@@ -9,6 +9,7 @@ import java.time.Instant
 
 object BixiApiHandler {
     var docks = mutableMapOf<Int, BixiStation>()
+    var sortableDocks = mutableListOf<BixiStation>()
 
     private fun getDocksInfoJson(): JSONArray {
         val url = URL("https://secure.bixi.com/data/stations.json")
@@ -59,6 +60,7 @@ object BixiApiHandler {
         for (i in 0 until stations.length()) {
             val station = getBixiStationFromJson(stations.getJSONObject(i))
             docks[station.id] = station
+            sortableDocks.add(station)
         }
     }
 }
