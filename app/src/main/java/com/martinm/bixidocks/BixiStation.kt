@@ -12,7 +12,7 @@ class BixiStation(
     var availableBikes: Int,
     var isActive: Boolean,
     var lastUpdate: Instant
-    ): Comparable<BixiStation> {
+) : Comparable<BixiStation> {
 
     var hue: Float = 0F
 
@@ -50,11 +50,15 @@ class BixiStation(
 
     override fun compareTo(other: BixiStation): Int {
         val results: FloatArray = floatArrayOf(1F)
-        Location.distanceBetween(location.latitude, location.longitude,
-            userLocation.latitude, userLocation.longitude, results)
+        Location.distanceBetween(
+            location.latitude, location.longitude,
+            userLocation.latitude, userLocation.longitude, results
+        )
         val thisDistance = results[0]
-        Location.distanceBetween(other.location.latitude, other.location.longitude,
-            userLocation.latitude, userLocation.longitude, results)
+        Location.distanceBetween(
+            other.location.latitude, other.location.longitude,
+            userLocation.latitude, userLocation.longitude, results
+        )
         val otherDistance = results[0]
 
         // Meter precision. Should be good enough

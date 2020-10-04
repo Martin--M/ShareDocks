@@ -41,7 +41,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         setContentView(R.layout.activity_maps)
         mLocationProvider = LocationServices.getFusedLocationProviderClient(this)
         val mapFragment = supportFragmentManager
-                .findFragmentById(R.id.map) as SupportMapFragment
+            .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
     }
 
@@ -49,13 +49,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         mMap = googleMap
         mMap.setOnMarkerClickListener(this)
 
-        if (ContextCompat.checkSelfPermission(this.applicationContext,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-            == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(
+                this.applicationContext,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+            == PackageManager.PERMISSION_GRANTED
+        ) {
             mIsLocationEnabled = true
         } else {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                REQUEST_CODE_FINE_LOCATION)
+            ActivityCompat.requestPermissions(
+                this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                REQUEST_CODE_FINE_LOCATION
+            )
         }
         centerMap()
         mMap.isMyLocationEnabled = mIsLocationEnabled
@@ -78,7 +83,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 this.runOnUiThread {
                     it.setIcon(
                         BitmapDescriptorFactory.defaultMarker(
-                        (it.tag as BixiStation).hue))
+                            (it.tag as BixiStation).hue
+                        )
+                    )
                 }
                 // Unblock UI thread to allow for responsiveness
                 sleep(10)
@@ -94,7 +101,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 mLocationProvider.lastLocation.addOnCompleteListener {
                     if (it.isSuccessful && it.result != null) {
                         BixiStation.userLocation = LatLng(it.result.latitude, it.result.longitude)
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(BixiStation.userLocation, 14F))
+                        mMap.moveCamera(
+                            CameraUpdateFactory.newLatLngZoom(
+                                BixiStation.userLocation,
+                                14F
+                            )
+                        )
                     }
                 }
                 mMap.isMyLocationEnabled = mIsLocationEnabled
@@ -114,7 +126,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         when (requestCode) {
             REQUEST_CODE_FINE_LOCATION -> {
                 if (grantResults.isNotEmpty() &&
-                        grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    grantResults[0] == PackageManager.PERMISSION_GRANTED
+                ) {
                     mIsLocationEnabled = true
                     centerMap()
                 }
