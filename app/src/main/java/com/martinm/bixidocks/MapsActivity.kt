@@ -32,6 +32,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     private lateinit var mMap: GoogleMap
     private lateinit var mLocationProvider: FusedLocationProviderClient
     private val mBixi = BixiApiHandler
+    private val mLogic = LogicHandler
     private var mIsPopupPresent: Boolean = false
     private var mIsLocationEnabled: Boolean = false
     private var mMarkers: MutableList<Marker> = mutableListOf()
@@ -155,9 +156,19 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             popupWindow.dismiss()
             mIsPopupPresent = false
         }
+
+        popupView.findViewById<Button>(R.id.toggle_dock_button).setOnClickListener {
+            mLogic.toggleUserDockId(station.id)
+            popupView.findViewById<Button>(R.id.toggle_dock_button).text =
+                mLogic.getButtonStringForId(baseContext, station.id)
+        }
+
         popupView.findViewById<TextView>(R.id.bikes_value).text = station.availableBikes.toString()
         popupView.findViewById<TextView>(R.id.docks_value).text = station.availableDocks.toString()
         popupView.findViewById<TextView>(R.id.dock_name).text = station.name
+        popupView.findViewById<Button>(R.id.toggle_dock_button).text =
+            mLogic.getButtonStringForId(baseContext, station.id)
+
 
         popupWindow.showAtLocation(
             findViewById(R.id.map),
