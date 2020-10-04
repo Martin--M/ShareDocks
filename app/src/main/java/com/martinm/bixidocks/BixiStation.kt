@@ -26,21 +26,26 @@ class BixiStation(
 
     private fun getAvailablePercent(): Float {
         if (availableBikes + availableDocks == 0 || !isActive) {
-            /*
-             * Sad hack to select a blue hue if station is unavailable. The plan is to eventually
-             * change this to NaN and select a proper gray icon or something like that
-             */
-            return 2F
+            return Float.NaN
         }
         return availableBikes.toFloat() / (availableBikes + availableDocks)
     }
 
     private fun getNewHue(): Float {
         /*
-         * Ranges from 0 (Red) to 120 (Green)
-         * Special case for disabled Stations at 240 (Blue)
+         * Ranges from 30 (Warm Red) to 90 (Yellow Green)
+         * Special case for disabled Stations at 240 (Blue), empty stations at 0 (Red), and full
+         * stations at 120 (Green)
          */
-        return getAvailablePercent() * 120
+        val availability = getAvailablePercent()
+        if (availability.isNaN()) {
+            return 240F
+        }
+        return when (availability) {
+            0F -> 0F
+            1F -> 120F
+            else -> 30 + availability * 60
+        }
     }
 
     override fun compareTo(other: BixiStation): Int {
