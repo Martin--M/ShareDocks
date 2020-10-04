@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BixiDocks</string>
+    <string name="popup_label_docks">Points d\'ancrage</string>
+    <string name="popup_label_bikes">Vélos</string>
+    <string name="popup_button_close">Fermer</string>
+</resources>
