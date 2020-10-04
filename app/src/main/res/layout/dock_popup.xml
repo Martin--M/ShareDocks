@@ -37,7 +37,7 @@
             <TextView
                 android:id="@+id/bikes_label"
                 android:textAlignment="viewEnd"
-                android:text="Bikes" />
+                android:text="@string/popup_label_bikes" />
 
             <TextView
                 android:id="@+id/bikes_value"
@@ -52,7 +52,7 @@
             <TextView
                 android:id="@+id/docks_label"
                 android:textAlignment="viewEnd"
-                android:text="Docks" />
+                android:text="@string/popup_label_docks" />
 
             <TextView
                 android:id="@+id/docks_value"
@@ -67,7 +67,7 @@
                 android:id="@+id/close_popup_button"
                 android:layout_span="2"
                 android:gravity="center"
-                android:text="Close" />
+                android:text="@string/popup_button_close" />
         </TableRow>
     </TableLayout>
 
