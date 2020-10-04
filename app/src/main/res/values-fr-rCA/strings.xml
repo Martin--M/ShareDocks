@@ -4,4 +4,6 @@
     <string name="popup_label_docks">Points d\'ancrage</string>
     <string name="popup_label_bikes">Vélos</string>
     <string name="popup_button_close">Fermer</string>
+    <string name="popup_button_add">Ajouter</string>
+    <string name="popup_button_remove">Supprimer</string>
 </resources>
