@@ -19,9 +19,12 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import java.lang.Thread.sleep
+import java.util.concurrent.CountDownLatch
 import kotlin.concurrent.thread
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
@@ -58,6 +61,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         mMap.isMyLocationEnabled = mIsLocationEnabled
 
         thread(start = true) {
+            val latch = CountDownLatch(1)
             mBixi.loadDockLocations()
             mBixi.sortableDocks.sort()
             this.runOnUiThread {
@@ -66,6 +70,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                     marker.tag = it
                     mMarkers.add(marker)
                 }
+                latch.countDown()
+            }
+            // Sync with the initialization of the markers
+            latch.await()
+            mMarkers.forEach {
+                this.runOnUiThread {
+                    it.setIcon(
+                        BitmapDescriptorFactory.defaultMarker(
+                        (it.tag as BixiStation).hue))
+                }
+                // Unblock UI thread to allow for responsiveness
+                sleep(10)
             }
         }
     }
