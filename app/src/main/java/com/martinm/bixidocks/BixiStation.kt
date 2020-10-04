@@ -11,5 +11,4 @@ class BixiStation(
     var availableBikes: Int,
     var isActive: Boolean,
     var lastUpdate: Instant
-    ) {
-}
+    )

@@ -110,7 +110,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         }
 
         val popupView = (getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater)
-            .inflate(R.layout.dock_popup, null)
+            .inflate(R.layout.dock_popup, findViewById(R.id.map), false)
         val popupWindow = PopupWindow(
             popupView,
             ConstraintLayout.LayoutParams.WRAP_CONTENT,

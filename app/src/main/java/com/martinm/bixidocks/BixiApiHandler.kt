@@ -55,7 +55,7 @@ object BixiApiHandler {
     }
 
     fun loadDockLocations() {
-        var stations = getDocksInfoJson()
+        val stations = getDocksInfoJson()
         for (i in 0 until stations.length()) {
             val station = getBixiStationFromJson(stations.getJSONObject(i))
             docks[station.id] = station
