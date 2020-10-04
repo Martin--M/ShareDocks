@@ -31,6 +31,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     private val mBixi = BixiApiHandler
     private var mIsPopupPresent: Boolean = false
     private var mIsLocationEnabled: Boolean = false
+    private var mMarkers: MutableList<Marker> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +44,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+        mMap.setOnMarkerClickListener(this)
 
         if (ContextCompat.checkSelfPermission(this.applicationContext,
                 Manifest.permission.ACCESS_FINE_LOCATION)
@@ -57,34 +59,35 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
         thread(start = true) {
             mBixi.loadDockLocations()
+            mBixi.sortableDocks.sort()
             this.runOnUiThread {
-                mBixi.docks.forEach {
-                    mMap.addMarker(MarkerOptions().position(it.value.location))
-                        .tag = it.value
-                    mMap.setOnMarkerClickListener(this)
+                mBixi.sortableDocks.forEach {
+                    val marker = mMap.addMarker(MarkerOptions().position(it.location))
+                    marker.tag = it
+                    mMarkers.add(marker)
                 }
             }
         }
     }
 
     private fun centerMap() {
+        // Default to downtown Montreal
+        BixiStation.userLocation = LatLng(45.5005302, -73.5686184)
         if (mIsLocationEnabled) {
             try {
                 mLocationProvider.lastLocation.addOnCompleteListener {
                     if (it.isSuccessful && it.result != null) {
-                        mMap.moveCamera(CameraUpdateFactory.
-                            newLatLngZoom(LatLng(it.result.latitude, it.result.longitude), 14F))
+                        BixiStation.userLocation = LatLng(it.result.latitude, it.result.longitude)
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(BixiStation.userLocation, 14F))
                     }
                 }
                 mMap.isMyLocationEnabled = mIsLocationEnabled
+                return
             } catch (e: SecurityException) {
                 // Shouldn't happen since we check already if the user granted permissions
             }
-        } else {
-            // Just center around downtown Montreal if location is disabled
-            mMap.moveCamera(CameraUpdateFactory
-                .newLatLngZoom(LatLng(45.5005302, -73.5686184), 14F))
         }
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(BixiStation.userLocation, 14F))
     }
 
     override fun onRequestPermissionsResult(
@@ -109,7 +112,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             return true
         }
 
-        var station = p0.tag as BixiStation
+        val station = p0.tag as BixiStation
 
         val popupView = (getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater)
             .inflate(R.layout.dock_popup, findViewById(R.id.map), false)
