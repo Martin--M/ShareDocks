@@ -60,7 +60,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             this.runOnUiThread {
                 mBixi.docks.forEach {
                     mMap.addMarker(MarkerOptions().position(it.value.location))
-                        .tag = it.value.id
+                        .tag = it.value
                     mMap.setOnMarkerClickListener(this)
                 }
             }
@@ -109,6 +109,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             return true
         }
 
+        var station = p0.tag as BixiStation
+
         val popupView = (getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater)
             .inflate(R.layout.dock_popup, findViewById(R.id.map), false)
         val popupWindow = PopupWindow(
@@ -121,10 +123,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             popupWindow.dismiss()
             mIsPopupPresent = false
         }
-
-        popupView.findViewById<TextView>(R.id.bikes_value).text = mBixi.docks[p0.tag]?.availableBikes.toString()
-        popupView.findViewById<TextView>(R.id.docks_value).text = mBixi.docks[p0.tag]?.availableDocks.toString()
-        popupView.findViewById<TextView>(R.id.dock_name).text = mBixi.docks[p0.tag]?.name
+        popupView.findViewById<TextView>(R.id.bikes_value).text = station.availableBikes.toString()
+        popupView.findViewById<TextView>(R.id.docks_value).text = station.availableDocks.toString()
+        popupView.findViewById<TextView>(R.id.dock_name).text = station.name
 
         popupWindow.showAtLocation(
             findViewById(R.id.map),
