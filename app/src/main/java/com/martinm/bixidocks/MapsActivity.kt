@@ -53,8 +53,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         mLocationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult?) {
                 locationResult ?: return
-                for (location in locationResult.locations) {
-                    BixiStation.userLocation = LatLng(location.latitude, location.longitude)
+                if (locationResult.locations.size > 0)
+                {
+                    if (LogicHandler.isReorderingNeeded(locationResult.locations[0])) {
+                        mBixi.sortableDocks.sort()
+                    }
+                    BixiStation.userLocation = LatLng(
+                        locationResult.locations[0].latitude,
+                        locationResult.locations[0].longitude
+                    )
+                }
+                if (mLogic.isUserCloseToStation()) {
+                    // TODO: Implement the logic to start the tracking
                 }
             }
         }
