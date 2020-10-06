@@ -4,21 +4,43 @@ import android.content.Context
 import android.location.Location
 
 object LogicHandler {
-    var userDockIds = mutableListOf<Int>()
+    var userDocks = mutableListOf<BixiStation>()
     var closestStations = mutableListOf<BixiStation>()
     private var mBixi = BixiApiHandler
 
-    fun toggleUserDockId(id: Int) {
-        if (!userDockIds.contains(id)) {
-            userDockIds.add(id)
+    private fun containsId(list: MutableList<BixiStation>, id: Int): BixiStation? {
+        list.forEach {
+            if (it.id == id) {
+                return it
+            }
+        }
+        return null
+    }
+
+    private fun addStation(list: MutableList<BixiStation>, station: BixiStation) {
+        if (containsId(list, station.id) == null) {
+            list.add(station)
+        }
+    }
+
+    private fun removeStation(list: MutableList<BixiStation>, station: BixiStation) {
+        val listStation: BixiStation? = containsId(list, station.id)
+        if (listStation != null) {
+            list.remove(listStation)
+        }
+    }
+
+    fun toggleUserDock(station: BixiStation) {
+        if (containsId(userDocks, station.id) == null) {
+            addStation(userDocks, station.copy())
         } else {
-            userDockIds.remove(id)
+            removeStation(userDocks, station)
         }
     }
 
     fun getButtonStringForId(context: Context, id: Int): String {
         val res = context.resources
-        return if (userDockIds.contains(id)) {
+        return if (containsId(userDocks, id) != null) {
             res.getString(res.getIdentifier("popup_button_remove", "string", context.packageName))
         } else {
             res.getString(res.getIdentifier("popup_button_add", "string", context.packageName))

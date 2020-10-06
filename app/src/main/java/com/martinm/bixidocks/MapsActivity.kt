@@ -191,7 +191,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
         // Listener for the Toggle button
         popupView.findViewById<Button>(R.id.toggle_dock_button).setOnClickListener {
-            mLogic.toggleUserDockId(station.id)
+            mLogic.toggleUserDock(station)
             popupView.findViewById<Button>(R.id.toggle_dock_button).text =
                 mLogic.getButtonStringForId(baseContext, station.id)
         }
