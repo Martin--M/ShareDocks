@@ -31,7 +31,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
     private lateinit var mMap: GoogleMap
     private lateinit var mLocationProvider: FusedLocationProviderClient
-    private lateinit var mLocationCallback: LocationCallback
     private lateinit var mLocationRequest: LocationRequest
 
     private val mBixi = BixiApiHandler
@@ -39,6 +38,24 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     private var mIsPopupPresent: Boolean = false
     private var mIsLocationEnabled: Boolean = false
     private var mMarkers: MutableList<Marker> = mutableListOf()
+
+    private var mLocationCallback = object : LocationCallback() {
+        override fun onLocationResult(locationResult: LocationResult?) {
+            locationResult ?: return
+            if (locationResult.locations.size > 0) {
+                if (LogicHandler.isReorderingNeeded(locationResult.locations[0])) {
+                    mBixi.sortableDocks.sort()
+                }
+                BixiStation.userLocation = LatLng(
+                    locationResult.locations[0].latitude,
+                    locationResult.locations[0].longitude
+                )
+            }
+            if (mLogic.isUserCloseToStation()) {
+                // TODO: Implement tracking logic
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,25 +66,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         mapFragment.getMapAsync(this)
         mLocationRequest = LocationRequest.create()
             .setInterval(10000)
+            .setFastestInterval(5000)
             .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-        mLocationCallback = object : LocationCallback() {
-            override fun onLocationResult(locationResult: LocationResult?) {
-                locationResult ?: return
-                if (locationResult.locations.size > 0)
-                {
-                    if (LogicHandler.isReorderingNeeded(locationResult.locations[0])) {
-                        mBixi.sortableDocks.sort()
-                    }
-                    BixiStation.userLocation = LatLng(
-                        locationResult.locations[0].latitude,
-                        locationResult.locations[0].longitude
-                    )
-                }
-                if (mLogic.isUserCloseToStation()) {
-                    // TODO: Implement the logic to start the tracking
-                }
-            }
-        }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -183,23 +183,25 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             ConstraintLayout.LayoutParams.WRAP_CONTENT
         )
 
+        // Listener for the Close button
         popupView.findViewById<Button>(R.id.close_popup_button).setOnClickListener {
             popupWindow.dismiss()
             mIsPopupPresent = false
         }
 
+        // Listener for the Toggle button
         popupView.findViewById<Button>(R.id.toggle_dock_button).setOnClickListener {
             mLogic.toggleUserDockId(station.id)
             popupView.findViewById<Button>(R.id.toggle_dock_button).text =
                 mLogic.getButtonStringForId(baseContext, station.id)
         }
 
+        // Load labels with appropriate values
         popupView.findViewById<TextView>(R.id.bikes_value).text = station.availableBikes.toString()
         popupView.findViewById<TextView>(R.id.docks_value).text = station.availableDocks.toString()
         popupView.findViewById<TextView>(R.id.dock_name).text = station.name
         popupView.findViewById<Button>(R.id.toggle_dock_button).text =
             mLogic.getButtonStringForId(baseContext, station.id)
-
 
         popupWindow.showAtLocation(
             findViewById(R.id.map),
