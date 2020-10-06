@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Looper
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.widget.Button
@@ -12,8 +13,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 
 import com.google.android.gms.maps.GoogleMap
@@ -31,6 +31,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
     private lateinit var mMap: GoogleMap
     private lateinit var mLocationProvider: FusedLocationProviderClient
+    private lateinit var mLocationCallback: LocationCallback
+    private lateinit var mLocationRequest: LocationRequest
+
     private val mBixi = BixiApiHandler
     private val mLogic = LogicHandler
     private var mIsPopupPresent: Boolean = false
@@ -44,6 +47,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+        mLocationRequest = LocationRequest.create()
+            .setInterval(10000)
+            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+        mLocationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult?) {
+                locationResult ?: return
+                for (location in locationResult.locations) {
+                    BixiStation.userLocation = LatLng(location.latitude, location.longitude)
+                }
+            }
+        }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -111,6 +125,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                     }
                 }
                 mMap.isMyLocationEnabled = mIsLocationEnabled
+                // Start location updates
+                mLocationProvider.requestLocationUpdates(
+                    mLocationRequest,
+                    mLocationCallback,
+                    Looper.getMainLooper()
+                )
+
                 return
             } catch (e: SecurityException) {
                 // Shouldn't happen since we check already if the user granted permissions

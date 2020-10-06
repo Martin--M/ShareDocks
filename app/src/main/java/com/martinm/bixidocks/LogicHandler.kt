@@ -15,7 +15,7 @@ object LogicHandler {
     }
 
     fun getButtonStringForId(context: Context, id: Int): String {
-        var res = context.resources
+        val res = context.resources
         return if (userDockIds.contains(id)) {
             res.getString(res.getIdentifier("popup_button_remove", "string", context.packageName))
         } else {
