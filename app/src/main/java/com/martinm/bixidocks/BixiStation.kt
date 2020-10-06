@@ -24,6 +24,18 @@ class BixiStation(
         var userLocation = LatLng(0.0, 0.0)
     }
 
+    fun copy(): BixiStation {
+        return BixiStation(
+            location = LatLng(this.location.latitude, this.location.longitude),
+            name = this.name,
+            lastUpdate = this.lastUpdate,
+            isActive = this.isActive,
+            availableDocks = this.availableDocks,
+            availableBikes = this.availableBikes,
+            id = this.id
+        )
+    }
+
     private fun getAvailablePercent(): Float {
         if (availableBikes + availableDocks == 0 || !isActive) {
             return Float.NaN
