@@ -52,7 +52,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 )
             }
             if (mLogic.isUserCloseToStation()) {
-                // TODO: Implement tracking logic
+                mLogic.startTracking()
             }
         }
     }

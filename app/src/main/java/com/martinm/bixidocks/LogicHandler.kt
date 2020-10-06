@@ -2,11 +2,23 @@ package com.martinm.bixidocks
 
 import android.content.Context
 import android.location.Location
+import android.os.CountDownTimer
 
 object LogicHandler {
     var userDocks = mutableListOf<BixiStation>()
-    var closestStations = mutableListOf<BixiStation>()
+    var isTracking: Boolean = false
     private var mBixi = BixiApiHandler
+
+    private val mTrackingTimer = object : CountDownTimer(45 * 60 * 1000, 30 * 1000) {
+        override fun onFinish() {
+            isTracking = false
+        }
+
+        override fun onTick(p0: Long) {
+            isTracking = true
+            // TODO: Call bixi API here, update map, and recheck user stations
+        }
+    }
 
     private fun containsId(list: MutableList<BixiStation>, id: Int): BixiStation? {
         list.forEach {
@@ -76,5 +88,17 @@ object LogicHandler {
             }
         }
         return false
+    }
+
+    fun startTracking() {
+        if (isTracking) {
+            return
+        }
+        mTrackingTimer.start()
+    }
+
+    fun stopTracking() {
+        mTrackingTimer.cancel()
+        isTracking = false
     }
 }
