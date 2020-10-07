@@ -7,7 +7,7 @@ import android.os.CountDownTimer
 object LogicHandler {
     var userDocks = mutableListOf<BixiStation>()
     var isTracking: Boolean = false
-    private var mBixi = BixiApiHandler
+    private val mBixi = BixiApiHandler
 
     private val mTrackingTimer = object : CountDownTimer(45 * 60 * 1000, 30 * 1000) {
         override fun onFinish() {
@@ -22,7 +22,7 @@ object LogicHandler {
                 if (!mBixi.docks[it.id]!!.isActive && it.isActive &&
                     mBixi.docks[it.id]!!.availableDocks == 0 && it.availableDocks != 0
                 ) {
-                    // TODO: Show notification here
+                    NotificationHandler.showNotification("0 docks at " + it.name)
                 }
                 mBixi.updateStation(mBixi.docks[it.id]!!, it)
             }

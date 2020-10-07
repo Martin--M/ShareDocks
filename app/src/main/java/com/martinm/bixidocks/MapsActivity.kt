@@ -1,6 +1,8 @@
 package com.martinm.bixidocks
 
 import android.Manifest
+import android.app.NotificationManager
+import android.content.Context
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -43,7 +45,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         override fun onLocationResult(locationResult: LocationResult?) {
             locationResult ?: return
             if (locationResult.locations.size > 0) {
-                if (LogicHandler.isReorderingNeeded(locationResult.locations[0])) {
+                if (mLogic.isReorderingNeeded(locationResult.locations[0])) {
                     mBixi.sortableDocks.sort()
                 }
                 BixiStation.userLocation = LatLng(
@@ -60,6 +62,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
+        NotificationHandler.initialize(
+            this,
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        )
         mLocationProvider = LocationServices.getFusedLocationProviderClient(this)
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
