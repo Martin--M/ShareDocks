@@ -55,6 +55,25 @@ object BixiApiHandler {
         )
     }
 
+    fun updateStation(source: BixiStation, destination: BixiStation) {
+        destination.availableDocks = source.availableDocks
+        destination.availableBikes = source.availableBikes
+        destination.lastUpdate = source.lastUpdate
+        destination.isActive = source.isActive
+    }
+
+    fun updateDockLocations() {
+        val stations = getDocksInfoJson()
+        for (i in 0 until stations.length()) {
+            val station = getBixiStationFromJson(stations.getJSONObject(i))
+            if (docks[station.id] == null) {
+                docks[station.id] = station
+                sortableDocks.add(station)
+            }
+            updateStation(station, docks[station.id]!!)
+        }
+    }
+
     fun loadDockLocations() {
         val stations = getDocksInfoJson()
         for (i in 0 until stations.length()) {

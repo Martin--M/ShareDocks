@@ -16,7 +16,16 @@ object LogicHandler {
 
         override fun onTick(p0: Long) {
             isTracking = true
-            // TODO: Call bixi API here, update map, and recheck user stations
+            mBixi.updateDockLocations()
+            userDocks.forEach {
+                // There's been a change that affects the user
+                if (!mBixi.docks[it.id]!!.isActive && it.isActive &&
+                    mBixi.docks[it.id]!!.availableDocks == 0 && it.availableDocks != 0
+                ) {
+                    // TODO: Show notification here
+                }
+                mBixi.updateStation(mBixi.docks[it.id]!!, it)
+            }
         }
     }
 
