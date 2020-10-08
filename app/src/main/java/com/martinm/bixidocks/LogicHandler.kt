@@ -51,6 +51,14 @@ object LogicHandler {
         }
     }
 
+    fun loadUserDocks() {
+        ConfigurationHandler.stationIdListFromStorageString().forEach {
+            if (mBixi.docks[it] != null) {
+                addStation(userDocks, mBixi.docks[it]!!.copy())
+            }
+        }
+    }
+
     fun toggleUserDock(station: BixiStation) {
         if (containsId(userDocks, station.id) == null) {
             addStation(userDocks, station.copy())

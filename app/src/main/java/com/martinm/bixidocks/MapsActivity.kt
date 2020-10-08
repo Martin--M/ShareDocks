@@ -66,6 +66,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             this,
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         )
+        ConfigurationHandler.initialize(this)
         mLocationProvider = LocationServices.getFusedLocationProviderClient(this)
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
@@ -99,6 +100,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         thread(start = true) {
             val latch = CountDownLatch(1)
             mBixi.loadDockLocations()
+            mLogic.loadUserDocks()
             mBixi.sortableDocks.sort()
             this.runOnUiThread {
                 mBixi.sortableDocks.forEach {
@@ -200,6 +202,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             mLogic.toggleUserDock(station)
             popupView.findViewById<Button>(R.id.toggle_dock_button).text =
                 mLogic.getButtonStringForId(baseContext, station.id)
+            ConfigurationHandler.storeStationList(mLogic.userDocks)
         }
 
         // Load labels with appropriate values
