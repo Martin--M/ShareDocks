@@ -14,6 +14,7 @@ object LogicHandler {
     var userDocks = mutableListOf<BixiStation>()
     var isTracking: Boolean = false
     private val mBixi = BixiApiHandler
+    private lateinit var mTimerContext: Context
 
     private val mTrackingTimer = object : CountDownTimer(45 * 60 * 1000, 30 * 1000) {
         override fun onFinish() {
@@ -28,8 +29,7 @@ object LogicHandler {
                 if (!mBixi.docks[it.id]!!.isActive && it.isActive &&
                     mBixi.docks[it.id]!!.availableDocks == 0 && it.availableDocks != 0
                 ) {
-                    // TODO: Pass a proper context
-                    // NotificationHandler.showNotification("0 docks at " + it.name)
+                    NotificationHandler.showNotification(mTimerContext, "0 docks at " + it.name)
                 }
                 mBixi.updateStation(mBixi.docks[it.id]!!, it)
             }
@@ -83,10 +83,11 @@ object LogicHandler {
         }
     }
 
-    fun startTracking() {
+    fun startTracking(context: Context) {
         if (isTracking) {
             return
         }
+        mTimerContext = context
         mTrackingTimer.start()
     }
 
