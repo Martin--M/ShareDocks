@@ -1,7 +1,14 @@
 package com.martinm.bixidocks
 
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.os.CountDownTimer
+import android.widget.Toast
+import com.google.android.gms.location.ActivityRecognition
+import com.google.android.gms.location.ActivityTransition
+import com.google.android.gms.location.ActivityTransitionRequest
+import com.google.android.gms.location.DetectedActivity
 
 object LogicHandler {
     var userDocks = mutableListOf<BixiStation>()
@@ -86,5 +93,43 @@ object LogicHandler {
     fun stopTracking() {
         mTrackingTimer.cancel()
         isTracking = false
+    }
+
+    fun setupActivityRecognitionCallback(context: Context) {
+        val activityTransitions = listOf<ActivityTransition>(
+            ActivityTransition.Builder()
+                .setActivityType(DetectedActivity.ON_BICYCLE)
+                .setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_ENTER)
+                .build(),
+            ActivityTransition.Builder()
+                .setActivityType(DetectedActivity.ON_BICYCLE)
+                .setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_EXIT)
+                .build()
+        )
+        val activityTransitionRequest = ActivityTransitionRequest(activityTransitions)
+        val pendingIntent = PendingIntent.getBroadcast(
+            context,
+            0,
+            Intent().setClass(context, ActivityTransitionReceiver::class.java),
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+        val task = ActivityRecognition.getClient(context)
+            .requestActivityTransitionUpdates(activityTransitionRequest, pendingIntent)
+
+        task.addOnSuccessListener {
+            Toast.makeText(
+                context,
+                "Connected to the Activity Recognition Service",
+                Toast.LENGTH_LONG
+            )
+                .show()
+        }
+        task.addOnFailureListener {
+            Toast.makeText(
+                context,
+                "Failed to connect to the Activity Recognition Service. Restart the application",
+                Toast.LENGTH_LONG
+            ).show()
+        }
     }
 }

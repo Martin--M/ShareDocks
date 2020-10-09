@@ -2,16 +2,15 @@ package com.martinm.bixidocks
 
 import android.app.NotificationManager
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.PopupWindow
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.gms.maps.CameraUpdateFactory
-
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -35,13 +34,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
+
         NotificationHandler.initialize(
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         )
         ConfigurationHandler.initialize(this)
+
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        mLogic.setupActivityRecognitionCallback(applicationContext)
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -74,7 +77,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                     )
                 }
                 // Unblock UI thread to allow for responsiveness
-                sleep(10)
+                sleep(50)
             }
         }
     }
