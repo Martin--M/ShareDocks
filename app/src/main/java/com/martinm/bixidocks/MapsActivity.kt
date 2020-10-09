@@ -36,7 +36,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
         NotificationHandler.initialize(
-            this,
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         )
         ConfigurationHandler.initialize(this)

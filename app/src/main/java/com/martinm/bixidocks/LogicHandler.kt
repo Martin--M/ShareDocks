@@ -21,7 +21,8 @@ object LogicHandler {
                 if (!mBixi.docks[it.id]!!.isActive && it.isActive &&
                     mBixi.docks[it.id]!!.availableDocks == 0 && it.availableDocks != 0
                 ) {
-                    NotificationHandler.showNotification("0 docks at " + it.name)
+                    // TODO: Pass a proper context
+                    // NotificationHandler.showNotification("0 docks at " + it.name)
                 }
                 mBixi.updateStation(mBixi.docks[it.id]!!, it)
             }
