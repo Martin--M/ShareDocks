@@ -2,6 +2,8 @@ package com.martinm.bixidocks
 
 import android.app.NotificationManager
 import android.content.Context
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -10,6 +12,8 @@ import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -44,7 +48,24 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        mLogic.setupActivityRecognitionCallback(applicationContext)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            if (ContextCompat.checkSelfPermission(
+                    this.applicationContext,
+                    "android.permission.ACTIVITY_RECOGNITION"
+                )
+                == PackageManager.PERMISSION_GRANTED
+            ) {
+                mLogic.setupActivityRecognitionCallback(applicationContext)
+            } else {
+                ActivityCompat.requestPermissions(
+                    this, arrayOf("android.permission.ACTIVITY_RECOGNITION"),
+                    REQUEST_CODE_ACTIVITY_RECOGNITION
+                )
+            }
+        } else {
+            mLogic.setupActivityRecognitionCallback(applicationContext)
+        }
+
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -133,5 +154,25 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
         mIsPopupPresent = true
         return true
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+            REQUEST_CODE_ACTIVITY_RECOGNITION -> {
+                if (grantResults.isNotEmpty() &&
+                    grantResults[0] == PackageManager.PERMISSION_GRANTED
+                ) {
+                    mLogic.setupActivityRecognitionCallback(applicationContext)
+                }
+            }
+        }
+    }
+
+    companion object {
+        private const val REQUEST_CODE_ACTIVITY_RECOGNITION: Int = 1
     }
 }
