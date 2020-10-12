@@ -10,6 +10,7 @@ import com.google.android.gms.location.ActivityTransition
 import com.google.android.gms.location.ActivityTransitionRequest
 import com.google.android.gms.location.DetectedActivity
 import java.lang.Exception
+import kotlin.concurrent.thread
 
 object LogicHandler {
     var userDocks = mutableListOf<BixiStation>()
@@ -28,23 +29,25 @@ object LogicHandler {
 
         override fun onTick(p0: Long) {
             isTracking = true
-            try {
-                mBixi.updateDockLocations()
-            } catch (e: Exception) {
-                Toast.makeText(
-                    mTimerContext,
-                    "Error getting station data: $e",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-            userDocks.forEach {
-                // There's been a change that affects the user
-                if (!mBixi.docks[it.id]!!.isActive && it.isActive &&
-                    mBixi.docks[it.id]!!.availableDocks == 0 && it.availableDocks != 0
-                ) {
-                    NotificationHandler.showNotification(mTimerContext, "0 docks at " + it.name)
+            thread(start = true) {
+                try {
+                    mBixi.updateDockLocations()
+                } catch (e: Exception) {
+                    Toast.makeText(
+                        mTimerContext,
+                        "Error getting station data: $e",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
-                mBixi.updateStation(mBixi.docks[it.id]!!, it)
+                userDocks.forEach {
+                    // There's been a change that affects the user
+                    if (!mBixi.docks[it.id]!!.isActive && it.isActive &&
+                        mBixi.docks[it.id]!!.availableDocks == 0 && it.availableDocks != 0
+                    ) {
+                        NotificationHandler.showNotification(mTimerContext, "0 docks at " + it.name)
+                    }
+                    mBixi.updateStation(mBixi.docks[it.id]!!, it)
+                }
             }
         }
     }
@@ -100,20 +103,22 @@ object LogicHandler {
         if (isTracking) {
             return
         }
-        // Load docks again in case the whole context has been lost
-        try {
-            mBixi.loadDockLocations()
-        } catch (e: Exception) {
-            Toast.makeText(
-                context,
-                "Error getting station data: $e",
-                Toast.LENGTH_LONG
-            ).show()
-        }
+        thread(start = true) {
+            // Load docks again in case the whole context has been lost
+            try {
+                mBixi.loadDockLocations()
+            } catch (e: Exception) {
+                Toast.makeText(
+                    context,
+                    "Error getting station data: $e",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
 
-        loadUserDocks()
-        mTimerContext = context
-        mTrackingTimer.start()
+            loadUserDocks()
+            mTimerContext = context
+            mTrackingTimer.start()
+        }
     }
 
     fun stopTracking() {
