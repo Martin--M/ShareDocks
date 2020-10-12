@@ -87,6 +87,9 @@ object LogicHandler {
         if (isTracking) {
             return
         }
+        // Load docks again in case the whole context has been lost
+        mBixi.loadDockLocations()
+        loadUserDocks()
         mTimerContext = context
         mTrackingTimer.start()
     }
@@ -122,8 +125,7 @@ object LogicHandler {
                 context,
                 "Connected to the Activity Recognition Service",
                 Toast.LENGTH_LONG
-            )
-                .show()
+            ).show()
         }
         task.addOnFailureListener {
             Toast.makeText(
