@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.PopupWindow
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
@@ -22,6 +23,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import java.lang.Exception
 import java.lang.Thread.sleep
 import java.util.concurrent.CountDownLatch
 import kotlin.concurrent.thread
@@ -76,7 +78,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
         thread(start = true) {
             val latch = CountDownLatch(1)
-            mBixi.loadDockLocations()
+            try {
+                mBixi.loadDockLocations()
+            } catch (e: Exception) {
+                Toast.makeText(
+                    this,
+                    "Error getting station data: $e",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+
             mLogic.loadUserDocks()
             mBixi.sortableDocks.sort()
             this.runOnUiThread {

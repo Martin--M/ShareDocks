@@ -9,6 +9,7 @@ import com.google.android.gms.location.ActivityRecognition
 import com.google.android.gms.location.ActivityTransition
 import com.google.android.gms.location.ActivityTransitionRequest
 import com.google.android.gms.location.DetectedActivity
+import java.lang.Exception
 
 object LogicHandler {
     var userDocks = mutableListOf<BixiStation>()
@@ -27,7 +28,15 @@ object LogicHandler {
 
         override fun onTick(p0: Long) {
             isTracking = true
-            mBixi.updateDockLocations()
+            try {
+                mBixi.updateDockLocations()
+            } catch (e: Exception) {
+                Toast.makeText(
+                    mTimerContext,
+                    "Error getting station data: $e",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
             userDocks.forEach {
                 // There's been a change that affects the user
                 if (!mBixi.docks[it.id]!!.isActive && it.isActive &&
@@ -92,7 +101,16 @@ object LogicHandler {
             return
         }
         // Load docks again in case the whole context has been lost
-        mBixi.loadDockLocations()
+        try {
+            mBixi.loadDockLocations()
+        } catch (e: Exception) {
+            Toast.makeText(
+                context,
+                "Error getting station data: $e",
+                Toast.LENGTH_LONG
+            ).show()
+        }
+
         loadUserDocks()
         mTimerContext = context
         mTrackingTimer.start()

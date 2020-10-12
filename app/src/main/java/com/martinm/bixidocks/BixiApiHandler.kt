@@ -13,20 +13,15 @@ object BixiApiHandler {
 
     private fun getDocksInfoJson(): JSONArray {
         val url = URL("https://secure.bixi.com/data/stations.json")
-        try {
-            with(url.openConnection() as HttpURLConnection) {
-                requestMethod = "GET"
-                inputStream.bufferedReader().use {
-                    /*
-                     * Note: There are "schemeSuspended" and "timestamp" as top level entries that
-                     * we might or might not need in the future (winter?)
-                     */
-                    return JSONObject(it.readText()).getJSONArray("stations")
-                }
+        with(url.openConnection() as HttpURLConnection) {
+            requestMethod = "GET"
+            inputStream.bufferedReader().use {
+                /*
+                 * Note: There are "schemeSuspended" and "timestamp" as top level entries that
+                 * we might or might not need in the future (winter?)
+                 */
+                return JSONObject(it.readText()).getJSONArray("stations")
             }
-        } catch (e: Exception) {
-            // TODO: handle exception when there's an issue getting the stations.json
-            return JSONArray()
         }
     }
 
