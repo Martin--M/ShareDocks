@@ -13,6 +13,9 @@ object NotificationHandler {
     private const val CHANNEL_ID_UPDATES: String = "DocksUpdates"
     private const val CHANNEL_ID_TRACKING: String = "DocksTracking"
 
+    private const val NOTIFICATION_ID_UPDATES = 100001
+    const val NOTIFICATION_ID_TRACKING = 100002
+
     fun initialize(notificationManager: NotificationManager) {
         mNotificationManager = notificationManager
         val chanUpdates = NotificationChannel(
@@ -41,7 +44,7 @@ object NotificationHandler {
             .setContentText(message)
 
         with(NotificationManagerCompat.from(context)) {
-            notify(100001, builder.build())
+            notify(NOTIFICATION_ID_UPDATES, builder.build())
         }
     }
 
