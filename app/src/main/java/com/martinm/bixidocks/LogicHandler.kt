@@ -16,6 +16,9 @@ object LogicHandler {
     private val mBixi = BixiApiHandler
     private lateinit var mTimerContext: Context
 
+    const val RECEIVER_REQUEST_ID_ACTIVITY_TRANSITION = 0
+    const val RECEIVER_REQUEST_ID_STOP_TRACKING = 1
+
     private val mTrackingTimer = object : CountDownTimer(30 * 60 * 1000, 30 * 1000) {
         override fun onFinish() {
             // The tracking service will ensure the timer ends. Else we continue tracking
@@ -114,7 +117,7 @@ object LogicHandler {
         val activityTransitionRequest = ActivityTransitionRequest(activityTransitions)
         val pendingIntent = PendingIntent.getBroadcast(
             context,
-            0,
+            RECEIVER_REQUEST_ID_ACTIVITY_TRANSITION,
             Intent().setClass(context, ActivityTransitionReceiver::class.java),
             PendingIntent.FLAG_UPDATE_CURRENT
         )
