@@ -16,9 +16,19 @@ class ActivityTransitionReceiver : BroadcastReceiver() {
         for (event in result.transitionEvents) {
             if (event.activityType == DetectedActivity.ON_BICYCLE) {
                 if (event.transitionType == ActivityTransition.ACTIVITY_TRANSITION_ENTER) {
-                    LogicHandler.startTracking(context)
+                    context.startForegroundService(
+                        Intent().setClass(
+                            context,
+                            DocksTracker::class.java
+                        ).setAction(DocksTracker.FOREGROUND_SERVICE_START)
+                    )
                 } else if (event.transitionType == ActivityTransition.ACTIVITY_TRANSITION_EXIT) {
-                    LogicHandler.stopTracking()
+                    context.startForegroundService(
+                        Intent().setClass(
+                            context,
+                            DocksTracker::class.java
+                        ).setAction(DocksTracker.FOREGROUND_SERVICE_STOP)
+                    )
                 }
             }
         }
