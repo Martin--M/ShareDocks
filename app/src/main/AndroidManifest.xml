@@ -25,6 +25,7 @@
         </activity>
 
         <receiver android:name=".ActivityTransitionReceiver" />
+        <receiver android:name=".StopTrackingReceiver" />
 
         <service android:name=".DocksTracker"
             android:foregroundServiceType="dataSync" />

@@ -3,7 +3,9 @@ package com.martinm.bixidocks
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 
@@ -49,8 +51,17 @@ object NotificationHandler {
     }
 
     fun getForegroundNotification(context: Context): Notification {
+        val pendingIntent = PendingIntent.getBroadcast(
+            context,
+            LogicHandler.RECEIVER_REQUEST_ID_STOP_TRACKING,
+            Intent(context, StopTrackingReceiver::class.java),
+            PendingIntent.FLAG_IMMUTABLE
+        )
+
         return NotificationCompat.Builder(context, CHANNEL_ID_TRACKING)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
-            .setContentTitle("Station tracking in progress").build()
+            .addAction(R.drawable.ic_launcher_foreground, "Stop", pendingIntent)
+            .setContentTitle("Station tracking in progress")
+            .build()
     }
 }
