@@ -24,7 +24,10 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".ActivityTransitionReceiver"  />
+        <receiver android:name=".ActivityTransitionReceiver" />
+
+        <service android:name=".DocksTracker"
+            android:foregroundServiceType="dataSync" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
