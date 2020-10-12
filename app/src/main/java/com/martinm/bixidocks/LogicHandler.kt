@@ -16,9 +16,10 @@ object LogicHandler {
     private val mBixi = BixiApiHandler
     private lateinit var mTimerContext: Context
 
-    private val mTrackingTimer = object : CountDownTimer(45 * 60 * 1000, 30 * 1000) {
+    private val mTrackingTimer = object : CountDownTimer(30 * 60 * 1000, 30 * 1000) {
         override fun onFinish() {
-            isTracking = false
+            // The tracking service will ensure the timer ends. Else we continue tracking
+            start()
         }
 
         override fun onTick(p0: Long) {
