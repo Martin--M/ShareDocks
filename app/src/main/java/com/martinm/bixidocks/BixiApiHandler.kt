@@ -5,13 +5,26 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.net.HttpURLConnection
 import java.net.URL
+import java.time.Duration
 import java.time.Instant
 
 object BixiApiHandler {
     var docks = mutableMapOf<Int, BixiStation>()
     var sortableDocks = mutableListOf<BixiStation>()
 
+    private lateinit var mLastCalled: Instant
+
     private fun getDocksInfoJson(): JSONArray {
+        // Avoid calling the API too often
+        if (this::mLastCalled.isInitialized && Duration.between(
+                mLastCalled,
+                Instant.now()
+            ).seconds < 5
+        ) {
+            return JSONArray()
+        } else {
+            mLastCalled = Instant.now()
+        }
         val url = URL("https://secure.bixi.com/data/stations.json")
         with(url.openConnection() as HttpURLConnection) {
             requestMethod = "GET"
