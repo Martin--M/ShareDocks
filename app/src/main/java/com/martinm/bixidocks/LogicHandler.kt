@@ -4,12 +4,14 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.CountDownTimer
+import android.speech.tts.TextToSpeech
 import android.widget.Toast
 import com.google.android.gms.location.ActivityRecognition
 import com.google.android.gms.location.ActivityTransition
 import com.google.android.gms.location.ActivityTransitionRequest
 import com.google.android.gms.location.DetectedActivity
-import java.lang.Exception
+import java.lang.Thread.sleep
+import java.util.*
 import kotlin.concurrent.thread
 
 object LogicHandler {
@@ -17,9 +19,16 @@ object LogicHandler {
     var isTracking: Boolean = false
     private val mBixi = BixiApiHandler
     private lateinit var mTimerContext: Context
+    private lateinit var mTextToSpeech: TextToSpeech
 
     const val RECEIVER_REQUEST_ID_ACTIVITY_TRANSITION = 0
     const val RECEIVER_REQUEST_ID_STOP_TRACKING = 1
+
+    private val listener = TextToSpeech.OnInitListener {
+        if (it == TextToSpeech.SUCCESS) {
+            mTextToSpeech.language = Locale.getDefault()
+        }
+    }
 
     private val mTrackingTimer = object : CountDownTimer(30 * 60 * 1000, 30 * 1000) {
         override fun onFinish() {
@@ -45,6 +54,14 @@ object LogicHandler {
                         mBixi.docks[it.id]!!.availableDocks == 0 && it.availableDocks != 0
                     ) {
                         NotificationHandler.showNotification(mTimerContext, "0 docks at " + it.name)
+                        // Wait for the notification alert to finish
+                        sleep(2000)
+                        mTextToSpeech.speak(
+                            "Station. " + it.name.replace("/", "and") + " is full",
+                            TextToSpeech.QUEUE_ADD,
+                            null,
+                            ""
+                        )
                     }
                     mBixi.updateStation(mBixi.docks[it.id]!!, it)
                 }
@@ -103,6 +120,7 @@ object LogicHandler {
         if (isTracking) {
             return
         }
+        mTextToSpeech = TextToSpeech(context, listener)
         thread(start = true) {
             // Load docks again in case the whole context has been lost
             try {
