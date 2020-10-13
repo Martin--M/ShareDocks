@@ -6,7 +6,7 @@ import android.content.Intent
 
 class StopTrackingReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        context.startForegroundService(
+        context.startService(
             Intent().setClass(
                 context,
                 DocksTracker::class.java

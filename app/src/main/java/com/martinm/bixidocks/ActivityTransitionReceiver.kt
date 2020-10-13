@@ -23,7 +23,7 @@ class ActivityTransitionReceiver : BroadcastReceiver() {
                         ).setAction(DocksTracker.FOREGROUND_SERVICE_START)
                     )
                 } else if (event.transitionType == ActivityTransition.ACTIVITY_TRANSITION_EXIT) {
-                    context.startForegroundService(
+                    context.startService(
                         Intent().setClass(
                             context,
                             DocksTracker::class.java
