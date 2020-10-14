@@ -44,7 +44,7 @@ object LogicHandler {
                 } catch (e: Exception) {
                     Toast.makeText(
                         mTimerContext,
-                        "Error getting station data: $e",
+                        mTimerContext.getString(R.string.toast_error_network, e.toString()),
                         Toast.LENGTH_LONG
                     ).show()
                 }
@@ -53,11 +53,20 @@ object LogicHandler {
                     if (!mBixi.docks[it.id]!!.isActive && it.isActive &&
                         mBixi.docks[it.id]!!.availableDocks == 0 && it.availableDocks != 0
                     ) {
-                        NotificationHandler.showNotification(mTimerContext, "0 docks at " + it.name)
+                        NotificationHandler.showNotification(
+                            mTimerContext,
+                            mTimerContext.getString(R.string.notification_update_content, it.name)
+                        )
                         // Wait for the notification alert to finish
                         sleep(2000)
                         mTextToSpeech.speak(
-                            "Station. " + it.name.replace("/", "and") + " is full",
+                            mTimerContext.getString(
+                                R.string.tts_update,
+                                it.name.replace(
+                                    "/",
+                                    mTimerContext.getString(R.string.tts_replace_intersection)
+                                )
+                            ),
                             TextToSpeech.QUEUE_ADD,
                             null,
                             ""
@@ -108,11 +117,10 @@ object LogicHandler {
     }
 
     fun getButtonStringForId(context: Context, id: Int): String {
-        val res = context.resources
         return if (containsId(userDocks, id) != null) {
-            res.getString(res.getIdentifier("popup_button_remove", "string", context.packageName))
+            context.getString(R.string.popup_button_remove)
         } else {
-            res.getString(res.getIdentifier("popup_button_add", "string", context.packageName))
+            context.getString(R.string.popup_button_add)
         }
     }
 
@@ -128,7 +136,7 @@ object LogicHandler {
             } catch (e: Exception) {
                 Toast.makeText(
                     context,
-                    "Error getting station data: $e",
+                    context.getString(R.string.toast_error_network, e.toString()),
                     Toast.LENGTH_LONG
                 ).show()
             }
@@ -168,14 +176,14 @@ object LogicHandler {
         task.addOnSuccessListener {
             Toast.makeText(
                 context,
-                "Connected to the Activity Recognition Service",
+                context.getString(R.string.toast_activity_recognition_connection_success),
                 Toast.LENGTH_LONG
             ).show()
         }
         task.addOnFailureListener {
             Toast.makeText(
                 context,
-                "Failed to connect to the Activity Recognition Service. Restart the application",
+                context.getString(R.string.toast_activity_recognition_connection_failure),
                 Toast.LENGTH_LONG
             ).show()
         }

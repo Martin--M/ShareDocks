@@ -5,4 +5,17 @@
     <string name="popup_button_close">Close</string>
     <string name="popup_button_add">Add</string>
     <string name="popup_button_remove">Remove</string>
+    <string name="toast_error_network">Error getting station data: %1$s</string>
+    <string name="notification_channel_update_name">Updates</string>
+    <string name="notification_channel_update_description">Notification to receive updates when stations are full.</string>
+    <string name="notification_channel_tracking_name">Tracking</string>
+    <string name="notification_channel_tracking_description">The notification that is shown whenever tracking is in progress.</string>
+    <string name="notification_update_title">Station full</string>
+    <string name="notification_tracking_title">Station tracking in progress</string>
+    <string name="notification_tracking_stop_button">Stop</string>
+    <string name="toast_activity_recognition_connection_success">Connected to the Activity Recognition Service</string>
+    <string name="toast_activity_recognition_connection_failure">Failed to connect to the Activity Recognition Service. Restart the application</string>
+    <string name="notification_update_content">Station full: %1$s</string>
+    <string name="tts_update">Station at %1$s is full</string>
+    <string name="tts_replace_intersection">and</string>
 </resources>

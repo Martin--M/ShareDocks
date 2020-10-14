@@ -18,21 +18,21 @@ object NotificationHandler {
     private const val NOTIFICATION_ID_UPDATES = 100001
     const val NOTIFICATION_ID_TRACKING = 100002
 
-    fun initialize(notificationManager: NotificationManager) {
+    fun initialize(context: Context, notificationManager: NotificationManager) {
         mNotificationManager = notificationManager
         val chanUpdates = NotificationChannel(
             CHANNEL_ID_UPDATES,
-            "DocksChannel",
+            context.getString(R.string.notification_channel_update_name),
             NotificationManager.IMPORTANCE_HIGH
         ).apply {
-            description = "DocksDescription"
+            description = context.getString(R.string.notification_channel_update_description)
         }
         val chanTracking = NotificationChannel(
             CHANNEL_ID_TRACKING,
-            "DocksTrackingChannel",
-            NotificationManager.IMPORTANCE_DEFAULT
+            context.getString(R.string.notification_channel_tracking_name),
+            NotificationManager.IMPORTANCE_LOW
         ).apply {
-            description = "Channel used for sending tracking notification"
+            description = context.getString(R.string.notification_channel_tracking_description)
         }
         mNotificationManager.createNotificationChannel(chanUpdates)
         mNotificationManager.createNotificationChannel(chanTracking)
@@ -42,7 +42,7 @@ object NotificationHandler {
         val builder = NotificationCompat.Builder(context, CHANNEL_ID_UPDATES)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setContentTitle("Station full")
+            .setContentTitle(context.getString(R.string.notification_update_title))
             .setContentText(message)
 
         with(NotificationManagerCompat.from(context)) {
@@ -60,8 +60,12 @@ object NotificationHandler {
 
         return NotificationCompat.Builder(context, CHANNEL_ID_TRACKING)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
-            .addAction(R.drawable.ic_launcher_foreground, "Stop", pendingIntent)
-            .setContentTitle("Station tracking in progress")
+            .addAction(
+                R.drawable.ic_launcher_foreground,
+                context.getString(R.string.notification_tracking_stop_button),
+                pendingIntent
+            )
+            .setContentTitle(context.getString(R.string.notification_tracking_title))
             .build()
     }
 }

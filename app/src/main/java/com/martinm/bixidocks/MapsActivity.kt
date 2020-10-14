@@ -42,6 +42,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         setContentView(R.layout.activity_maps)
 
         NotificationHandler.initialize(
+            this,
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         )
         ConfigurationHandler.initialize(this)
@@ -83,7 +84,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             } catch (e: Exception) {
                 Toast.makeText(
                     this,
-                    "Error getting station data: $e",
+                    getString(R.string.toast_error_network, e.toString()),
                     Toast.LENGTH_LONG
                 ).show()
             }
