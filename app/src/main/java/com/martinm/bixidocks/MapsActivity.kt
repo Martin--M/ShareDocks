@@ -2,6 +2,7 @@ package com.martinm.bixidocks
 
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -82,11 +83,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             try {
                 mBixi.loadDockLocations()
             } catch (e: Exception) {
-                Toast.makeText(
-                    this,
-                    getString(R.string.toast_error_network, e.toString()),
-                    Toast.LENGTH_LONG
-                ).show()
+                this.runOnUiThread {
+                    Toast.makeText(
+                        this,
+                        getString(R.string.toast_error_network),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
             }
 
             mLogic.loadUserDocks()

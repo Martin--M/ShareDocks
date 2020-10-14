@@ -4,6 +4,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.CountDownTimer
+import android.os.Handler
 import android.speech.tts.TextToSpeech
 import android.widget.Toast
 import com.google.android.gms.location.ActivityRecognition
@@ -42,11 +43,13 @@ object LogicHandler {
                 try {
                     mBixi.updateDockLocations()
                 } catch (e: Exception) {
-                    Toast.makeText(
-                        mTimerContext,
-                        mTimerContext.getString(R.string.toast_error_network, e.toString()),
-                        Toast.LENGTH_LONG
-                    ).show()
+                    Handler(mTimerContext.mainLooper).post {
+                        Toast.makeText(
+                            mTimerContext,
+                            mTimerContext.getString(R.string.toast_error_network),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
                 }
                 userDocks.forEach {
                     // There's been a change that affects the user
@@ -134,11 +137,13 @@ object LogicHandler {
             try {
                 mBixi.loadDockLocations()
             } catch (e: Exception) {
-                Toast.makeText(
-                    context,
-                    context.getString(R.string.toast_error_network, e.toString()),
-                    Toast.LENGTH_LONG
-                ).show()
+                Handler(context.mainLooper).post {
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.toast_error_network),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
             }
 
             loadUserDocks()
