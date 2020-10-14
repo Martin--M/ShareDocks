@@ -5,7 +5,7 @@
     <string name="popup_button_close">Fermer</string>
     <string name="popup_button_add">Ajouter</string>
     <string name="popup_button_remove">Enlever</string>
-    <string name="toast_error_network">Échec à obtenir les données des stations: %1$s</string>
+    <string name="toast_error_network">Échec à obtenir les données des stations</string>
     <string name="notification_channel_update_name">"Mises à jour "</string>
     <string name="notification_channel_update_description">Notification pour recevoir un avertissement quand les stations sont pleines.</string>
     <string name="notification_channel_tracking_name">Suivi en cours</string>
