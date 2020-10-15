@@ -47,13 +47,13 @@ object LogicHandler {
                     ) {
                         NotificationHandler.showNotification(
                             mTimerContext,
-                            mTimerContext.getString(R.string.notification_update_content, it.name)
+                            mTimerContext.getString(R.string.notification_update_content_single, 1)
                         )
                         // Wait for the notification alert to finish
                         sleep(2000)
                         mTextToSpeech.speak(
                             mTimerContext.getString(
-                                R.string.tts_update,
+                                R.string.tts_update_full,
                                 it.name.replace(
                                     "/",
                                     mTimerContext.getString(R.string.tts_replace_intersection)
