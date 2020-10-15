@@ -3,7 +3,6 @@ package com.martinm.bixidocks
 import android.content.Context
 import android.os.Handler
 import android.widget.Toast
-import java.lang.Exception
 
 object Utils {
     private val mBixi = BixiApiHandler
@@ -33,14 +32,14 @@ object Utils {
     fun loadUserDocks() {
         ConfigurationHandler.stationIdListFromStorageString().forEach {
             if (mBixi.docks[it] != null) {
-                addStation(LogicHandler.userDocks, mBixi.docks[it]!!.copy())
+                addStation(LogicHandler.userDocks, mBixi.docks[it]!!)
             }
         }
     }
 
     fun toggleUserDock(station: BixiStation) {
         if (containsId(LogicHandler.userDocks, station.id) == null) {
-            addStation(LogicHandler.userDocks, station.copy())
+            addStation(LogicHandler.userDocks, station)
         } else {
             removeStation(LogicHandler.userDocks, station)
         }
@@ -80,5 +79,46 @@ object Utils {
                 ).show()
             }
         }
+    }
+
+    fun isStationStatusChanged(
+        userStations: MutableList<BixiStation>,
+        currentUnavailableIds: MutableList<Int>,
+        newChanges: MutableMap<Int, Boolean>
+    ): Boolean {
+        var isChanged = false
+        userStations.forEach {
+            if (!it.isActive || it.availableDocks == 0) {
+                if (!currentUnavailableIds.contains(it.id)) {
+                    isChanged = true
+                    currentUnavailableIds.add(it.id)
+                    newChanges[it.id] = false
+                }
+            } else {
+                if (currentUnavailableIds.contains(it.id)) {
+                    isChanged = true
+                    currentUnavailableIds.remove(it.id)
+                    newChanges[it.id] = true
+                }
+            }
+        }
+        return isChanged
+    }
+
+    fun buildTrackingTTS(context: Context, stationId: Int, isAvailable: Boolean): String {
+        if (mBixi.docks[stationId] == null) {
+            return ""
+        }
+
+        val stationTTS = mBixi.docks[stationId]!!.name.replace(
+            "/",
+            context.getString(R.string.tts_replace_intersection)
+        )
+
+        if (isAvailable) {
+            return context.getString(R.string.tts_update_available, stationTTS)
+        }
+
+        return context.getString(R.string.tts_update_full, stationTTS)
     }
 }
