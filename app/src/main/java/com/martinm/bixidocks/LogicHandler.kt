@@ -4,7 +4,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.CountDownTimer
-import android.os.Handler
 import android.speech.tts.TextToSpeech
 import android.widget.Toast
 import com.google.android.gms.location.ActivityRecognition
@@ -40,17 +39,7 @@ object LogicHandler {
         override fun onTick(p0: Long) {
             isTracking = true
             thread(start = true) {
-                try {
-                    mBixi.updateDockLocations()
-                } catch (e: Exception) {
-                    Handler(mTimerContext.mainLooper).post {
-                        Toast.makeText(
-                            mTimerContext,
-                            mTimerContext.getString(R.string.toast_error_network),
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-                }
+                Utils.safeUpdateDockLocations(mTimerContext)
                 userDocks.forEach {
                     // There's been a change that affects the user
                     if (!mBixi.docks[it.id]!!.isActive && it.isActive &&
@@ -88,17 +77,7 @@ object LogicHandler {
         mTextToSpeech = TextToSpeech(context, listener)
         thread(start = true) {
             // Load docks again in case the whole context has been lost
-            try {
-                mBixi.loadDockLocations()
-            } catch (e: Exception) {
-                Handler(context.mainLooper).post {
-                    Toast.makeText(
-                        context,
-                        context.getString(R.string.toast_error_network),
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-            }
+            Utils.safeLoadDockLocations(context)
 
             Utils.loadUserDocks()
             mTimerContext = context

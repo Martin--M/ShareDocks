@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.PopupWindow
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
@@ -23,7 +22,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import java.lang.Exception
 import java.lang.Thread.sleep
 import java.util.concurrent.CountDownLatch
 import kotlin.concurrent.thread
@@ -79,20 +77,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
         thread(start = true) {
             val latch = CountDownLatch(1)
-            try {
-                mBixi.loadDockLocations()
-            } catch (e: Exception) {
-                this.runOnUiThread {
-                    Toast.makeText(
-                        this,
-                        getString(R.string.toast_error_network),
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-            }
 
+            Utils.safeLoadDockLocations(this)
             Utils.loadUserDocks()
             mBixi.sortableDocks.sort()
+
             this.runOnUiThread {
                 mBixi.sortableDocks.forEach {
                     val marker = mMap.addMarker(MarkerOptions().position(it.location))
