@@ -2,7 +2,6 @@ package com.martinm.bixidocks
 
 import android.app.NotificationManager
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -92,7 +91,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 }
             }
 
-            mLogic.loadUserDocks()
+            Utils.loadUserDocks()
             mBixi.sortableDocks.sort()
             this.runOnUiThread {
                 mBixi.sortableDocks.forEach {
@@ -148,9 +147,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
         // Listener for the Toggle button
         popupView.findViewById<Button>(R.id.toggle_dock_button).setOnClickListener {
-            mLogic.toggleUserDock(station)
+            Utils.toggleUserDock(station)
             popupView.findViewById<Button>(R.id.toggle_dock_button).text =
-                mLogic.getButtonStringForId(baseContext, station.id)
+                Utils.getButtonStringForId(baseContext, station.id)
             ConfigurationHandler.storeStationList(mLogic.userDocks)
         }
 
@@ -159,7 +158,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         popupView.findViewById<TextView>(R.id.docks_value).text = station.availableDocks.toString()
         popupView.findViewById<TextView>(R.id.dock_name).text = station.name
         popupView.findViewById<Button>(R.id.toggle_dock_button).text =
-            mLogic.getButtonStringForId(baseContext, station.id)
+            Utils.getButtonStringForId(baseContext, station.id)
 
         popupWindow.showAtLocation(
             findViewById(R.id.map),

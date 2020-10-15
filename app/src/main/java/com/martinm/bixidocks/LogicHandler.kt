@@ -81,52 +81,6 @@ object LogicHandler {
         }
     }
 
-    private fun containsId(list: MutableList<BixiStation>, id: Int): BixiStation? {
-        list.forEach {
-            if (it.id == id) {
-                return it
-            }
-        }
-        return null
-    }
-
-    private fun addStation(list: MutableList<BixiStation>, station: BixiStation) {
-        if (containsId(list, station.id) == null) {
-            list.add(station)
-        }
-    }
-
-    private fun removeStation(list: MutableList<BixiStation>, station: BixiStation) {
-        val listStation: BixiStation? = containsId(list, station.id)
-        if (listStation != null) {
-            list.remove(listStation)
-        }
-    }
-
-    fun loadUserDocks() {
-        ConfigurationHandler.stationIdListFromStorageString().forEach {
-            if (mBixi.docks[it] != null) {
-                addStation(userDocks, mBixi.docks[it]!!.copy())
-            }
-        }
-    }
-
-    fun toggleUserDock(station: BixiStation) {
-        if (containsId(userDocks, station.id) == null) {
-            addStation(userDocks, station.copy())
-        } else {
-            removeStation(userDocks, station)
-        }
-    }
-
-    fun getButtonStringForId(context: Context, id: Int): String {
-        return if (containsId(userDocks, id) != null) {
-            context.getString(R.string.popup_button_remove)
-        } else {
-            context.getString(R.string.popup_button_add)
-        }
-    }
-
     fun startTracking(context: Context) {
         if (isTracking) {
             return
@@ -146,7 +100,7 @@ object LogicHandler {
                 }
             }
 
-            loadUserDocks()
+            Utils.loadUserDocks()
             mTimerContext = context
             mTrackingTimer.start()
         }
