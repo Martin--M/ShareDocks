@@ -17,7 +17,6 @@ import kotlin.concurrent.thread
 object LogicHandler {
     var userDocks = mutableListOf<BixiStation>()
     var isTracking: Boolean = false
-    private val mBixi = BixiApiHandler
     private lateinit var mTimerContext: Context
     private lateinit var mTextToSpeech: TextToSpeech
 
@@ -31,6 +30,7 @@ object LogicHandler {
     }
 
     private val mTrackingTimer = object : CountDownTimer(30 * 60 * 1000, 30 * 1000) {
+        var mUnavailableIds = mutableListOf<Int>()
         override fun onFinish() {
             // The tracking service will ensure the timer ends. Else we continue tracking
             start()
@@ -39,33 +39,41 @@ object LogicHandler {
         override fun onTick(p0: Long) {
             isTracking = true
             thread(start = true) {
+                val currentChanges = mutableMapOf<Int, Boolean>()
                 Utils.safeUpdateDockLocations(mTimerContext)
-                userDocks.forEach {
-                    // There's been a change that affects the user
-                    if (!mBixi.docks[it.id]!!.isActive && it.isActive &&
-                        mBixi.docks[it.id]!!.availableDocks == 0 && it.availableDocks != 0
-                    ) {
+
+                if (Utils.isStationStatusChanged(userDocks, mUnavailableIds, currentChanges)) {
+                    val notificationDetails =
+                        NotificationHandler.buildTrackingNotificationMessage(mUnavailableIds)
+
+                    if (notificationDetails == "") {
+                        NotificationHandler.removeTrackingNotifications()
+                    } else {
+                        val content = if (mUnavailableIds.size == 1) {
+                            mTimerContext.getString(R.string.notification_update_content_single)
+                        } else {
+                            mTimerContext.getString(
+                                R.string.notification_update_content,
+                                mUnavailableIds.size
+                            )
+                        }
                         NotificationHandler.showNotification(
                             mTimerContext,
-                            mTimerContext.getString(R.string.notification_update_content_single, 1),
-                            NotificationHandler.buildTrackingNotificationMessage(mutableListOf())
+                            mTimerContext.getString(R.string.notification_update_title),
+                            content,
+                            notificationDetails
                         )
-                        // Wait for the notification alert to finish
-                        sleep(2000)
+                    }
+                    // Wait for the notification alert to finish
+                    sleep(2000)
+                    currentChanges.forEach {
                         mTextToSpeech.speak(
-                            mTimerContext.getString(
-                                R.string.tts_update_full,
-                                it.name.replace(
-                                    "/",
-                                    mTimerContext.getString(R.string.tts_replace_intersection)
-                                )
-                            ),
+                            Utils.buildTrackingTTS(mTimerContext, it.key, it.value),
                             TextToSpeech.QUEUE_ADD,
                             null,
                             ""
                         )
                     }
-                    mBixi.updateStation(mBixi.docks[it.id]!!, it)
                 }
             }
         }
