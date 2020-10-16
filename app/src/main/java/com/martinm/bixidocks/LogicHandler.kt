@@ -17,6 +17,7 @@ import kotlin.concurrent.thread
 object LogicHandler {
     var userDocks = mutableListOf<BixiStation>()
     var isTracking: Boolean = false
+    private val mUnavailableIds = mutableListOf<Int>()
     private lateinit var mTimerContext: Context
     private lateinit var mTextToSpeech: TextToSpeech
 
@@ -30,14 +31,12 @@ object LogicHandler {
     }
 
     private val mTrackingTimer = object : CountDownTimer(30 * 60 * 1000, 30 * 1000) {
-        var mUnavailableIds = mutableListOf<Int>()
         override fun onFinish() {
             // The tracking service will ensure the timer ends. Else we continue tracking
             start()
         }
 
         override fun onTick(p0: Long) {
-            isTracking = true
             thread(start = true) {
                 val currentChanges = mutableMapOf<Int, Boolean>()
                 Utils.safeUpdateDockLocations(mTimerContext)
@@ -83,13 +82,17 @@ object LogicHandler {
         if (isTracking) {
             return
         }
+        isTracking = true
         mTextToSpeech = TextToSpeech(context, listener)
         thread(start = true) {
             // Load docks again in case the whole context has been lost
             Utils.safeLoadDockLocations(context)
-
             Utils.loadUserDocks()
+
+            mUnavailableIds.clear()
             mTimerContext = context
+
+            mTrackingTimer.cancel()
             mTrackingTimer.start()
         }
     }
