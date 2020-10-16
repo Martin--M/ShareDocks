@@ -47,7 +47,8 @@ object LogicHandler {
                     ) {
                         NotificationHandler.showNotification(
                             mTimerContext,
-                            mTimerContext.getString(R.string.notification_update_content_single, 1)
+                            mTimerContext.getString(R.string.notification_update_content_single, 1),
+                            NotificationHandler.buildTrackingNotificationMessage(mutableListOf())
                         )
                         // Wait for the notification alert to finish
                         sleep(2000)

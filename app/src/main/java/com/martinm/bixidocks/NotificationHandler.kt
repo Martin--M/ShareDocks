@@ -6,10 +6,12 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.text.Html
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 
 object NotificationHandler {
+    private val mBixi = BixiApiHandler
     private lateinit var mNotificationManager: NotificationManager
 
     private const val CHANNEL_ID_UPDATES: String = "DocksUpdates"
@@ -38,16 +40,43 @@ object NotificationHandler {
         mNotificationManager.createNotificationChannel(chanTracking)
     }
 
-    fun showNotification(context: Context, message: String) {
+    fun showNotification(
+        context: Context,
+        title: String,
+        message: String,
+        details: String? = null
+    ) {
         val builder = NotificationCompat.Builder(context, CHANNEL_ID_UPDATES)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setContentTitle(context.getString(R.string.notification_update_title))
+            .setContentTitle(title)
             .setContentText(message)
+
+        if (details != null) {
+            builder.setStyle(NotificationCompat.BigTextStyle().bigText(Html.fromHtml(details, 0)))
+        }
 
         with(NotificationManagerCompat.from(context)) {
             notify(NOTIFICATION_ID_UPDATES, builder.build())
         }
+    }
+
+    fun buildTrackingNotificationMessage(unavailableIds: MutableList<Int>): String {
+        if (unavailableIds.isEmpty()) {
+            return ""
+        }
+        val builder = StringBuilder()
+        unavailableIds.forEach {
+            if (mBixi.docks[it] != null) {
+                builder.append(mBixi.docks[it]!!.name)
+                    .append("<br>")
+            }
+        }
+        return builder.toString()
+    }
+
+    fun removeTrackingNotifications() {
+        mNotificationManager.cancel(NOTIFICATION_ID_UPDATES)
     }
 
     fun getForegroundNotification(context: Context): Notification {
