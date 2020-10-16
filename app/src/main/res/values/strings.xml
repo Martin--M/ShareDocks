@@ -20,4 +20,5 @@
     <string name="tts_replace_intersection">and</string>
     <string name="notification_update_content_single">1 station is full</string>
     <string name="tts_update_available">Station at %1$s is not full anymore</string>
+    <string name="button_user_stations_description">Button to see user-tracked stations</string>
 </resources>

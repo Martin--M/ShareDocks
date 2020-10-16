@@ -20,4 +20,5 @@
     <string name="notification_channel_tracking_description">Notification pour recevoir un avertissement quand le suivi est en cours.</string>
     <string name="notification_update_content_single">1 station est pleine</string>
     <string name="tts_update_available">La station à %1$s n\'est plus pleine</string>
+    <string name="button_user_stations_description">Button pour voir les stations suivies par l\'usager</string>
 </resources>
