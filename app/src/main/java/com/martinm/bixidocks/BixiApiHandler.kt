@@ -63,7 +63,7 @@ object BixiApiHandler {
         )
     }
 
-    fun updateStation(source: BixiStation, destination: BixiStation) {
+    private fun updateStation(source: BixiStation, destination: BixiStation) {
         destination.availableDocks = source.availableDocks
         destination.availableBikes = source.availableBikes
         destination.lastUpdate = source.lastUpdate
@@ -74,6 +74,9 @@ object BixiApiHandler {
         val stations = getDocksInfoJson()
         for (i in 0 until stations.length()) {
             val station = getBixiStationFromJson(stations.getJSONObject(i))
+            if (station.location.longitude == 0.0) {
+                continue
+            }
             if (docks[station.id] == null) {
                 docks[station.id] = station
                 sortableDocks.add(station)
@@ -86,6 +89,9 @@ object BixiApiHandler {
         val stations = getDocksInfoJson()
         for (i in 0 until stations.length()) {
             val station = getBixiStationFromJson(stations.getJSONObject(i))
+            if (station.location.longitude == 0.0) {
+                continue
+            }
             docks[station.id] = station
             sortableDocks.add(station)
         }
