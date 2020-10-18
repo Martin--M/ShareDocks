@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -47,6 +48,9 @@ object Utils {
             if (mBixi.docks[it] != null) {
                 addStation(LogicHandler.userDocks, mBixi.docks[it]!!)
             }
+        }
+        mBixi.docks.forEach {
+            addStation(LogicHandler.userDocks, it.value)
         }
     }
 
@@ -143,9 +147,10 @@ object Utils {
                     context.findViewById(R.id.map),
                     false
                 ) as RecyclerView
+            val favoritesAdapter = FavoritesAdapter(LogicHandler.userDocks, map)
             favoritesView.setHasFixedSize(true)
             favoritesView.layoutManager = GridLayoutManager(context, 1)
-            favoritesView.adapter = FavoritesAdapter(LogicHandler.userDocks, map)
+            favoritesView.adapter = favoritesAdapter
             favoritesView.addItemDecoration(
                 DividerItemDecoration(
                     favoritesView.context,
@@ -163,6 +168,26 @@ object Utils {
                 Gravity.BOTTOM,
                 0, 0
             )
+
+            val touchHelper = ItemTouchHelper(object :
+                ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+                override fun onMove(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    target: RecyclerView.ViewHolder
+                ): Boolean {
+                    return true
+                }
+
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    if (LogicHandler.userDocks.size > viewHolder.layoutPosition) {
+                        LogicHandler.userDocks.removeAt(viewHolder.layoutPosition)
+                    }
+                    favoritesAdapter.notifyItemRemoved(viewHolder.layoutPosition)
+                }
+
+            })
+            touchHelper.attachToRecyclerView(favoritesView)
         }
     }
 
