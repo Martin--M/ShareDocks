@@ -2,10 +2,21 @@ package com.martinm.bixidocks
 
 import android.content.Context
 import android.os.Handler
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.ImageButton
+import android.widget.PopupWindow
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 object Utils {
     private val mBixi = BixiApiHandler
+    var favoritesPopup: PopupWindow? = null
 
     private fun containsId(list: MutableList<BixiStation>, id: Int): BixiStation? {
         list.forEach {
@@ -120,5 +131,36 @@ object Utils {
         }
 
         return context.getString(R.string.tts_update_full, stationTTS)
+    }
+
+    fun setupFavoritesButtonCallback(context: AppCompatActivity) {
+        context.findViewById<ImageButton>(R.id.button_favorites).setOnClickListener {
+            val favoritesView =
+                (context.getSystemService(AppCompatActivity.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(
+                    R.layout.tracked_stations_view,
+                    context.findViewById(R.id.map),
+                    false
+                ) as RecyclerView
+            favoritesView.setHasFixedSize(true)
+            favoritesView.layoutManager = GridLayoutManager(context, 1)
+            favoritesView.adapter = FavoritesAdapter(LogicHandler.userDocks)
+            favoritesView.addItemDecoration(
+                DividerItemDecoration(
+                    favoritesView.context,
+                    DividerItemDecoration.VERTICAL
+                )
+            )
+
+            favoritesPopup = PopupWindow(
+                favoritesView,
+                ConstraintLayout.LayoutParams.MATCH_PARENT,
+                context.findViewById<View>(R.id.map).height
+            )
+            favoritesPopup!!.showAtLocation(
+                context.findViewById(R.id.map),
+                Gravity.BOTTOM,
+                0, 0
+            )
+        }
     }
 }
