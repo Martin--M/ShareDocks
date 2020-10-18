@@ -135,7 +135,7 @@ object Utils {
         return context.getString(R.string.tts_update_full, stationTTS)
     }
 
-    fun setupFavoritesButtonCallback(context: AppCompatActivity) {
+    fun setupFavoritesButtonCallback(context: AppCompatActivity, map: GoogleMap) {
         context.findViewById<ImageButton>(R.id.button_favorites).setOnClickListener {
             val favoritesView =
                 (context.getSystemService(AppCompatActivity.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(
@@ -145,7 +145,7 @@ object Utils {
                 ) as RecyclerView
             favoritesView.setHasFixedSize(true)
             favoritesView.layoutManager = GridLayoutManager(context, 1)
-            favoritesView.adapter = FavoritesAdapter(LogicHandler.userDocks)
+            favoritesView.adapter = FavoritesAdapter(LogicHandler.userDocks, map)
             favoritesView.addItemDecoration(
                 DividerItemDecoration(
                     favoritesView.context,

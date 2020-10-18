@@ -45,7 +45,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         )
         ConfigurationHandler.initialize(this)
-        Utils.setupFavoritesButtonCallback(this)
 
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
@@ -86,6 +85,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         mMap.setOnMarkerClickListener(this)
+        Utils.setupFavoritesButtonCallback(this, mMap)
 
         Utils.centerMap(mMap)
 
