@@ -15,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -69,6 +68,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         } else {
             mLogic.setupActivityRecognitionCallback(applicationContext)
         }
+
+        // Default user location to downtown Montreal
+        BixiStation.userLocation = LatLng(45.5005302, -73.5686184)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -85,7 +87,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         mMap = googleMap
         mMap.setOnMarkerClickListener(this)
 
-        centerMap()
+        Utils.centerMap(mMap)
 
         thread(start = true) {
             val latch = CountDownLatch(1)
@@ -116,12 +118,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 sleep(50)
             }
         }
-    }
-
-    private fun centerMap() {
-        // Default to downtown Montreal
-        BixiStation.userLocation = LatLng(45.5005302, -73.5686184)
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(BixiStation.userLocation, 14F))
     }
 
     override fun onMarkerClick(p0: Marker?): Boolean {

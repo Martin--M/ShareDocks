@@ -13,6 +13,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
 
 object Utils {
     private val mBixi = BixiApiHandler
@@ -162,5 +164,9 @@ object Utils {
                 0, 0
             )
         }
+    }
+
+    fun centerMap(map: GoogleMap) {
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(BixiStation.userLocation, 14F))
     }
 }
