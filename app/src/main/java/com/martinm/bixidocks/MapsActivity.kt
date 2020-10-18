@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.PopupWindow
 import android.widget.TextView
@@ -38,6 +39,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         NotificationHandler.initialize(
             this,
@@ -67,6 +69,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         } else {
             mLogic.setupActivityRecognitionCallback(applicationContext)
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                Utils.favoritesPopup?.dismiss()
+                return true
+            }
+        }
+        return false
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
