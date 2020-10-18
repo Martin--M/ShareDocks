@@ -166,7 +166,7 @@ object Utils {
         }
     }
 
-    fun centerMap(map: GoogleMap) {
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(BixiStation.userLocation, 14F))
+    fun centerMap(map: GoogleMap, zoom: Float) {
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(BixiStation.userLocation, zoom))
     }
 }

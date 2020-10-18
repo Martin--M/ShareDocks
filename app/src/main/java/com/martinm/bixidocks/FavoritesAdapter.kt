@@ -26,7 +26,7 @@ class FavoritesAdapter(private val docks: MutableList<BixiStation>, private val 
         holder.textView.text = docks[position].name
         holder.textView.setOnClickListener {
             BixiStation.userLocation = docks[position].location
-            Utils.centerMap(map)
+            Utils.centerMap(map, 17F)
             Utils.favoritesPopup?.dismiss()
         }
     }

@@ -87,7 +87,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         mMap.setOnMarkerClickListener(this)
         Utils.setupFavoritesButtonCallback(this, mMap)
 
-        Utils.centerMap(mMap)
+        Utils.centerMap(mMap, 14F)
 
         thread(start = true) {
             val latch = CountDownLatch(1)
