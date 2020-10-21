@@ -45,7 +45,7 @@ class BixiStation(
 
     private fun getNewHue(): Float {
         /*
-         * Ranges from 30 (Warm Red) to 90 (Yellow Green)
+         * Ranges from 15 (Warm Red) to 95 (Yellow Green)
          * Special case for disabled Stations at 240 (Blue), empty stations at 0 (Red), and full
          * stations at 120 (Green)
          */
@@ -56,7 +56,7 @@ class BixiStation(
         return when (availability) {
             0F -> 0F
             1F -> 120F
-            else -> 30 + availability * 60
+            else -> 15 + availability * 80
         }
     }
 
