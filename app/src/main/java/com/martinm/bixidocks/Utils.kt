@@ -1,15 +1,19 @@
 package com.martinm.bixidocks
 
 import android.content.Context
+import android.os.Bundle
 import android.os.Handler
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.PopupWindow
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.Fragment
+import androidx.preference.PreferenceFragmentCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -191,7 +195,33 @@ object Utils {
         }
     }
 
+    fun setupSettingsButtonCallback(context: AppCompatActivity) {
+        context.findViewById<ImageButton>(R.id.button_settings).setOnClickListener {
+            context.supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.map, BackgroundOverlayFragment())
+                .replace(R.id.settings_background_fragment, SettingsFragment())
+                .commit()
+        }
+    }
+
     fun centerMap(map: GoogleMap, zoom: Float) {
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(BixiStation.userLocation, zoom))
+    }
+
+    class SettingsFragment : PreferenceFragmentCompat() {
+        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+            setPreferencesFromResource(R.xml.settings_definition, rootKey)
+        }
+    }
+
+    class BackgroundOverlayFragment : Fragment() {
+        override fun onCreateView(
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
+        ): View? {
+            return inflater.inflate(R.layout.settings_background_fragment, container, false)
+        }
     }
 }

@@ -45,6 +45,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         )
         ConfigurationHandler.initialize(this)
+        Utils.setupSettingsButtonCallback(this)
 
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
