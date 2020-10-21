@@ -1,36 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorAccent">
 
     <SwitchPreferenceCompat
-        android:title="Disable tracking"
-        android:summary="Completely disable station tracking. Useful for vacations, winter, or long periods where the app shouldn't start tracking when biking is detected"
-        android:defaultValue="false"
-        android:key="settings_disable_tracking" />
+        android:title="Enable station tracking"
+        android:summary="The core of this app. Disabling it can be useful for vacations, winter, or long periods where the app shouldn't start tracking when biking is detected"
+        android:defaultValue="true"
+        android:key="settings_enable_tracking" />
 
     <SwitchPreferenceCompat
         android:title="Colors on station markers"
         android:summary="Show the color of the station marker based on the availability of bikes"
         android:defaultValue="false"
-        android:key="settings_is_colors_on_markers"/>
+        android:dependency="settings_enable_tracking"
+        android:key="settings_is_colors_on_markers" />
 
     <SeekBarPreference
         android:title="Load responsiveness"
         android:summary="How responsive the UI will be while loading the markers. 0 responsiveness means that all the markers will be loaded and color coded before even displayed the map. Might take a few seconds"
-        android:enabled="false"
-        android:max="200"
+        android:max="100"
         android:min="0"
         android:defaultValue="50"
+        app:showSeekBarValue="true"
+        android:dependency="settings_is_colors_on_markers"
         android:key="settings_load_responsiveness" />
 
     <SeekBarPreference
         android:title="Period between station updates"
         android:summary="While in tracking mode, how often should the application update station data (in seconds)"
         android:max="300"
-        android:min="10"
+        app:min="10"
         android:defaultValue="30"
+        app:showSeekBarValue="true"
+        android:dependency="settings_enable_tracking"
         android:key="tracking_period_s" />
-
-
 
 </PreferenceScreen>
