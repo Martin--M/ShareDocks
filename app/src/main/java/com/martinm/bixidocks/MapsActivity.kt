@@ -77,6 +77,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         when (item.itemId) {
             android.R.id.home -> {
                 Utils.favoritesPopup?.dismiss()
+                for (fragment in supportFragmentManager.fragments) {
+                    if (fragment is SupportMapFragment) {
+                        continue
+                    }
+                    supportFragmentManager.beginTransaction().remove(fragment).commit()
+                }
                 return true
             }
         }
