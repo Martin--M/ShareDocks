@@ -38,7 +38,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         NotificationHandler.initialize(
             this,
@@ -76,6 +75,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
+                supportActionBar?.setDisplayHomeAsUpEnabled(false)
                 Utils.favoritesPopup?.dismiss()
                 for (fragment in supportFragmentManager.fragments) {
                     if (fragment is SupportMapFragment) {
