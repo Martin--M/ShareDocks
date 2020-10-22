@@ -13,7 +13,7 @@ import java.lang.Thread.sleep
 import kotlin.concurrent.thread
 
 object LogicHandler {
-    var userDocks = mutableListOf<BixiStation>()
+    var userDocks = mutableListOf<ShareStation>()
     var isTracking: Boolean = false
     private val mUnavailableIds = mutableListOf<Int>()
     private lateinit var mTimerContext: Context

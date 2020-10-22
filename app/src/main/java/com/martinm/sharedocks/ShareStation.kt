@@ -4,7 +4,7 @@ import android.location.Location
 import com.google.android.gms.maps.model.LatLng
 import java.time.Instant
 
-class BixiStation(
+class ShareStation(
     var location: LatLng,
     val id: Int,
     val name: String,
@@ -12,7 +12,7 @@ class BixiStation(
     var availableBikes: Int,
     var isActive: Boolean,
     var lastUpdate: Instant
-) : Comparable<BixiStation> {
+) : Comparable<ShareStation> {
 
     var hue: Float = 0F
 
@@ -24,8 +24,8 @@ class BixiStation(
         var userLocation = LatLng(0.0, 0.0)
     }
 
-    fun copy(): BixiStation {
-        return BixiStation(
+    fun copy(): ShareStation {
+        return ShareStation(
             location = LatLng(this.location.latitude, this.location.longitude),
             name = this.name,
             lastUpdate = this.lastUpdate,
@@ -60,7 +60,7 @@ class BixiStation(
         }
     }
 
-    override fun compareTo(other: BixiStation): Int {
+    override fun compareTo(other: ShareStation): Int {
         val results: FloatArray = floatArrayOf(1F)
         Location.distanceBetween(
             location.latitude, location.longitude,

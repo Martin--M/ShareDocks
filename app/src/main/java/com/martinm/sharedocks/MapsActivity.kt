@@ -69,7 +69,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         }
 
         // Default user location to downtown Montreal
-        BixiStation.userLocation = LatLng(45.5005302, -73.5686184)
+        ShareStation.userLocation = LatLng(45.5005302, -73.5686184)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -119,7 +119,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                     this.runOnUiThread {
                         it.setIcon(
                             BitmapDescriptorFactory.defaultMarker(
-                                (it.tag as BixiStation).hue
+                                (it.tag as ShareStation).hue
                             )
                         )
                     }
@@ -136,7 +136,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             return true
         }
 
-        val station = p0.tag as BixiStation
+        val station = p0.tag as ShareStation
 
         val popupView = (getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater)
             .inflate(R.layout.dock_popup, findViewById(R.id.map), false)

@@ -9,8 +9,8 @@ import java.time.Duration
 import java.time.Instant
 
 object BixiApiHandler {
-    var docks = mutableMapOf<Int, BixiStation>()
-    var sortableDocks = mutableListOf<BixiStation>()
+    var docks = mutableMapOf<Int, ShareStation>()
+    var sortableDocks = mutableListOf<ShareStation>()
 
     private lateinit var mLastCalled: Instant
 
@@ -38,8 +38,8 @@ object BixiApiHandler {
         }
     }
 
-    private fun getBixiStationFromJson(obj: JSONObject): BixiStation {
-        return BixiStation(
+    private fun getBixiStationFromJson(obj: JSONObject): ShareStation {
+        return ShareStation(
             location = LatLng(obj.getDouble("la"), obj.getDouble("lo")),
             id = obj.getInt("id"),
             availableBikes = obj.getInt("ba"),
@@ -63,7 +63,7 @@ object BixiApiHandler {
         )
     }
 
-    private fun updateStation(source: BixiStation, destination: BixiStation) {
+    private fun updateStation(source: ShareStation, destination: ShareStation) {
         destination.availableDocks = source.availableDocks
         destination.availableBikes = source.availableBikes
         destination.lastUpdate = source.lastUpdate

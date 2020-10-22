@@ -13,7 +13,7 @@ object ConfigurationHandler {
         mSettings = context.getSharedPreferences(context.packageName + "_preferences", Context.MODE_PRIVATE)
     }
 
-    fun storeStationList(list: MutableList<BixiStation>) {
+    fun storeStationList(list: MutableList<ShareStation>) {
         val strBuilder = StringBuilder()
         list.forEach {
             strBuilder.append(it.id)

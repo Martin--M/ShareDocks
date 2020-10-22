@@ -6,7 +6,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.GoogleMap
 
-class FavoritesAdapter(private val docks: MutableList<BixiStation>, private val map: GoogleMap) :
+class FavoritesAdapter(private val docks: MutableList<ShareStation>, private val map: GoogleMap) :
     RecyclerView.Adapter<FavoritesAdapter.FavoritesViewHolder>() {
 
     class FavoritesViewHolder(val textView: TextView) : RecyclerView.ViewHolder(textView)
@@ -25,7 +25,7 @@ class FavoritesAdapter(private val docks: MutableList<BixiStation>, private val 
     override fun onBindViewHolder(holder: FavoritesViewHolder, position: Int) {
         holder.textView.text = docks[position].name
         holder.textView.setOnClickListener {
-            BixiStation.userLocation = docks[position].location
+            ShareStation.userLocation = docks[position].location
             Utils.centerMap(map, 17F)
             Utils.favoritesPopup?.dismiss()
         }

@@ -25,7 +25,7 @@ object Utils {
     private val mBixi = BixiApiHandler
     var favoritesPopup: PopupWindow? = null
 
-    private fun containsId(list: MutableList<BixiStation>, id: Int): BixiStation? {
+    private fun containsId(list: MutableList<ShareStation>, id: Int): ShareStation? {
         list.forEach {
             if (it.id == id) {
                 return it
@@ -34,14 +34,14 @@ object Utils {
         return null
     }
 
-    private fun addStation(list: MutableList<BixiStation>, station: BixiStation) {
+    private fun addStation(list: MutableList<ShareStation>, station: ShareStation) {
         if (containsId(list, station.id) == null) {
             list.add(station)
         }
     }
 
-    private fun removeStation(list: MutableList<BixiStation>, station: BixiStation) {
-        val listStation: BixiStation? = containsId(list, station.id)
+    private fun removeStation(list: MutableList<ShareStation>, station: ShareStation) {
+        val listStation: ShareStation? = containsId(list, station.id)
         if (listStation != null) {
             list.remove(listStation)
         }
@@ -55,7 +55,7 @@ object Utils {
         }
     }
 
-    fun toggleUserDock(station: BixiStation) {
+    fun toggleUserDock(station: ShareStation) {
         if (containsId(LogicHandler.userDocks, station.id) == null) {
             addStation(LogicHandler.userDocks, station)
         } else {
@@ -100,7 +100,7 @@ object Utils {
     }
 
     fun isStationStatusChanged(
-        userStations: MutableList<BixiStation>,
+        userStations: MutableList<ShareStation>,
         currentUnavailableIds: MutableList<Int>,
         newChanges: MutableMap<Int, Boolean>
     ): Boolean {
@@ -207,7 +207,7 @@ object Utils {
     }
 
     fun centerMap(map: GoogleMap, zoom: Float) {
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(BixiStation.userLocation, zoom))
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(ShareStation.userLocation, zoom))
     }
 
     class SettingsFragment : PreferenceFragmentCompat() {
