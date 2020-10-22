@@ -77,6 +77,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         when (item.itemId) {
             android.R.id.home -> {
                 supportActionBar?.setDisplayHomeAsUpEnabled(false)
+                title = getString(R.string.app_name)
                 Utils.favoritesPopup?.dismiss()
                 for (fragment in supportFragmentManager.fragments) {
                     if (fragment is SupportMapFragment) {
