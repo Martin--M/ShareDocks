@@ -10,7 +10,7 @@ object ConfigurationHandler {
 
     fun initialize(context: Context) {
         mContext = context
-        mSettings = context.getSharedPreferences("DocksSettings", Context.MODE_PRIVATE)
+        mSettings = context.getSharedPreferences("com.martinm.bixidocks_preferences", Context.MODE_PRIVATE)
     }
 
     fun storeStationList(list: MutableList<BixiStation>) {
@@ -33,5 +33,21 @@ object ConfigurationHandler {
             }
         }
         return list
+    }
+
+    fun getTrackingEnabled(): Boolean {
+        return mSettings.getBoolean("settings_enable_tracking", true)
+    }
+
+    fun getUIResponsiveness(): Int {
+        return mSettings.getInt("settings_load_responsiveness", 50)
+    }
+
+    fun getColorOnMarkers(): Boolean {
+        return mSettings.getBoolean("settings_is_colors_on_markers", false)
+    }
+
+    fun getTrackingUpdatePeriodSec(): Int {
+        return mSettings.getInt("tracking_period_s", 30)
     }
 }
