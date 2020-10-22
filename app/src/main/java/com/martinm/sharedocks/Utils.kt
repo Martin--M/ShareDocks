@@ -22,7 +22,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 
 object Utils {
-    private val mBixi = BixiApiHandler
+    private val mBixi = ShareApiHandler
     var favoritesPopup: PopupWindow? = null
 
     private fun containsId(list: MutableList<ShareStation>, id: Int): ShareStation? {

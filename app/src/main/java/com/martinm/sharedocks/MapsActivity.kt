@@ -30,7 +30,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
     private lateinit var mMap: GoogleMap
 
-    private val mBixi = BixiApiHandler
+    private val mBixi = ShareApiHandler
     private val mLogic = LogicHandler
     private var mIsPopupPresent: Boolean = false
     private var mMarkers: MutableList<Marker> = mutableListOf()

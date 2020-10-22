@@ -8,7 +8,7 @@ import java.net.URL
 import java.time.Duration
 import java.time.Instant
 
-object BixiApiHandler {
+object ShareApiHandler {
     var docks = mutableMapOf<Int, ShareStation>()
     var sortableDocks = mutableListOf<ShareStation>()
 

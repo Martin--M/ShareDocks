@@ -11,7 +11,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 
 object NotificationHandler {
-    private val mBixi = BixiApiHandler
+    private val mBixi = ShareApiHandler
     private lateinit var mNotificationManager: NotificationManager
 
     private const val CHANNEL_ID_UPDATES: String = "DocksUpdates"
