@@ -54,9 +54,6 @@ object Utils {
                 addStation(LogicHandler.userDocks, mBixi.docks[it]!!)
             }
         }
-        mBixi.docks.forEach {
-            addStation(LogicHandler.userDocks, it.value)
-        }
     }
 
     fun toggleUserDock(station: BixiStation) {
