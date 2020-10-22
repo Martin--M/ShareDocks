@@ -2,6 +2,7 @@ package com.martinm.bixidocks
 
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -111,18 +112,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 }
                 latch.countDown()
             }
-            // Sync with the initialization of the markers
-            latch.await()
-            mMarkers.forEach {
-                this.runOnUiThread {
-                    it.setIcon(
-                        BitmapDescriptorFactory.defaultMarker(
-                            (it.tag as BixiStation).hue
+            if (ConfigurationHandler.getColorOnMarkers()) {
+                // Sync with the initialization of the markers
+                latch.await()
+                mMarkers.forEach {
+                    this.runOnUiThread {
+                        it.setIcon(
+                            BitmapDescriptorFactory.defaultMarker(
+                                (it.tag as BixiStation).hue
+                            )
                         )
-                    )
+                    }
+                    // Unblock UI thread to allow for responsiveness
+                    sleep(ConfigurationHandler.getUIResponsiveness().toLong())
                 }
-                // Unblock UI thread to allow for responsiveness
-                sleep(50)
             }
         }
     }

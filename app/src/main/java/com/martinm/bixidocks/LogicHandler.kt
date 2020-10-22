@@ -20,6 +20,7 @@ object LogicHandler {
     private val mUnavailableIds = mutableListOf<Int>()
     private lateinit var mTimerContext: Context
     private lateinit var mTextToSpeech: TextToSpeech
+    private lateinit var mTrackingTimer: CountDownTimer
 
     const val RECEIVER_REQUEST_ID_ACTIVITY_TRANSITION = 0
     const val RECEIVER_REQUEST_ID_STOP_TRACKING = 1
@@ -30,52 +31,60 @@ object LogicHandler {
         }
     }
 
-    private val mTrackingTimer = object : CountDownTimer(30 * 60 * 1000, 30 * 1000) {
-        override fun onFinish() {
-            // The tracking service will ensure the timer ends. Else we continue tracking
-            start()
-        }
+    private fun createTrackingTimer(updatePeriodSec: Int) {
+        mTrackingTimer =
+            object : CountDownTimer(30 * 60 * 1000, (updatePeriodSec * 1000).toLong()) {
+                override fun onFinish() {
+                    // The tracking service will ensure the timer ends. Else we continue tracking
+                    start()
+                }
 
-        override fun onTick(p0: Long) {
-            thread(start = true) {
-                val currentChanges = mutableMapOf<Int, Boolean>()
-                Utils.safeUpdateDockLocations(mTimerContext)
+                override fun onTick(p0: Long) {
+                    thread(start = true) {
+                        val currentChanges = mutableMapOf<Int, Boolean>()
+                        Utils.safeUpdateDockLocations(mTimerContext)
 
-                if (Utils.isStationStatusChanged(userDocks, mUnavailableIds, currentChanges)) {
-                    val notificationDetails =
-                        NotificationHandler.buildTrackingNotificationMessage(mUnavailableIds)
-
-                    if (notificationDetails == "") {
-                        NotificationHandler.removeTrackingNotifications()
-                    } else {
-                        val content = if (mUnavailableIds.size == 1) {
-                            mTimerContext.getString(R.string.notification_update_content_single)
-                        } else {
-                            mTimerContext.getString(
-                                R.string.notification_update_content,
-                                mUnavailableIds.size
+                        if (Utils.isStationStatusChanged(
+                                userDocks,
+                                mUnavailableIds,
+                                currentChanges
                             )
+                        ) {
+                            val notificationDetails =
+                                NotificationHandler.buildTrackingNotificationMessage(mUnavailableIds)
+
+                            if (notificationDetails == "") {
+                                NotificationHandler.removeTrackingNotifications()
+                            } else {
+                                val content = if (mUnavailableIds.size == 1) {
+                                    mTimerContext.getString(R.string.notification_update_content_single)
+                                } else {
+                                    mTimerContext.getString(
+                                        R.string.notification_update_content,
+                                        mUnavailableIds.size
+                                    )
+                                }
+                                NotificationHandler.showNotification(
+                                    mTimerContext,
+                                    mTimerContext.getString(R.string.notification_update_title),
+                                    content,
+                                    notificationDetails
+                                )
+                            }
+                            // Wait for the notification alert to finish
+                            sleep(2000)
+                            currentChanges.forEach {
+                                mTextToSpeech.speak(
+                                    Utils.buildTrackingTTS(mTimerContext, it.key, it.value),
+                                    TextToSpeech.QUEUE_ADD,
+                                    null,
+                                    ""
+                                )
+                            }
                         }
-                        NotificationHandler.showNotification(
-                            mTimerContext,
-                            mTimerContext.getString(R.string.notification_update_title),
-                            content,
-                            notificationDetails
-                        )
-                    }
-                    // Wait for the notification alert to finish
-                    sleep(2000)
-                    currentChanges.forEach {
-                        mTextToSpeech.speak(
-                            Utils.buildTrackingTTS(mTimerContext, it.key, it.value),
-                            TextToSpeech.QUEUE_ADD,
-                            null,
-                            ""
-                        )
                     }
                 }
             }
-        }
     }
 
     fun startTracking(context: Context) {
@@ -84,6 +93,7 @@ object LogicHandler {
         }
         isTracking = true
         mTextToSpeech = TextToSpeech(context, listener)
+        createTrackingTimer(ConfigurationHandler.getTrackingUpdatePeriodSec())
         thread(start = true) {
             // Load docks again in case the whole context has been lost
             Utils.safeLoadDockLocations(context)
@@ -98,7 +108,9 @@ object LogicHandler {
     }
 
     fun stopTracking() {
-        mTrackingTimer.cancel()
+        if (this::mTrackingTimer.isInitialized) {
+            mTrackingTimer.cancel()
+        }
         isTracking = false
     }
 
