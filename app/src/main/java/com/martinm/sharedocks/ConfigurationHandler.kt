@@ -10,7 +10,7 @@ object ConfigurationHandler {
 
     fun initialize(context: Context) {
         mContext = context
-        mSettings = context.getSharedPreferences("com.martinm.bixidocks_preferences", Context.MODE_PRIVATE)
+        mSettings = context.getSharedPreferences(context.packageName + "_preferences", Context.MODE_PRIVATE)
     }
 
     fun storeStationList(list: MutableList<BixiStation>) {
