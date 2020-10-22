@@ -185,6 +185,7 @@ object Utils {
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                     if (LogicHandler.userDocks.size > viewHolder.layoutPosition) {
                         LogicHandler.userDocks.removeAt(viewHolder.layoutPosition)
+                        ConfigurationHandler.storeStationList(LogicHandler.userDocks)
                     }
                     favoritesAdapter.notifyItemRemoved(viewHolder.layoutPosition)
                 }
