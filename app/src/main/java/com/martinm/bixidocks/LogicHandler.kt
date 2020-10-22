@@ -4,14 +4,12 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.CountDownTimer
-import android.speech.tts.TextToSpeech
 import android.widget.Toast
 import com.google.android.gms.location.ActivityRecognition
 import com.google.android.gms.location.ActivityTransition
 import com.google.android.gms.location.ActivityTransitionRequest
 import com.google.android.gms.location.DetectedActivity
 import java.lang.Thread.sleep
-import java.util.*
 import kotlin.concurrent.thread
 
 object LogicHandler {
@@ -19,17 +17,10 @@ object LogicHandler {
     var isTracking: Boolean = false
     private val mUnavailableIds = mutableListOf<Int>()
     private lateinit var mTimerContext: Context
-    private lateinit var mTextToSpeech: TextToSpeech
     private lateinit var mTrackingTimer: CountDownTimer
 
     const val RECEIVER_REQUEST_ID_ACTIVITY_TRANSITION = 0
     const val RECEIVER_REQUEST_ID_STOP_TRACKING = 1
-
-    private val listener = TextToSpeech.OnInitListener {
-        if (it == TextToSpeech.SUCCESS) {
-            mTextToSpeech.language = Locale.getDefault()
-        }
-    }
 
     private fun createTrackingTimer(updatePeriodSec: Int) {
         mTrackingTimer =
@@ -74,11 +65,8 @@ object LogicHandler {
                             // Wait for the notification alert to finish
                             sleep(2000)
                             currentChanges.forEach {
-                                mTextToSpeech.speak(
-                                    Utils.buildTrackingTTS(mTimerContext, it.key, it.value),
-                                    TextToSpeech.QUEUE_ADD,
-                                    null,
-                                    ""
+                                TtsHandler.speak(
+                                    Utils.buildTrackingTTS(mTimerContext, it.key, it.value)
                                 )
                             }
                         }
@@ -92,7 +80,7 @@ object LogicHandler {
             return
         }
         isTracking = true
-        mTextToSpeech = TextToSpeech(context, listener)
+        TtsHandler.initialize(context)
         createTrackingTimer(ConfigurationHandler.getTrackingUpdatePeriodSec())
         thread(start = true) {
             // Load docks again in case the whole context has been lost
