@@ -22,7 +22,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 
 object Utils {
-    private val mBixi = ShareApiHandler
+    private val mApi = ShareApiHandler
     var favoritesPopup: PopupWindow? = null
 
     private fun containsId(list: MutableList<ShareStation>, id: Int): ShareStation? {
@@ -49,8 +49,8 @@ object Utils {
 
     fun loadUserDocks() {
         ConfigurationHandler.stationIdListFromStorageString().forEach {
-            if (mBixi.docks[it] != null) {
-                addStation(LogicHandler.userDocks, mBixi.docks[it]!!)
+            if (mApi.docks[it] != null) {
+                addStation(LogicHandler.userDocks, mApi.docks[it]!!)
             }
         }
     }
@@ -73,7 +73,7 @@ object Utils {
 
     fun safeLoadDockLocations(context: Context) {
         try {
-            mBixi.loadDockLocations()
+            mApi.loadDockLocations()
         } catch (e: Exception) {
             Handler(context.mainLooper).post {
                 Toast.makeText(
@@ -87,7 +87,7 @@ object Utils {
 
     fun safeUpdateDockLocations(context: Context) {
         try {
-            mBixi.updateDockLocations()
+            mApi.updateDockLocations()
         } catch (e: Exception) {
             Handler(context.mainLooper).post {
                 Toast.makeText(
@@ -124,11 +124,11 @@ object Utils {
     }
 
     fun buildTrackingTTS(context: Context, stationId: Int, isAvailable: Boolean): String {
-        if (mBixi.docks[stationId] == null) {
+        if (mApi.docks[stationId] == null) {
             return ""
         }
 
-        val stationTTS = mBixi.docks[stationId]!!.name.replace(
+        val stationTTS = mApi.docks[stationId]!!.name.replace(
             "/",
             context.getString(R.string.tts_replace_intersection)
         )

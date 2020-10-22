@@ -11,7 +11,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 
 object NotificationHandler {
-    private val mBixi = ShareApiHandler
+    private val mApi = ShareApiHandler
     private lateinit var mNotificationManager: NotificationManager
 
     private const val CHANNEL_ID_UPDATES: String = "DocksUpdates"
@@ -67,8 +67,8 @@ object NotificationHandler {
         }
         val builder = StringBuilder()
         unavailableIds.forEach {
-            if (mBixi.docks[it] != null) {
-                builder.append(mBixi.docks[it]!!.name)
+            if (mApi.docks[it] != null) {
+                builder.append(mApi.docks[it]!!.name)
                     .append("<br>")
             }
         }

@@ -38,7 +38,7 @@ object ShareApiHandler {
         }
     }
 
-    private fun getBixiStationFromJson(obj: JSONObject): ShareStation {
+    private fun getShareStationFromJson(obj: JSONObject): ShareStation {
         return ShareStation(
             location = LatLng(obj.getDouble("la"), obj.getDouble("lo")),
             id = obj.getInt("id"),
@@ -73,7 +73,7 @@ object ShareApiHandler {
     fun updateDockLocations() {
         val stations = getDocksInfoJson()
         for (i in 0 until stations.length()) {
-            val station = getBixiStationFromJson(stations.getJSONObject(i))
+            val station = getShareStationFromJson(stations.getJSONObject(i))
             if (station.location.longitude == 0.0) {
                 continue
             }
@@ -88,7 +88,7 @@ object ShareApiHandler {
     fun loadDockLocations() {
         val stations = getDocksInfoJson()
         for (i in 0 until stations.length()) {
-            val station = getBixiStationFromJson(stations.getJSONObject(i))
+            val station = getShareStationFromJson(stations.getJSONObject(i))
             if (station.location.longitude == 0.0) {
                 continue
             }

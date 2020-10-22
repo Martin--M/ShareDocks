@@ -30,7 +30,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
     private lateinit var mMap: GoogleMap
 
-    private val mBixi = ShareApiHandler
+    private val mApi = ShareApiHandler
     private val mLogic = LogicHandler
     private var mIsPopupPresent: Boolean = false
     private var mMarkers: MutableList<Marker> = mutableListOf()
@@ -102,10 +102,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
             Utils.safeLoadDockLocations(this)
             Utils.loadUserDocks()
-            mBixi.sortableDocks.sort()
+            mApi.sortableDocks.sort()
 
             this.runOnUiThread {
-                mBixi.sortableDocks.forEach {
+                mApi.sortableDocks.forEach {
                     val marker = mMap.addMarker(MarkerOptions().position(it.location))
                     marker.tag = it
                     mMarkers.add(marker)
