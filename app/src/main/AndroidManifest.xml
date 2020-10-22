@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.martinm.bixidocks">
+    package="com.martinm.sharedocks">
 
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".MapsActivity">
+            android:name="com.martinm.sharedocks.MapsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,10 +24,10 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".ActivityTransitionReceiver" />
-        <receiver android:name=".StopTrackingReceiver" />
+        <receiver android:name="com.martinm.sharedocks.ActivityTransitionReceiver" />
+        <receiver android:name="com.martinm.sharedocks.StopTrackingReceiver" />
 
-        <service android:name=".DocksTracker"
+        <service android:name="com.martinm.sharedocks.DocksTracker"
             android:foregroundServiceType="dataSync" />
 
         <meta-data

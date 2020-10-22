@@ -6,7 +6,7 @@ android {
     compileSdkVersion 30
 
     defaultConfig {
-        applicationId "com.martinm.bixidocks"
+        applicationId "com.martinm.sharedocks"
         minSdkVersion 26
         targetSdkVersion 30
         versionCode 1

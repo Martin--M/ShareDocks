@@ -1,4 +1,4 @@
-package com.martinm.bixidocks
+package com.martinm.sharedocks
 
 import android.app.Service
 import android.content.Intent
@@ -26,7 +26,7 @@ class DocksTracker : Service() {
     }
 
     companion object {
-        const val FOREGROUND_SERVICE_START = "com.martinm.bixidocks.action.starttracking"
-        const val FOREGROUND_SERVICE_STOP = "com.martinm.bixidocks.action.stoptracking"
+        const val FOREGROUND_SERVICE_START = "com.martinm.sharedocks.action.starttracking"
+        const val FOREGROUND_SERVICE_STOP = "com.martinm.sharedocks.action.stoptracking"
     }
 }

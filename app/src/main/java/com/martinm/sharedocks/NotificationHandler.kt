@@ -1,4 +1,4 @@
-package com.martinm.bixidocks
+package com.martinm.sharedocks
 
 import android.app.Notification
 import android.app.NotificationChannel

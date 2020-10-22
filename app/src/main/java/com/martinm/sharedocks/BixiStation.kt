@@ -1,4 +1,4 @@
-package com.martinm.bixidocks
+package com.martinm.sharedocks
 
 import android.location.Location
 import com.google.android.gms.maps.model.LatLng
