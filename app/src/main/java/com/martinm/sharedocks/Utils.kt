@@ -22,6 +22,9 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 
 object Utils {
+    const val RECEIVER_REQUEST_ID_ACTIVITY_TRANSITION = 0
+    const val RECEIVER_REQUEST_ID_STOP_TRACKING = 1
+
     private val mApi = ShareApiHandler
     var favoritesPopup: PopupWindow? = null
 

@@ -82,7 +82,7 @@ object NotificationHandler {
     fun getForegroundNotification(context: Context): Notification {
         val pendingIntent = PendingIntent.getBroadcast(
             context,
-            LogicHandler.RECEIVER_REQUEST_ID_STOP_TRACKING,
+            Utils.RECEIVER_REQUEST_ID_STOP_TRACKING,
             Intent(context, StopTrackingReceiver::class.java),
             PendingIntent.FLAG_IMMUTABLE
         )

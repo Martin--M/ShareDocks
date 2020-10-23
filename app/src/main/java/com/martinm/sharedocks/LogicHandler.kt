@@ -14,13 +14,10 @@ import kotlin.concurrent.thread
 
 object LogicHandler {
     var userDocks = mutableListOf<ShareStation>()
-    var isTracking: Boolean = false
+    private var isTracking: Boolean = false
     private val mUnavailableIds = mutableListOf<Int>()
     private lateinit var mTimerContext: Context
     private lateinit var mTrackingTimer: CountDownTimer
-
-    const val RECEIVER_REQUEST_ID_ACTIVITY_TRANSITION = 0
-    const val RECEIVER_REQUEST_ID_STOP_TRACKING = 1
 
     private fun createTrackingTimer(updatePeriodSec: Int) {
         mTrackingTimer =
@@ -120,7 +117,7 @@ object LogicHandler {
         val activityTransitionRequest = ActivityTransitionRequest(activityTransitions)
         val pendingIntent = PendingIntent.getBroadcast(
             context,
-            RECEIVER_REQUEST_ID_ACTIVITY_TRANSITION,
+            Utils.RECEIVER_REQUEST_ID_ACTIVITY_TRANSITION,
             Intent().setClass(context, ActivityTransitionReceiver::class.java),
             PendingIntent.FLAG_UPDATE_CURRENT
         )
