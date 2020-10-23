@@ -12,6 +12,9 @@ object ShareApiHandler {
     var docks = mutableMapOf<Int, ShareStation>()
     var sortableDocks = mutableListOf<ShareStation>()
 
+    private const val STATION_INFO_JSON_PATH = "station_information.json"
+    private const val STATION_STATUS_JSON_PATH = "station_status.json"
+
     private lateinit var mLastCalled: Instant
 
     /*
@@ -38,11 +41,11 @@ object ShareApiHandler {
         } else {
             mLastCalled = Instant.now()
         }
-        return getDocksJson(URL("https://api-core.bixi.com/gbfs/en/station_information.json"))
+        return getDocksJson(URL(Utils.cityUrls["Montréal"]!! + STATION_INFO_JSON_PATH))
     }
 
     private fun getDocksStatusJson(): JSONArray {
-        return getDocksJson(URL("https://api-core.bixi.com/gbfs/en/station_status.json"))
+        return getDocksJson(URL(Utils.cityUrls["Montréal"]!! + STATION_STATUS_JSON_PATH))
     }
 
     fun updateDockStatus() {
