@@ -14,6 +14,19 @@ object ShareApiHandler {
 
     private lateinit var mLastCalled: Instant
 
+    /*
+     * Note: all API information is available at: https://github.com/NABSA/gbfs
+     */
+
+    private fun getDocksJson(url: URL): JSONArray {
+        with(url.openConnection() as HttpURLConnection) {
+            requestMethod = "GET"
+            inputStream.bufferedReader().use {
+                return JSONObject(it.readText()).getJSONObject("data").getJSONArray("stations")
+            }
+        }
+    }
+
     private fun getDocksInfoJson(): JSONArray {
         // Avoid calling the API too often
         if (this::mLastCalled.isInitialized && Duration.between(
@@ -25,75 +38,47 @@ object ShareApiHandler {
         } else {
             mLastCalled = Instant.now()
         }
-        val url = URL("https://secure.bixi.com/data/stations.json")
-        with(url.openConnection() as HttpURLConnection) {
-            requestMethod = "GET"
-            inputStream.bufferedReader().use {
-                /*
-                 * Note: There are "schemeSuspended" and "timestamp" as top level entries that
-                 * we might or might not need in the future (winter?)
-                 */
-                return JSONObject(it.readText()).getJSONArray("stations")
-            }
-        }
+        return getDocksJson(URL("https://api-core.bixi.com/gbfs/en/station_information.json"))
     }
 
-    private fun getShareStationFromJson(obj: JSONObject): ShareStation {
-        return ShareStation(
-            location = LatLng(obj.getDouble("la"), obj.getDouble("lo")),
-            id = obj.getInt("id"),
-            availableBikes = obj.getInt("ba"),
-            availableDocks = obj.getInt("da"),
-            // Active if Blocked, Suspended, Maintenance are "false", and State is 1 (active)
-            isActive = obj.getInt("st") == 1 &&
-                    !obj.getBoolean("b") &&
-                    !obj.getBoolean("su") &&
-                    !obj.getBoolean("m"),
-            lastUpdate = Instant.ofEpochMilli(obj.getLong("lu")),
-            name = obj.getString("s")
-            /*
-             * Note: The following API entries aren't used for now
-             * - "n" : ID for the station terminal (?)
-             * - "lc" : Epoch of last connection to the server
-             * - "bk" : Unused at the API level
-             * - "bl" : Unused at the API level
-             * - "dx" : Unavailable docks
-             * - "bx" : Unavailable bikes
-             */
-        )
+    private fun getDocksStatusJson(): JSONArray {
+        return getDocksJson(URL("https://api-core.bixi.com/gbfs/en/station_status.json"))
     }
 
-    private fun updateStation(source: ShareStation, destination: ShareStation) {
-        destination.availableDocks = source.availableDocks
-        destination.availableBikes = source.availableBikes
-        destination.lastUpdate = source.lastUpdate
-        destination.isActive = source.isActive
-    }
-
-    fun updateDockLocations() {
-        val stations = getDocksInfoJson()
+    fun updateDockStatus() {
+        val stations = getDocksStatusJson()
         for (i in 0 until stations.length()) {
-            val station = getShareStationFromJson(stations.getJSONObject(i))
-            if (station.location.longitude == 0.0) {
-                continue
+            val obj = stations.getJSONObject(i)
+            val id = obj.getInt("station_id")
+            if (docks[id] != null) {
+                docks[id]!!.availableBikes = obj.getInt("num_bikes_available")
+                docks[id]!!.availableDocks = obj.getInt("num_docks_available")
+                docks[id]!!.lastUpdate = Instant.ofEpochMilli(obj.getLong("last_reported"))
+                // The "is_renting" property is not needed for tracking
+                docks[id]!!.isActive =
+                    obj.getInt("is_installed") == 1 && obj.getInt("is_returning") == 1
+                docks[id]!!.updateHue()
             }
-            if (docks[station.id] == null) {
-                docks[station.id] = station
-                sortableDocks.add(station)
-            }
-            updateStation(station, docks[station.id]!!)
         }
     }
 
     fun loadDockLocations() {
         val stations = getDocksInfoJson()
         for (i in 0 until stations.length()) {
-            val station = getShareStationFromJson(stations.getJSONObject(i))
-            if (station.location.longitude == 0.0) {
-                continue
+            val obj = stations.getJSONObject(i)
+            val id = obj.getInt("station_id")
+            if (docks[id] == null) {
+                docks[id] = ShareStation(id)
             }
-            docks[station.id] = station
-            sortableDocks.add(station)
+
+            docks[id]!!.location = LatLng(obj.getDouble("lat"), obj.getDouble("lon"))
+            docks[id]!!.name = obj.getString("name")
+
+            if (docks[id]!!.location.longitude == 0.0 && docks[id]!!.location.latitude == 0.0) {
+                docks.remove(id)
+            } else {
+                sortableDocks.add(docks[id]!!)
+            }
         }
     }
 }

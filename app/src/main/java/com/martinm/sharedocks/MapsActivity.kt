@@ -101,6 +101,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             val latch = CountDownLatch(1)
 
             Utils.safeLoadDockLocations(this)
+            Utils.safeUpdateDockStatus(this)
             Utils.loadUserDocks()
             mApi.sortableDocks.sort()
 

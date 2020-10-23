@@ -4,36 +4,18 @@ import android.location.Location
 import com.google.android.gms.maps.model.LatLng
 import java.time.Instant
 
-class ShareStation(
-    var location: LatLng,
-    val id: Int,
-    val name: String,
-    var availableDocks: Int,
-    var availableBikes: Int,
-    var isActive: Boolean,
-    var lastUpdate: Instant
-) : Comparable<ShareStation> {
+class ShareStation(val id: Int) : Comparable<ShareStation> {
 
+    lateinit var name: String
+    lateinit var lastUpdate: Instant
+    var location: LatLng = LatLng(0.0, 0.0)
+    var availableDocks: Int = 0
+    var availableBikes: Int = 0
+    var isActive: Boolean = false
     var hue: Float = 0F
-
-    init {
-        hue = getNewHue()
-    }
 
     companion object {
         var userLocation = LatLng(0.0, 0.0)
-    }
-
-    fun copy(): ShareStation {
-        return ShareStation(
-            location = LatLng(this.location.latitude, this.location.longitude),
-            name = this.name,
-            lastUpdate = this.lastUpdate,
-            isActive = this.isActive,
-            availableDocks = this.availableDocks,
-            availableBikes = this.availableBikes,
-            id = this.id
-        )
     }
 
     private fun getAvailablePercent(): Float {
@@ -43,20 +25,21 @@ class ShareStation(
         return availableBikes.toFloat() / (availableBikes + availableDocks)
     }
 
-    private fun getNewHue(): Float {
+    fun updateHue() {
         /*
          * Ranges from 15 (Warm Red) to 95 (Yellow Green)
          * Special case for disabled Stations at 240 (Blue), empty stations at 0 (Red), and full
          * stations at 120 (Green)
          */
         val availability = getAvailablePercent()
-        if (availability.isNaN()) {
-            return 240F
-        }
-        return when (availability) {
-            0F -> 0F
-            1F -> 120F
-            else -> 15 + availability * 80
+        hue = if (availability.isNaN()) {
+            240F
+        } else {
+            when (availability) {
+                0F -> 0F
+                1F -> 120F
+                else -> 15 + availability * 80
+            }
         }
     }
 

@@ -85,9 +85,9 @@ object Utils {
         }
     }
 
-    fun safeUpdateDockLocations(context: Context) {
+    fun safeUpdateDockStatus(context: Context) {
         try {
-            mApi.updateDockLocations()
+            mApi.updateDockStatus()
         } catch (e: Exception) {
             Handler(context.mainLooper).post {
                 Toast.makeText(
