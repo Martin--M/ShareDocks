@@ -50,4 +50,8 @@ object ConfigurationHandler {
     fun getTrackingUpdatePeriodSec(): Int {
         return mSettings.getInt("tracking_period_s", 30)
     }
+
+    fun getExclusiveAudioEnabled(): Boolean {
+        return mSettings.getBoolean("settings_exclusive_audio", true)
+    }
 }

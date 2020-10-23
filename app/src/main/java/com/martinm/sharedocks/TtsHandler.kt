@@ -17,8 +17,13 @@ object TtsHandler {
         }
 
         mTextToSpeech.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
+            private val focusGain = if (ConfigurationHandler.getExclusiveAudioEnabled()) {
+                AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_EXCLUSIVE
+            } else {
+                AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK
+            }
             private val mFocusRequest: AudioFocusRequest =
-                AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_EXCLUSIVE).build()
+                AudioFocusRequest.Builder(focusGain).build()
 
             override fun onDone(p0: String?) {
                 mAudioManager.abandonAudioFocusRequest(mFocusRequest)

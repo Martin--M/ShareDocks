@@ -36,4 +36,11 @@
         android:dependency="settings_enable_tracking"
         android:key="tracking_period_s" />
 
+    <SwitchPreferenceCompat
+        android:title="Pause music during notifications"
+        android:summary="Used during text-to-speech notifications. If enabled, any music playback will temporarily pause until the notification is over"
+        android:defaultValue="true"
+        android:dependency="settings_enable_tracking"
+        android:key="settings_exclusive_audio" />
+
 </PreferenceScreen>
