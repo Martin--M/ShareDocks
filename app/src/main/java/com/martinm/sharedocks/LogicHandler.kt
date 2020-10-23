@@ -33,6 +33,10 @@ object LogicHandler {
                 override fun onTick(p0: Long) {
                     thread(start = true) {
                         val currentChanges = mutableMapOf<Int, Boolean>()
+                        if (ShareApiHandler.docks.isEmpty()) {
+                            Utils.safeLoadDockLocations(mTimerContext)
+                            Utils.loadUserDocks()
+                        }
                         Utils.safeUpdateDockStatus(mTimerContext)
 
                         if (Utils.isStationStatusChanged(
