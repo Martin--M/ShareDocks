@@ -9,6 +9,14 @@
         android:defaultValue="true"
         android:key="settings_enable_tracking" />
 
+    <ListPreference
+        android:title="Current city"
+        android:summary="%s"
+        android:entries="@array/cityData"
+        android:entryValues="@array/cityId"
+        android:dependency="settings_enable_tracking"
+        android:key="settings_current_city" />
+
     <SwitchPreferenceCompat
         android:title="Colors on station markers"
         android:summary="Show the color of the station marker based on the availability of bikes"

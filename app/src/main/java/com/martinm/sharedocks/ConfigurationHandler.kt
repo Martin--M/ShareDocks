@@ -54,4 +54,12 @@ object ConfigurationHandler {
     fun getExclusiveAudioEnabled(): Boolean {
         return mSettings.getBoolean("settings_exclusive_audio", true)
     }
+
+    fun getCityId(): Int {
+        val strId = mSettings.getString("settings_current_city", "")
+        if (strId == null || strId == "") {
+            return 0
+        }
+        return strId.toInt()
+    }
 }

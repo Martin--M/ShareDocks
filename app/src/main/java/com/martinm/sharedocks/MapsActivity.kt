@@ -92,7 +92,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         Utils.centerMap(mMap, 14F)
 
         thread(start = true) {
-            Utils.setupMap(this, mMap, mMarkers)
+            if (ConfigurationHandler.getCityId() != 0) {
+                Utils.setupMap(this, mMap, mMarkers)
+            }
         }
     }
 
