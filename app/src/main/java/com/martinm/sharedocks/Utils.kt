@@ -20,6 +20,10 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
+import java.util.concurrent.CountDownLatch
 
 object Utils {
     const val RECEIVER_REQUEST_ID_ACTIVITY_TRANSITION = 0
@@ -216,6 +220,46 @@ object Utils {
 
     fun centerMap(map: GoogleMap, zoom: Float) {
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(ShareStation.userLocation, zoom))
+    }
+
+    fun setupMap(context: AppCompatActivity, map: GoogleMap, markers: MutableList<Marker>) {
+        val latch = CountDownLatch(1)
+
+        context.runOnUiThread {
+            markers.forEach {
+                it.remove()
+            }
+        }
+        markers.clear()
+
+        safeLoadDockLocations(context)
+        safeUpdateDockStatus(context)
+        loadUserDocks()
+        mApi.sortableDocks.sort()
+
+        context.runOnUiThread {
+            mApi.sortableDocks.forEach {
+                val marker = map.addMarker(MarkerOptions().position(it.location))
+                marker.tag = it
+                markers.add(marker)
+            }
+            latch.countDown()
+        }
+        if (ConfigurationHandler.getColorOnMarkers()) {
+            // Sync with the initialization of the markers
+            latch.await()
+            markers.forEach {
+                context.runOnUiThread {
+                    it.setIcon(
+                        BitmapDescriptorFactory.defaultMarker(
+                            (it.tag as ShareStation).hue
+                        )
+                    )
+                }
+                // Unblock UI thread to allow for responsiveness
+                Thread.sleep(ConfigurationHandler.getUIResponsiveness().toLong())
+            }
+        }
     }
 
     class SettingsFragment : PreferenceFragmentCompat() {

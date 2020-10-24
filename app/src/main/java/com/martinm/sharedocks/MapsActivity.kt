@@ -18,19 +18,14 @@ import androidx.core.content.ContextCompat
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
-import java.lang.Thread.sleep
-import java.util.concurrent.CountDownLatch
 import kotlin.concurrent.thread
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private lateinit var mMap: GoogleMap
 
-    private val mApi = ShareApiHandler
     private val mLogic = LogicHandler
     private var mIsPopupPresent: Boolean = false
     private var mMarkers: MutableList<Marker> = mutableListOf()
@@ -98,36 +93,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         Utils.centerMap(mMap, 14F)
 
         thread(start = true) {
-            val latch = CountDownLatch(1)
-
-            Utils.safeLoadDockLocations(this)
-            Utils.safeUpdateDockStatus(this)
-            Utils.loadUserDocks()
-            mApi.sortableDocks.sort()
-
-            this.runOnUiThread {
-                mApi.sortableDocks.forEach {
-                    val marker = mMap.addMarker(MarkerOptions().position(it.location))
-                    marker.tag = it
-                    mMarkers.add(marker)
-                }
-                latch.countDown()
-            }
-            if (ConfigurationHandler.getColorOnMarkers()) {
-                // Sync with the initialization of the markers
-                latch.await()
-                mMarkers.forEach {
-                    this.runOnUiThread {
-                        it.setIcon(
-                            BitmapDescriptorFactory.defaultMarker(
-                                (it.tag as ShareStation).hue
-                            )
-                        )
-                    }
-                    // Unblock UI thread to allow for responsiveness
-                    sleep(ConfigurationHandler.getUIResponsiveness().toLong())
-                }
-            }
+            Utils.setupMap(this, mMap, mMarkers)
         }
     }
 
