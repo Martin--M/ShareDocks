@@ -41,11 +41,11 @@ object ShareApiHandler {
         } else {
             mLastCalled = Instant.now()
         }
-        return getDocksJson(URL(Utils.cityUrls["Montréal"]!! + STATION_INFO_JSON_PATH))
+        return getDocksJson(URL(CityUtils.map[1]?.baseUrl!! + STATION_INFO_JSON_PATH))
     }
 
     private fun getDocksStatusJson(): JSONArray {
-        return getDocksJson(URL(Utils.cityUrls["Montréal"]!! + STATION_STATUS_JSON_PATH))
+        return getDocksJson(URL(CityUtils.map[1]?.baseUrl!! + STATION_STATUS_JSON_PATH))
     }
 
     fun updateDockStatus() {

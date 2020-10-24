@@ -29,10 +29,6 @@ object Utils {
     const val RECEIVER_REQUEST_ID_ACTIVITY_TRANSITION = 0
     const val RECEIVER_REQUEST_ID_STOP_TRACKING = 1
 
-    val cityUrls: MutableMap<String, String> = mutableMapOf(
-        "Montréal" to "https://api-core.bixi.com/gbfs/en/"
-    )
-
     private val mApi = ShareApiHandler
     var favoritesPopup: PopupWindow? = null
 

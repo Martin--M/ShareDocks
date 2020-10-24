@@ -18,7 +18,6 @@ import androidx.core.content.ContextCompat
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import kotlin.concurrent.thread
 
@@ -64,7 +63,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         }
 
         // Default user location to downtown Montreal
-        ShareStation.userLocation = LatLng(45.5005302, -73.5686184)
+        ShareStation.userLocation = CityUtils.map[1]?.location!!
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
