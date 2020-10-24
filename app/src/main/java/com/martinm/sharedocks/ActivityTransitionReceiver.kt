@@ -16,7 +16,7 @@ class ActivityTransitionReceiver : BroadcastReceiver() {
         for (event in result.transitionEvents) {
             if (event.activityType == DetectedActivity.ON_BICYCLE) {
                 if (event.transitionType == ActivityTransition.ACTIVITY_TRANSITION_ENTER) {
-                    if (ConfigurationHandler.getTrackingEnabled()) {
+                    if (ConfigurationHandler.getTrackingEnabled() && ConfigurationHandler.getCityId() != 0) {
                         context.startForegroundService(
                             Intent().setClass(
                                 context,
