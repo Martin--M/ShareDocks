@@ -81,6 +81,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                     }
                     supportFragmentManager.beginTransaction().remove(fragment).commit()
                 }
+
+                if (CityUtils.currentCity != ConfigurationHandler.getCityId()) {
+                    CityUtils.currentCity = ConfigurationHandler.getCityId()
+                    ShareStation.userLocation = CityUtils.map[CityUtils.currentCity]?.location!!
+                    Utils.centerMap(mMap, 14F)
+                    thread(start = true) {
+                        Utils.setupMap(this, mMap, mMarkers)
+                    }
+                }
                 return true
             }
         }
