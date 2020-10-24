@@ -8,6 +8,12 @@ object ConfigurationHandler {
     private lateinit var mContext: Context
     private lateinit var mSettings: SharedPreferences
 
+    private fun buildStationStorageKey(): String {
+        val info = CityUtils.map[CityUtils.currentCity] ?: return "user_docks"
+
+        return "user_docks_${info.country}_${info.name}"
+    }
+
     fun initialize(context: Context) {
         mContext = context
         mSettings = context.getSharedPreferences(context.packageName + "_preferences", Context.MODE_PRIVATE)
@@ -20,14 +26,14 @@ object ConfigurationHandler {
                 .append(",")
         }
         with(mSettings.edit()) {
-            putString("user_docks", strBuilder.toString())
+            putString(buildStationStorageKey(), strBuilder.toString())
             apply()
         }
     }
 
     fun stationIdListFromStorageString(): MutableList<Int> {
         val list = mutableListOf<Int>()
-        mSettings.getString("user_docks", "")?.split(",")?.forEach {
+        mSettings.getString(buildStationStorageKey(), "")?.split(",")?.forEach {
             if (it != "") {
                 list.add(it.toInt())
             }

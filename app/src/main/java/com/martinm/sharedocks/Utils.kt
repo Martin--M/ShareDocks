@@ -55,6 +55,7 @@ object Utils {
     }
 
     fun loadUserDocks() {
+        LogicHandler.userDocks.clear()
         ConfigurationHandler.stationIdListFromStorageString().forEach {
             if (mApi.docks[it] != null) {
                 addStation(LogicHandler.userDocks, mApi.docks[it]!!)
