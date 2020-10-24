@@ -3,6 +3,9 @@ package com.martinm.sharedocks
 import com.google.android.gms.maps.model.LatLng
 
 object CityUtils {
+
+    var currentCity: Int = 0
+
     class CityInfo(
         val country: String,
         val name: String,

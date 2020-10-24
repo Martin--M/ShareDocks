@@ -62,8 +62,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             mLogic.setupActivityRecognitionCallback(applicationContext)
         }
 
-        // Default user location to downtown Montreal
-        ShareStation.userLocation = CityUtils.map[1]?.location!!
+        CityUtils.currentCity = ConfigurationHandler.getCityId()
+
+        if (CityUtils.currentCity != 0) {
+            ShareStation.userLocation = CityUtils.map[CityUtils.currentCity]?.location!!
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -89,10 +92,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         mMap.setOnMarkerClickListener(this)
         Utils.setupFavoritesButtonCallback(this, mMap)
 
-        Utils.centerMap(mMap, 14F)
-
-        thread(start = true) {
-            if (ConfigurationHandler.getCityId() != 0) {
+        if (CityUtils.currentCity != 0) {
+            Utils.centerMap(mMap, 14F)
+            thread(start = true) {
                 Utils.setupMap(this, mMap, mMarkers)
             }
         }

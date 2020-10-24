@@ -87,6 +87,7 @@ object LogicHandler {
             // Load docks again in case the whole context has been lost
             Utils.safeLoadDockLocations(context)
             Utils.loadUserDocks()
+            CityUtils.currentCity = ConfigurationHandler.getCityId()
 
             mUnavailableIds.clear()
             mTimerContext = context
