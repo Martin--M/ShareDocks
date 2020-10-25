@@ -1,6 +1,7 @@
 package com.martinm.sharedocks
 
 import com.google.android.gms.maps.model.LatLng
+import java.net.URL
 
 object CityUtils {
 
@@ -10,7 +11,7 @@ object CityUtils {
         val country: String,
         val name: String,
         val location: LatLng,
-        val baseUrl: String
+        val baseUrl: URL
     )
 
     // This should be consistent with the entries under array.xml @cityData & @cityId
@@ -19,7 +20,7 @@ object CityUtils {
             "CA",
             "Montréal",
             LatLng(45.5005302, -73.5686184),
-            "https://api-core.bixi.com/gbfs/en/"
+            URL("https://api-core.bixi.com/gbfs/gbfs.json")
         )
     )
 }

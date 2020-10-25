@@ -12,14 +12,31 @@ object ShareApiHandler {
     var docks = mutableMapOf<Int, ShareStation>()
     var sortableDocks = mutableListOf<ShareStation>()
 
-    private const val STATION_INFO_JSON_PATH = "station_information.json"
-    private const val STATION_STATUS_JSON_PATH = "station_status.json"
-
+    private lateinit var mStationInfoUrl: URL
+    private lateinit var mStationStatusUrl: URL
     private lateinit var mLastCalled: Instant
 
     /*
      * Note: all API information is available at: https://github.com/NABSA/gbfs
      */
+
+    private fun loadStationUrls() {
+        with(CityUtils.map[CityUtils.currentCity]?.baseUrl!!.openConnection() as HttpURLConnection) {
+            requestMethod = "GET"
+            inputStream.bufferedReader().use { reader ->
+                val obj = JSONObject(reader.readText()).getJSONObject("data")
+                val arr = obj.getJSONObject(obj.keys().next()).getJSONArray("feeds")
+                for (i in 0 until arr.length()) {
+                    val feed = arr.getJSONObject(i).getString("name")
+                    val url = arr.getJSONObject(i).getString("url")
+                    when (feed) {
+                        "station_information" -> mStationInfoUrl = URL(url)
+                        "station_status" -> mStationStatusUrl = URL(url)
+                    }
+                }
+            }
+        }
+    }
 
     private fun getDocksJson(url: URL): JSONArray {
         with(url.openConnection() as HttpURLConnection) {
@@ -41,11 +58,11 @@ object ShareApiHandler {
         } else {
             mLastCalled = Instant.now()
         }
-        return getDocksJson(URL(CityUtils.map[CityUtils.currentCity]?.baseUrl!! + STATION_INFO_JSON_PATH))
+        return getDocksJson(mStationInfoUrl)
     }
 
     private fun getDocksStatusJson(): JSONArray {
-        return getDocksJson(URL(CityUtils.map[CityUtils.currentCity]?.baseUrl!! + STATION_STATUS_JSON_PATH))
+        return getDocksJson(mStationStatusUrl)
     }
 
     fun updateDockStatus() {
@@ -66,6 +83,7 @@ object ShareApiHandler {
     }
 
     fun loadDockLocations() {
+        loadStationUrls()
         val stations = getDocksInfoJson()
         for (i in 0 until stations.length()) {
             val obj = stations.getJSONObject(i)
