@@ -220,14 +220,17 @@ object Utils {
     }
 
     fun setupMap(context: AppCompatActivity, map: GoogleMap, markers: MutableList<Marker>) {
-        val latch = CountDownLatch(1)
+        var latch = CountDownLatch(1)
 
         context.runOnUiThread {
             markers.forEach {
                 it.remove()
             }
+            latch.countDown()
         }
+        latch.await()
         markers.clear()
+        latch = CountDownLatch(1)
 
         safeLoadDockLocations(context)
         safeUpdateDockStatus(context)
