@@ -4,7 +4,7 @@ import android.location.Location
 import com.google.android.gms.maps.model.LatLng
 import java.time.Instant
 
-class ShareStation(val id: Int) : Comparable<ShareStation> {
+class ShareStation(val id: String) : Comparable<ShareStation> {
 
     lateinit var name: String
     lateinit var lastUpdate: Instant

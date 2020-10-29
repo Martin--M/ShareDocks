@@ -32,7 +32,7 @@ object Utils {
     private val mApi = ShareApiHandler
     var favoritesPopup: PopupWindow? = null
 
-    private fun containsId(list: MutableList<ShareStation>, id: Int): ShareStation? {
+    private fun containsId(list: MutableList<ShareStation>, id: String): ShareStation? {
         list.forEach {
             if (it.id == id) {
                 return it
@@ -71,7 +71,7 @@ object Utils {
         }
     }
 
-    fun getButtonStringForId(context: Context, id: Int): String {
+    fun getButtonStringForId(context: Context, id: String): String {
         return if (containsId(LogicHandler.userDocks, id) != null) {
             context.getString(R.string.popup_button_remove)
         } else {
@@ -109,8 +109,8 @@ object Utils {
 
     fun isStationStatusChanged(
         userStations: MutableList<ShareStation>,
-        currentUnavailableIds: MutableList<Int>,
-        newChanges: MutableMap<Int, Boolean>
+        currentUnavailableIds: MutableList<String>,
+        newChanges: MutableMap<String, Boolean>
     ): Boolean {
         var isChanged = false
         userStations.forEach {
@@ -131,7 +131,7 @@ object Utils {
         return isChanged
     }
 
-    fun buildTrackingTTS(context: Context, stationId: Int, isAvailable: Boolean): String {
+    fun buildTrackingTTS(context: Context, stationId: String, isAvailable: Boolean): String {
         if (mApi.docks[stationId] == null) {
             return ""
         }

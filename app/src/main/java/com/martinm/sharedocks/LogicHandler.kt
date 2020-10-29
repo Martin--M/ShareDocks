@@ -15,7 +15,7 @@ import kotlin.concurrent.thread
 object LogicHandler {
     var userDocks = mutableListOf<ShareStation>()
     private var isTracking: Boolean = false
-    private val mUnavailableIds = mutableListOf<Int>()
+    private val mUnavailableIds = mutableListOf<String>()
     private lateinit var mTimerContext: Context
     private lateinit var mTrackingTimer: CountDownTimer
 
@@ -29,7 +29,7 @@ object LogicHandler {
 
                 override fun onTick(p0: Long) {
                     thread(start = true) {
-                        val currentChanges = mutableMapOf<Int, Boolean>()
+                        val currentChanges = mutableMapOf<String, Boolean>()
                         if (ShareApiHandler.docks.isEmpty()) {
                             Utils.safeLoadDockLocations(mTimerContext)
                             Utils.loadUserDocks()

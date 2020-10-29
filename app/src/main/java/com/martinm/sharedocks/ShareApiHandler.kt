@@ -9,7 +9,7 @@ import java.time.Duration
 import java.time.Instant
 
 object ShareApiHandler {
-    var docks = mutableMapOf<Int, ShareStation>()
+    var docks = mutableMapOf<String, ShareStation>()
     var sortableDocks = mutableListOf<ShareStation>()
 
     private lateinit var mStationInfoUrl: URL
@@ -69,7 +69,7 @@ object ShareApiHandler {
         val stations = getDocksStatusJson()
         for (i in 0 until stations.length()) {
             val obj = stations.getJSONObject(i)
-            val id = obj.getInt("station_id")
+            val id = obj.getString("station_id")
             if (docks[id] != null) {
                 docks[id]!!.availableBikes = obj.getInt("num_bikes_available")
                 docks[id]!!.availableDocks = obj.getInt("num_docks_available")
@@ -87,7 +87,7 @@ object ShareApiHandler {
         val stations = getDocksInfoJson()
         for (i in 0 until stations.length()) {
             val obj = stations.getJSONObject(i)
-            val id = obj.getInt("station_id")
+            val id = obj.getString("station_id")
             if (docks[id] == null) {
                 docks[id] = ShareStation(id)
             }

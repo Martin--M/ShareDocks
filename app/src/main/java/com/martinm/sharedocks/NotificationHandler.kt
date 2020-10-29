@@ -61,7 +61,7 @@ object NotificationHandler {
         }
     }
 
-    fun buildTrackingNotificationMessage(unavailableIds: MutableList<Int>): String {
+    fun buildTrackingNotificationMessage(unavailableIds: MutableList<String>): String {
         if (unavailableIds.isEmpty()) {
             return ""
         }

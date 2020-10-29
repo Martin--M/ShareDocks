@@ -31,11 +31,11 @@ object ConfigurationHandler {
         }
     }
 
-    fun stationIdListFromStorageString(): MutableList<Int> {
-        val list = mutableListOf<Int>()
+    fun stationIdListFromStorageString(): MutableList<String> {
+        val list = mutableListOf<String>()
         mSettings.getString(buildStationStorageKey(), "")?.split(",")?.forEach {
             if (it != "") {
-                list.add(it.toInt())
+                list.add(it)
             }
         }
         return list
