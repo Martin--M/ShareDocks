@@ -33,7 +33,7 @@ object ShareApiHandler {
                 }
                 for (i in 0 until arr.length()) {
                     val feed = arr.getJSONObject(i).getString("name")
-                    val url = arr.getJSONObject(i).getString("url")
+                    val url = arr.getJSONObject(i).getString("url").replace("http:", "https:")
                     when (feed) {
                         "station_information" -> mStationInfoUrl = URL(url)
                         "station_status" -> mStationStatusUrl = URL(url)
