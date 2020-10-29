@@ -25,7 +25,12 @@ object ShareApiHandler {
             requestMethod = "GET"
             inputStream.bufferedReader().use { reader ->
                 val obj = JSONObject(reader.readText()).getJSONObject("data")
-                val arr = obj.getJSONObject(obj.keys().next()).getJSONArray("feeds")
+                val nextKey = obj.keys().next()
+                val arr = if (nextKey != "feeds") {
+                    obj.getJSONObject(nextKey).getJSONArray("feeds")
+                } else {
+                    obj.getJSONArray("feeds")
+                }
                 for (i in 0 until arr.length()) {
                     val feed = arr.getJSONObject(i).getString("name")
                     val url = arr.getJSONObject(i).getString("url")
