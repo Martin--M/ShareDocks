@@ -83,6 +83,8 @@ object ShareApiHandler {
     }
 
     fun loadDockLocations() {
+        sortableDocks.clear()
+        docks.clear()
         loadStationUrls()
         val stations = getDocksInfoJson()
         for (i in 0 until stations.length()) {
