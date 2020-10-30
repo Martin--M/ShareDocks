@@ -30,6 +30,8 @@ object Utils {
     const val RECEIVER_REQUEST_ID_STOP_TRACKING = 1
 
     private val mApi = ShareApiHandler
+    var isMapLoading = false
+    var stopLoadRequest = false
     var favoritesPopup: PopupWindow? = null
 
     private fun containsId(list: MutableList<ShareStation>, id: String): ShareStation? {
@@ -221,6 +223,7 @@ object Utils {
 
     fun setupMap(context: AppCompatActivity, map: GoogleMap, markers: MutableList<Marker>) {
         var latch = CountDownLatch(1)
+        isMapLoading = true
 
         context.runOnUiThread {
             markers.forEach {
@@ -249,6 +252,9 @@ object Utils {
             // Sync with the initialization of the markers
             latch.await()
             markers.forEach {
+                if (stopLoadRequest) {
+                    return@forEach
+                }
                 context.runOnUiThread {
                     it.setIcon(
                         BitmapDescriptorFactory.defaultMarker(
@@ -260,6 +266,8 @@ object Utils {
                 Thread.sleep(ConfigurationHandler.getUIResponsiveness().toLong())
             }
         }
+        stopLoadRequest = false
+        isMapLoading = false
     }
 
     class SettingsFragment : PreferenceFragmentCompat() {

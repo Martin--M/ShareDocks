@@ -87,6 +87,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                     ShareStation.userLocation = CityUtils.map[CityUtils.currentCity]?.location!!
                     Utils.centerMap(mMap, 14F)
                     thread(start = true) {
+                        if (Utils.isMapLoading) {
+                            Utils.stopLoadRequest = true
+                            while (Utils.isMapLoading) {
+                                Thread.sleep(10)
+                            }
+                        }
                         Utils.setupMap(this, mMap, mMarkers)
                     }
                 }
