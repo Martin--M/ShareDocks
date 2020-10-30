@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="20dp"
+        android:visibility="gone"
         android:background="@drawable/button_background_layout"
         android:contentDescription="@string/button_user_stations_description"
         android:padding="5dp"

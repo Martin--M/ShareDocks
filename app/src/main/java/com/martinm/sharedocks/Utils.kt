@@ -241,6 +241,7 @@ object Utils {
         mApi.sortableDocks.sort()
 
         context.runOnUiThread {
+            context.findViewById<ImageButton>(R.id.button_favorites).visibility = View.VISIBLE
             mApi.sortableDocks.forEach {
                 val marker = map.addMarker(MarkerOptions().position(it.location))
                 marker.tag = it
