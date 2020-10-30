@@ -19,6 +19,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.Marker
+import java.time.Instant
 import kotlin.concurrent.thread
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
@@ -84,6 +85,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
                 if (CityUtils.currentCity != ConfigurationHandler.getCityId()) {
                     CityUtils.currentCity = ConfigurationHandler.getCityId()
+                    ShareApiHandler.lastCalled = Instant.MIN
                     ShareStation.userLocation = CityUtils.map[CityUtils.currentCity]?.location!!
                     Utils.centerMap(mMap, 14F)
                     thread(start = true) {

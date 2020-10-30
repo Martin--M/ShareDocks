@@ -16,7 +16,7 @@ object ShareApiHandler {
 
     private lateinit var mStationInfoUrl: URL
     private lateinit var mStationStatusUrl: URL
-    private lateinit var mLastCalled: Instant
+    lateinit var lastCalled: Instant
 
     /*
      * Note: all API information is available at: https://github.com/NABSA/gbfs
@@ -56,16 +56,6 @@ object ShareApiHandler {
     }
 
     private fun getDocksInfoJson(): JSONArray {
-        // Avoid calling the API too often
-        if (this::mLastCalled.isInitialized && Duration.between(
-                mLastCalled,
-                Instant.now()
-            ).seconds < 5
-        ) {
-            return JSONArray()
-        } else {
-            mLastCalled = Instant.now()
-        }
         return getDocksJson(mStationInfoUrl)
     }
 
@@ -97,6 +87,16 @@ object ShareApiHandler {
     }
 
     fun loadDockLocations() {
+        // Avoid calling the API too often
+        if (this::lastCalled.isInitialized && Duration.between(
+                lastCalled,
+                Instant.now()
+            ).seconds < 5
+        ) {
+            return
+        } else {
+            lastCalled = Instant.now()
+        }
         sortableDocks.clear()
         docks.clear()
         loadStationUrls()
