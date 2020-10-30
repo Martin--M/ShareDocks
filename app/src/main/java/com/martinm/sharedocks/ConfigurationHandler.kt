@@ -2,6 +2,7 @@ package com.martinm.sharedocks
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.preference.PreferenceManager
 import java.lang.StringBuilder
 
 object ConfigurationHandler {
@@ -16,7 +17,7 @@ object ConfigurationHandler {
 
     fun initialize(context: Context) {
         mContext = context
-        mSettings = context.getSharedPreferences(context.packageName + "_preferences", Context.MODE_PRIVATE)
+        mSettings = PreferenceManager.getDefaultSharedPreferences(context)
     }
 
     fun storeStationList(list: MutableList<ShareStation>) {
