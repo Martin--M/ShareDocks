@@ -1,10 +1,399 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="cityData">
+        <item>AE - Abu Dhabi</item>
+        <item>AE - Dubai</item>
+        <item>AR - Buenos Aires</item>
+        <item>AR - Rosario</item>
+        <item>AT - Innsbruck</item>
+        <item>AT - Klagenfurt</item>
+        <item>AT - Serfaus</item>
+        <item>AT - Sankt Pölten</item>
+        <item>AW - Aruba</item>
+        <item>BA - Banja Luka</item>
+        <item>BA - Sarajevo</item>
+        <item>BA - Zenica</item>
+        <item>BR - Porto Alegre</item>
+        <item>BR - Recife</item>
+        <item>BR - Rio de Janeiro</item>
+        <item>BR - Riviera de São Lourenço</item>
+        <item>BR - Salvador</item>
+        <item>BR - São Paulo</item>
+        <item>BR - Vila Velha</item>
+        <item>CA - Hamilton</item>
         <item>CA - Montréal</item>
+        <item>CA - Toronto</item>
+        <item>CA - Vancouver</item>
+        <item>CA - Vancouver (UBC)</item>
+        <item>CH - Lucerne</item>
+        <item>CL - Santiago</item>
+        <item>CY - Limassol</item>
+        <item>CY - Nicosia</item>
+        <item>CZ - Havířov</item>
+        <item>CZ - Ostrava</item>
+        <item>CZ - Prostějov</item>
+        <item>DE - Augsburg</item>
+        <item>DE - Berlin</item>
+        <item>DE - Buch</item>
+        <item>DE - Bonn (Nextbike)</item>
+        <item>DE - Bonn (NVK)</item>
+        <item>DE - Bremen</item>
+        <item>DE - Düsseldorf</item>
+        <item>DE - Erfurt</item>
+        <item>DE - Essen</item>
+        <item>DE - Frankfurt</item>
+        <item>DE - Freiburg im Breisgau</item>
+        <item>DE - Gießen</item>
+        <item>DE - Karlsruhe</item>
+        <item>DE - Kassel</item>
+        <item>DE - Kiel</item>
+        <item>DE - Köln</item>
+        <item>DE - Lahr</item>
+        <item>DE - Leipzig</item>
+        <item>DE - Leverkusen</item>
+        <item>DE - Lippstadt</item>
+        <item>DE - Manheim</item>
+        <item>DE - Mönchengladbach</item>
+        <item>DE - Nürnberg</item>
+        <item>DE - Potsdam</item>
+        <item>DE - Usedom</item>
+        <item>DE - Walldorf</item>
+        <item>ES - Barcelona</item>
+        <item>ES - Bilbao</item>
+        <item>ES - Ibiza</item>
+        <item>ES - Las Palmas de Gran Canaria</item>
+        <item>ES - Madrid</item>
+        <item>ES - Maspalomas</item>
+        <item>FR - Amiens</item>
+        <item>FR - Avignon</item>
+        <item>FR - Cergy-Pontoise</item>
+        <item>FR - Clermont-Ferrand</item>
+        <item>FR - Créteil</item>
+        <item>FR - Lyon</item>
+        <item>FR - Marseille</item>
+        <item>FR - Montpellier</item>
+        <item>FR - Mulhouse</item>
+        <item>FR - Nancy</item>
+        <item>FR - Nantes</item>
+        <item>FR - Paris</item>
+        <item>FR - Rennes</item>
+        <item>FR - Rouen</item>
+        <item>FR - Saint-Étienne</item>
+        <item>FR - Strasbourg</item>
+        <item>FR - Toulouse</item>
+        <item>FR - Valence</item>
+        <item>FR - Vannes</item>
+        <item>GB - Belfast</item>
+        <item>GB - Uxbridge</item>
+        <item>GB - Cardiff</item>
+        <item>GB - Edinburgh</item>
+        <item>GB - Exeter</item>
+        <item>GB - Glasgow</item>
+        <item>GB - Milton Keynes</item>
+        <item>GB - Stirling</item>
+        <item>GB - Swansea</item>
+        <item>HR - Metković</item>
+        <item>HR - Šibenik</item>
+        <item>HR - Sisak</item>
+        <item>HR - Slavonski Brod</item>
+        <item>HR - Split</item>
+        <item>HR - Velika Gorica</item>
+        <item>HR - Zadar</item>
+        <item>HR - Zagreb</item>
+        <item>IN - Bhopal</item>
+        <item>IN - Chennai</item>
+        <item>IN - Delhi</item>
+        <item>IN - Hyderabad</item>
+        <item>IN - Ranchi</item>
+        <item>IT - Verona</item>
+        <item>LB - Byblos</item>
+        <item>LV - Rīga</item>
+        <item>MC - Monaco</item>
+        <item>MT - Malta</item>
+        <item>MX - Guadalajara</item>
+        <item>NL - Dordrecht</item>
+        <item>NL - Wageningen</item>
+        <item>NO - Bergen</item>
+        <item>NO - Oslo</item>
+        <item>NO - Trondheim</item>
+        <item>NZ - Auckland</item>
+        <item>PL - Chorzów</item>
+        <item>PL - Grodzisk Mazowiecki</item>
+        <item>PL - Kołobrzeg</item>
+        <item>PL - Konin</item>
+        <item>PL - Legnica</item>
+        <item>PL - Łódź</item>
+        <item>PL - Lublin</item>
+        <item>PL - Marki</item>
+        <item>PL - Ostrów Wielkopolski</item>
+        <item>PL - Piaseczno</item>
+        <item>PL - Pielgrzymka</item>
+        <item>PL - Poznań</item>
+        <item>PL - Sosnowiec</item>
+        <item>PL - Szczecin</item>
+        <item>PL - Tarnów</item>
+        <item>PL - Warszawa</item>
+        <item>PL - Wrocław</item>
+        <item>SA - King Abdullah Economic City</item>
+        <item>SE - Göteborg</item>
+        <item>SI - Celje</item>
+        <item>SK - Nitra</item>
+        <item>SK - Žilina</item>
+        <item>UA - Lviv</item>
+        <item>UA - Vinnytsia</item>
+        <item>US - Aspen</item>
+        <item>US - Atlanta</item>
+        <item>US - Austin</item>
+        <item>US - Aventura</item>
+        <item>US - Battle Creek</item>
+        <item>US - Boston</item>
+        <item>US - Boulder</item>
+        <item>US - Buffalo</item>
+        <item>US - Charlotte</item>
+        <item>US - Chattanooga</item>
+        <item>US - Chicago</item>
+        <item>US - Cincinnati</item>
+        <item>US - Clarksville</item>
+        <item>US - Clemson</item>
+        <item>US - Columbus</item>
+        <item>US - Des Moines</item>
+        <item>US - Detroit</item>
+        <item>US - El Paso</item>
+        <item>US - Fort Lauderdale</item>
+        <item>US - Fort Worth</item>
+        <item>US - Freemont</item>
+        <item>US - Greenville</item>
+        <item>US - Honolulu</item>
+        <item>US - Houston</item>
+        <item>US - Indianapolis</item>
+        <item>US - Jackson</item>
+        <item>US - Kona</item>
+        <item>US - Las Vegas</item>
+        <item>US - Lincoln</item>
+        <item>US - Los Angeles</item>
+        <item>US - Louisville</item>
+        <item>US - Madison</item>
+        <item>US - McAllen</item>
+        <item>US - Memphis</item>
+        <item>US - Milwaukee</item>
+        <item>US - Minneapolis</item>
+        <item>US - New York</item>
+        <item>US - Omaha</item>
+        <item>US - Orlando</item>
+        <item>US - Philadelphia</item>
+        <item>US - Phoenix</item>
+        <item>US - Pittsburgh</item>
+        <item>US - Portland</item>
+        <item>US - Salt Lake City</item>
+        <item>US - San Antonio</item>
+        <item>US - San Francisco Bay Area</item>
+        <item>US - San Ramon</item>
+        <item>US - Santa Barbara</item>
+        <item>US - Santa Monica</item>
+        <item>US - Spartanburg</item>
+        <item>US - St. Petersburg</item>
+        <item>US - Tampa</item>
+        <item>US - Tempe</item>
+        <item>US - Tucson</item>
+        <item>US - Washington</item>
+
     </string-array>
 
     <string-array name="cityId">
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
         <item>1</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>27</item>
+        <item>28</item>
+        <item>29</item>
+        <item>30</item>
+        <item>31</item>
+        <item>32</item>
+        <item>33</item>
+        <item>34</item>
+        <item>35</item>
+        <item>36</item>
+        <item>37</item>
+        <item>38</item>
+        <item>39</item>
+        <item>40</item>
+        <item>41</item>
+        <item>42</item>
+        <item>43</item>
+        <item>44</item>
+        <item>45</item>
+        <item>46</item>
+        <item>47</item>
+        <item>48</item>
+        <item>49</item>
+        <item>50</item>
+        <item>51</item>
+        <item>52</item>
+        <item>53</item>
+        <item>54</item>
+        <item>55</item>
+        <item>56</item>
+        <item>57</item>
+        <item>58</item>
+        <item>59</item>
+        <item>60</item>
+        <item>61</item>
+        <item>62</item>
+        <item>63</item>
+        <item>64</item>
+        <item>65</item>
+        <item>66</item>
+        <item>67</item>
+        <item>68</item>
+        <item>69</item>
+        <item>70</item>
+        <item>71</item>
+        <item>72</item>
+        <item>73</item>
+        <item>74</item>
+        <item>75</item>
+        <item>76</item>
+        <item>77</item>
+        <item>78</item>
+        <item>79</item>
+        <item>80</item>
+        <item>81</item>
+        <item>82</item>
+        <item>83</item>
+        <item>84</item>
+        <item>85</item>
+        <item>86</item>
+        <item>87</item>
+        <item>88</item>
+        <item>89</item>
+        <item>90</item>
+        <item>91</item>
+        <item>92</item>
+        <item>93</item>
+        <item>94</item>
+        <item>95</item>
+        <item>96</item>
+        <item>97</item>
+        <item>98</item>
+        <item>99</item>
+        <item>100</item>
+        <item>101</item>
+        <item>102</item>
+        <item>103</item>
+        <item>104</item>
+        <item>105</item>
+        <item>106</item>
+        <item>107</item>
+        <item>108</item>
+        <item>109</item>
+        <item>110</item>
+        <item>111</item>
+        <item>112</item>
+        <item>113</item>
+        <item>114</item>
+        <item>115</item>
+        <item>116</item>
+        <item>117</item>
+        <item>118</item>
+        <item>119</item>
+        <item>120</item>
+        <item>121</item>
+        <item>122</item>
+        <item>123</item>
+        <item>124</item>
+        <item>125</item>
+        <item>126</item>
+        <item>127</item>
+        <item>128</item>
+        <item>129</item>
+        <item>130</item>
+        <item>131</item>
+        <item>132</item>
+        <item>133</item>
+        <item>134</item>
+        <item>135</item>
+        <item>136</item>
+        <item>137</item>
+        <item>138</item>
+        <item>139</item>
+        <item>140</item>
+        <item>141</item>
+        <item>142</item>
+        <item>143</item>
+        <item>144</item>
+        <item>145</item>
+        <item>146</item>
+        <item>147</item>
+        <item>148</item>
+        <item>149</item>
+        <item>150</item>
+        <item>151</item>
+        <item>152</item>
+        <item>153</item>
+        <item>154</item>
+        <item>155</item>
+        <item>156</item>
+        <item>157</item>
+        <item>158</item>
+        <item>159</item>
+        <item>160</item>
+        <item>161</item>
+        <item>162</item>
+        <item>163</item>
+        <item>164</item>
+        <item>165</item>
+        <item>166</item>
+        <item>167</item>
+        <item>168</item>
+        <item>169</item>
+        <item>170</item>
+        <item>171</item>
+        <item>172</item>
+        <item>173</item>
+        <item>174</item>
+        <item>175</item>
+        <item>176</item>
+        <item>177</item>
+        <item>178</item>
+        <item>179</item>
+        <item>180</item>
+        <item>181</item>
+        <item>182</item>
+        <item>183</item>
+        <item>184</item>
+        <item>185</item>
+        <item>186</item>
+        <item>187</item>
+        <item>188</item>
+        <item>189</item>
+        <item>190</item>
+        <item>191</item>
+        <item>192</item>
+        <item>193</item>
+        <item>194</item>
+        <item>195</item>
     </string-array>
 </resources>
