@@ -3,6 +3,8 @@ package com.martinm.sharedocks
 import com.google.android.gms.maps.model.LatLng
 import org.json.JSONArray
 import org.json.JSONObject
+import java.lang.Exception
+import java.lang.Thread.sleep
 import java.net.HttpURLConnection
 import java.net.URL
 import java.time.Duration
@@ -41,6 +43,7 @@ object ShareApiHandler {
                 }
             }
         }
+        sleep(100)
     }
 
     private fun getDocksJson(url: URL): JSONArray {
@@ -80,8 +83,14 @@ object ShareApiHandler {
                 docks[id]!!.availableDocks = obj.getInt("num_docks_available")
                 docks[id]!!.lastUpdate = Instant.ofEpochMilli(obj.getLong("last_reported"))
                 // The "is_renting" property is not needed for tracking
-                docks[id]!!.isActive =
-                    obj.getInt("is_installed") == 1 && obj.getInt("is_returning") == 1
+                try {
+                    docks[id]!!.isActive =
+                        obj.getInt("is_installed") == 1 && obj.getInt("is_returning") == 1
+                } catch (e: Exception) {
+                    docks[id]!!.isActive =
+                        obj.getBoolean("is_installed") && obj.getBoolean("is_returning")
+                }
+
                 docks[id]!!.updateHue()
             }
         }
