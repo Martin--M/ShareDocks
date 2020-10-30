@@ -3,6 +3,6 @@
     android:id="@+id/tracked_stations_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent">
+    android:background="@android:color/white">
 
 </androidx.recyclerview.widget.RecyclerView>
