@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.GoogleMap
+import java.lang.StringBuilder
 
 class FavoritesAdapter(private val docks: MutableList<ShareStation>, private val map: GoogleMap) :
     RecyclerView.Adapter<FavoritesAdapter.FavoritesViewHolder>() {
@@ -23,7 +24,13 @@ class FavoritesAdapter(private val docks: MutableList<ShareStation>, private val
     }
 
     override fun onBindViewHolder(holder: FavoritesViewHolder, position: Int) {
-        holder.textView.text = docks[position].name
+        val stationStr = StringBuilder()
+            .append(docks[position].name)
+            .append("\n\uD83D\uDEB2: ")
+            .append(String.format("%-13s", docks[position].availableBikes.toString()))
+            .append("\uD83D\uDCCD: ")
+            .append(docks[position].availableDocks)
+        holder.textView.text = stationStr.toString()
         holder.textView.setOnClickListener {
             ShareStation.userLocation = docks[position].location
             Utils.centerMap(map, 17F)
