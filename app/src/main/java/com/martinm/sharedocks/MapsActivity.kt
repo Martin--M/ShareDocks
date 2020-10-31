@@ -117,6 +117,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             thread(start = true) {
                 Utils.setupMap(this, mMap, mMarkers)
             }
+        } else {
+            thread(start = true) {
+                Utils.showNoCitySelectedPopup(this)
+            }
         }
     }
 

@@ -1,6 +1,7 @@
 package com.martinm.sharedocks
 
 import android.content.Context
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.os.Handler
 import android.view.Gravity
@@ -13,6 +14,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.preference.PreferenceFragmentCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
@@ -30,6 +32,7 @@ object Utils {
     const val RECEIVER_REQUEST_ID_STOP_TRACKING = 1
 
     private val mApi = ShareApiHandler
+    private lateinit var mTextPopup: PopupWindow
     var isMapLoading = false
     var stopLoadRequest = false
     var favoritesPopup: PopupWindow? = null
@@ -207,6 +210,9 @@ object Utils {
 
     fun setupSettingsButtonCallback(context: AppCompatActivity) {
         context.findViewById<ImageButton>(R.id.button_settings).setOnClickListener {
+            if (this::mTextPopup.isInitialized) {
+                mTextPopup.dismiss()
+            }
             context.supportActionBar?.setDisplayHomeAsUpEnabled(true)
             context.title = "Preferences"
             context.supportFragmentManager
@@ -214,6 +220,28 @@ object Utils {
                 .replace(R.id.map, BackgroundOverlayFragment())
                 .replace(R.id.settings_background_fragment, SettingsFragment())
                 .commit()
+        }
+    }
+
+    fun showNoCitySelectedPopup(context: AppCompatActivity) {
+        val popupView =
+            (context.getSystemService(AppCompatActivity.LAYOUT_INFLATER_SERVICE) as LayoutInflater)
+                .inflate(R.layout.text_popup, context.findViewById(R.id.map), false)
+        mTextPopup = PopupWindow(
+            popupView,
+            ConstraintLayout.LayoutParams.WRAP_CONTENT,
+            ConstraintLayout.LayoutParams.WRAP_CONTENT
+        )
+
+        while (!context.lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+            Thread.sleep(100)
+        }
+        context.runOnUiThread {
+            mTextPopup.showAtLocation(
+                context.findViewById(R.id.map),
+                Gravity.CENTER,
+                0, 0
+            )
         }
     }
 

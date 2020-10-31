@@ -21,4 +21,5 @@
     <string name="notification_update_content_single">1 station est pleine</string>
     <string name="tts_update_available">La station à %1$s n\'est plus pleine</string>
     <string name="button_user_stations_description">Button pour voir les stations suivies par l\'usager</string>
+    <string name="popup_no_city_selected">S\'il vous plaît choisissez une ville</string>
 </resources>
