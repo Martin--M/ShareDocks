@@ -15,6 +15,9 @@ class ActivityTransitionReceiver : BroadcastReceiver() {
         }
         val result = ActivityTransitionResult.extractResult(intent)!!
         for (event in result.transitionEvents) {
+            if (SystemClock.elapsedRealtimeNanos() - event.elapsedRealTimeNanos > 45L * 1000 * 1000 * 1000) {
+                continue
+            }
             if (event.activityType == DetectedActivity.ON_BICYCLE) {
                 if (event.transitionType == ActivityTransition.ACTIVITY_TRANSITION_ENTER) {
                     /* Make sure the configuration handler hasn't been disposed */
