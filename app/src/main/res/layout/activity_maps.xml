@@ -26,8 +26,7 @@
         android:layout_gravity="end|top"
         android:layout_margin="20dp"
         android:contentDescription=""
-        android:background="@android:color/transparent"
-        android:padding="5dp"
+        android:background="@android:drawable/ic_menu_preferences"
         android:src="@android:drawable/ic_menu_preferences" />
 
 </fragment>

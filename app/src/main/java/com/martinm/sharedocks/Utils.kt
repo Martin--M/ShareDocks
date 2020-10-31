@@ -221,6 +221,8 @@ object Utils {
                 .replace(R.id.settings_background_fragment, SettingsFragment())
                 .commit()
         }
+        context.findViewById<ImageButton>(R.id.button_settings)
+            .setColorFilter(context.getColor(R.color.colorPrimary), PorterDuff.Mode.MULTIPLY)
     }
 
     fun showNoCitySelectedPopup(context: AppCompatActivity) {
