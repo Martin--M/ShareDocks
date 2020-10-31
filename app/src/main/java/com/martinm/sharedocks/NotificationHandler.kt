@@ -84,7 +84,7 @@ object NotificationHandler {
             context,
             Utils.RECEIVER_REQUEST_ID_STOP_TRACKING,
             Intent(context, StopTrackingReceiver::class.java),
-            PendingIntent.FLAG_IMMUTABLE
+            PendingIntent.FLAG_UPDATE_CURRENT
         )
 
         return NotificationCompat.Builder(context, CHANNEL_ID_TRACKING)

@@ -33,6 +33,8 @@ object LogicHandler {
                         if (ShareApiHandler.docks.isEmpty()) {
                             Utils.safeLoadDockLocations(mTimerContext)
                             Utils.loadUserDocks()
+                        } else {
+                            ShareApiHandler.loadStationUrls()
                         }
                         Utils.safeUpdateDockStatus(mTimerContext)
 
@@ -85,9 +87,9 @@ object LogicHandler {
         createTrackingTimer(ConfigurationHandler.getTrackingUpdatePeriodSec())
         thread(start = true) {
             // Load docks again in case the whole context has been lost
+            CityUtils.currentCity = ConfigurationHandler.getCityId()
             Utils.safeLoadDockLocations(context)
             Utils.loadUserDocks()
-            CityUtils.currentCity = ConfigurationHandler.getCityId()
 
             mUnavailableIds.clear()
             mTimerContext = context

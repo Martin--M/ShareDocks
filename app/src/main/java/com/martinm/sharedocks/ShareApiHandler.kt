@@ -4,7 +4,6 @@ import com.google.android.gms.maps.model.LatLng
 import org.json.JSONArray
 import org.json.JSONObject
 import java.lang.Exception
-import java.lang.Thread.sleep
 import java.net.HttpURLConnection
 import java.net.URL
 import java.time.Duration
@@ -22,7 +21,7 @@ object ShareApiHandler {
      * Note: all API information is available at: https://github.com/NABSA/gbfs
      */
 
-    private fun loadStationUrls() {
+    fun loadStationUrls() {
         with(CityUtils.map[CityUtils.currentCity]?.baseUrl!!.openConnection() as HttpURLConnection) {
             requestMethod = "GET"
             inputStream.bufferedReader().use { reader ->
@@ -43,7 +42,6 @@ object ShareApiHandler {
                 }
             }
         }
-        sleep(100)
     }
 
     private fun getDocksJson(url: URL): JSONArray {
