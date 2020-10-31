@@ -10,35 +10,38 @@ import java.util.*
 object TtsHandler {
     private lateinit var mTextToSpeech: TextToSpeech
     private lateinit var mAudioManager: AudioManager
-
-    private val initListener = TextToSpeech.OnInitListener {
-        if (it == TextToSpeech.SUCCESS) {
-            mTextToSpeech.language = Locale.getDefault()
-        }
-
-        mTextToSpeech.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
-            private val focusGain = if (ConfigurationHandler.getExclusiveAudioEnabled()) {
-                AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_EXCLUSIVE
-            } else {
-                AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK
-            }
-            private val mFocusRequest: AudioFocusRequest =
-                AudioFocusRequest.Builder(focusGain).build()
-
-            override fun onDone(p0: String?) {
-                mAudioManager.abandonAudioFocusRequest(mFocusRequest)
-            }
-
-            override fun onError(p0: String?) {
-            }
-
-            override fun onStart(p0: String?) {
-                mAudioManager.requestAudioFocus(mFocusRequest)
-            }
-        })
-    }
+    var utteranceCount = 0
 
     fun initialize(context: Context) {
+        val initListener = TextToSpeech.OnInitListener {
+            if (it == TextToSpeech.SUCCESS) {
+                mTextToSpeech.language = Locale.getDefault()
+            }
+
+            mTextToSpeech.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
+                private val focusGain = if (ConfigurationHandler.getExclusiveAudioEnabled()) {
+                    AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_EXCLUSIVE
+                } else {
+                    AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK
+                }
+                private val mFocusRequest: AudioFocusRequest =
+                    AudioFocusRequest.Builder(focusGain).build()
+
+                override fun onDone(p0: String?) {
+                    mAudioManager.abandonAudioFocusRequest(mFocusRequest)
+                    if (--utteranceCount <= 0) {
+                        mTextToSpeech.shutdown()
+                    }
+                }
+
+                override fun onError(p0: String?) {
+                }
+
+                override fun onStart(p0: String?) {
+                    mAudioManager.requestAudioFocus(mFocusRequest)
+                }
+            })
+        }
         mAudioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         mTextToSpeech = TextToSpeech(context, initListener)
     }

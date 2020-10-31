@@ -66,8 +66,10 @@ object LogicHandler {
                                 )
                             }
                             // Wait for the notification alert to finish
+                            TtsHandler.initialize(mTimerContext)
                             sleep(2000)
                             currentChanges.forEach {
+                                TtsHandler.utteranceCount++
                                 TtsHandler.speak(
                                     Utils.buildTrackingTTS(mTimerContext, it.key, it.value)
                                 )
@@ -83,7 +85,6 @@ object LogicHandler {
             return
         }
         isTracking = true
-        TtsHandler.initialize(context)
         createTrackingTimer(ConfigurationHandler.getTrackingUpdatePeriodSec())
         thread(start = true) {
             // Load docks again in case the whole context has been lost
