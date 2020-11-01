@@ -106,7 +106,19 @@ object ShareApiHandler {
                 docks[id] = ShareStation(id)
             }
 
-            docks[id]!!.location = LatLng(obj.getDouble("lat"), obj.getDouble("lon"))
+            var tmpStr = obj.getString("lat")
+            val lat = if (tmpStr == "null") {
+                0.0
+            } else {
+                tmpStr.toDouble()
+            }
+            tmpStr = obj.getString("lon")
+            val lon = if (tmpStr == "null") {
+                0.0
+            } else {
+                tmpStr.toDouble()
+            }
+            docks[id]!!.location = LatLng(lat, lon)
             docks[id]!!.name = obj.getString("name")
 
             if (docks[id]!!.location.longitude == 0.0 && docks[id]!!.location.latitude == 0.0) {
