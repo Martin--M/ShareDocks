@@ -69,4 +69,8 @@ object ConfigurationHandler {
         }
         return strId.toInt()
     }
+
+    fun getTtsEnabled(): Boolean {
+        return mSettings.getBoolean("settings_enable_tts", true)
+    }
 }

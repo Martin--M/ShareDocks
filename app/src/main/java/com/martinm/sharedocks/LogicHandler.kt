@@ -65,14 +65,16 @@ object LogicHandler {
                                     notificationDetails
                                 )
                             }
-                            // Wait for the notification alert to finish
-                            TtsHandler.initialize(mTimerContext)
-                            sleep(2000)
-                            currentChanges.forEach {
-                                TtsHandler.utteranceCount++
-                                TtsHandler.speak(
-                                    Utils.buildTrackingTTS(mTimerContext, it.key, it.value)
-                                )
+                            if (ConfigurationHandler.getTtsEnabled()) {
+                                TtsHandler.initialize(mTimerContext)
+                                // Wait for the notification alert to finish
+                                sleep(2000)
+                                currentChanges.forEach {
+                                    TtsHandler.utteranceCount++
+                                    TtsHandler.speak(
+                                        Utils.buildTrackingTTS(mTimerContext, it.key, it.value)
+                                    )
+                                }
                             }
                         }
                     }
