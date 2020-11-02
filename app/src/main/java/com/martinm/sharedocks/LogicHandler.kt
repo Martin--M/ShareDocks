@@ -110,6 +110,11 @@ object LogicHandler {
     fun stopTracking() {
         if (this::mTrackingTimer.isInitialized) {
             mTrackingTimer.cancel()
+            NotificationHandler.removeTrackingNotifications(
+                mTimerContext.getSystemService(
+                    Context.NOTIFICATION_SERVICE
+                ) as NotificationManager
+            )
         }
         isTracking = false
     }
