@@ -170,9 +170,9 @@ object LogicHandler {
     private fun shutdownDetected(stations: MutableMap<String, ShareStation>): Boolean {
         stations.forEach { (_, value) ->
             if (value.isActive) {
-                return true
+                return false
             }
         }
-        return false
+        return true
     }
 }
