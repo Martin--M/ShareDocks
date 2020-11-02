@@ -156,7 +156,7 @@ object Utils {
     fun setupFavoritesButtonCallback(context: AppCompatActivity, map: GoogleMap) {
         context.findViewById<ImageButton>(R.id.button_favorites).setOnClickListener {
             context.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            context.title = "Tracked stations"
+            context.title = context.getString(R.string.actionbar_title_favorites)
             val favoritesView =
                 (context.getSystemService(AppCompatActivity.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(
                     R.layout.tracked_stations_view,
@@ -214,7 +214,7 @@ object Utils {
                 mTextPopup.dismiss()
             }
             context.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            context.title = "Preferences"
+            context.title = context.getString(R.string.actionbar_title_settings)
             context.supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.map, BackgroundOverlayFragment())

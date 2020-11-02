@@ -20,6 +20,25 @@
     <string name="tts_replace_intersection">and</string>
     <string name="notification_update_content_single">1 station is full</string>
     <string name="tts_update_available">Station at %1$s is not full anymore</string>
-    <string name="button_user_stations_description">Button to see user-tracked stations</string>
+    <string name="button_favorites">Tracked stations</string>
     <string name="popup_no_city_selected">Please select a city</string>
+    <string name="actionbar_title_favorites">Tracked Stations</string>
+    <string name="actionbar_title_settings">Settings</string>
+    <string name="button_settings">Settings</string>
+    <string name="settings_category_title_basic">Basic</string>
+    <string name="settings_entry_title_enable_tracking">Enable station tracking</string>
+    <string name="settings_entry_summary_enable_tracking">The core of this app. Disabling it can be useful for long periods where the app shouldn\'t start tracking even if biking is detected</string>
+    <string name="settings_entry_title_current_city">Current city</string>
+    <string name="settings_entry_title_tracking_period">Period between station updates</string>
+    <string name="settings_entry_summary_tracking_period">While in tracking mode, how often should the application update station data (in seconds)</string>
+    <string name="settings_entry_title_color_code">Colors on station markers</string>
+    <string name="settings_entry_summary_color_code">Show the color of the station markers based on the availability of bikes. This might take some time in cities with many stations</string>
+    <string name="settings_entry_title_responsiveness">Responsiveness during map load</string>
+    <string name="settings_entry_summary_responsiveness">A \'0\' here means that all markers will be color coding before loading the map. A higher value represents how slowly will the markers be color coded after the map is displayed and usable</string>
+    <string name="settings_category_title_visuals">Visuals</string>
+    <string name="settings_category_entry_tts">Text-to-Speech</string>
+    <string name="settings_entry_title_tts_enable">Enable</string>
+    <string name="settings_entry_summary_tts_enable">Get a voice notification when a tracked station is full</string>
+    <string name="settings_entry_title_tts_exclusive">Pause music during notifications</string>
+    <string name="settings_entry_summary_tts_exclusive">Temporarily pause music playback until the notification is over</string>
 </resources>

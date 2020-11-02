@@ -3,15 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/white">
 
-    <PreferenceCategory android:title="Basic">
+    <PreferenceCategory android:title="@string/settings_category_title_basic">
         <SwitchPreferenceCompat
-            android:title="Enable station tracking"
-            android:summary="The core of this app. Disabling it can be useful for vacations, winter, or long periods where the app shouldn't start tracking when biking is detected"
+            android:title="@string/settings_entry_title_enable_tracking"
+            android:summary="@string/settings_entry_summary_enable_tracking"
             android:defaultValue="true"
             android:key="settings_enable_tracking" />
 
         <ListPreference
-            android:title="Current city"
+            android:title="@string/settings_entry_title_current_city"
             android:summary="%s"
             android:entries="@array/cityData"
             android:entryValues="@array/cityId"
@@ -19,8 +19,8 @@
             android:key="settings_current_city" />
 
         <SeekBarPreference
-            android:title="Period between station updates"
-            android:summary="While in tracking mode, how often should the application update station data (in seconds)"
+            android:title="@string/settings_entry_title_tracking_period"
+            android:summary="@string/settings_entry_summary_tracking_period"
             android:max="300"
             app:min="10"
             android:defaultValue="30"
@@ -29,17 +29,17 @@
             android:key="tracking_period_s" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Visuals">
+    <PreferenceCategory android:title="@string/settings_category_title_visuals">
         <SwitchPreferenceCompat
-            android:title="Colors on station markers"
-            android:summary="Show the color of the station marker based on the availability of bikes"
+            android:title="@string/settings_entry_title_color_code"
+            android:summary="@string/settings_entry_summary_color_code"
             android:defaultValue="false"
             android:dependency="settings_enable_tracking"
             android:key="settings_is_colors_on_markers" />
 
         <SeekBarPreference
-            android:title="Load responsiveness"
-            android:summary="How responsive the UI will be while loading the markers. 0 responsiveness means that all the markers will be loaded and color coded before even displayed the map. Might take a few seconds"
+            android:title="@string/settings_entry_title_responsiveness"
+            android:summary="@string/settings_entry_summary_responsiveness"
             android:max="100"
             android:min="0"
             android:defaultValue="50"
@@ -48,17 +48,17 @@
             android:key="settings_load_responsiveness" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Text-To-Speech">
+    <PreferenceCategory android:title="@string/settings_category_entry_tts">
         <SwitchPreferenceCompat
-            android:title="Enable"
-            android:summary="Get a voice notification when a tracked station is full"
+            android:title="@string/settings_entry_title_tts_enable"
+            android:summary="@string/settings_entry_summary_tts_enable"
             android:defaultValue="true"
             android:dependency="settings_enable_tracking"
             android:key="settings_enable_tts" />
 
         <SwitchPreferenceCompat
-            android:title="Pause music during notifications"
-            android:summary="Temporarily pause music playback until the notification is over"
+            android:title="@string/settings_entry_title_tts_exclusive"
+            android:summary="@string/settings_entry_summary_tts_exclusive"
             android:defaultValue="true"
             android:dependency="settings_enable_tts"
             android:key="settings_exclusive_audio" />
