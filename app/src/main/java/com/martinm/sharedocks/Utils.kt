@@ -16,10 +16,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.preference.PreferenceFragmentCompat
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
@@ -155,56 +151,7 @@ object Utils {
 
     fun setupFavoritesButtonCallback(context: AppCompatActivity, map: GoogleMap) {
         context.findViewById<ImageButton>(R.id.button_favorites).setOnClickListener {
-            context.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            context.title = context.getString(R.string.actionbar_title_favorites)
-            val favoritesView =
-                (context.getSystemService(AppCompatActivity.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(
-                    R.layout.tracked_stations_view,
-                    context.findViewById(R.id.map),
-                    false
-                ) as RecyclerView
-            val favoritesAdapter = FavoritesAdapter(LogicHandler.userDocks, map)
-            favoritesView.setHasFixedSize(true)
-            favoritesView.layoutManager = GridLayoutManager(context, 1)
-            favoritesView.adapter = favoritesAdapter
-            favoritesView.addItemDecoration(
-                DividerItemDecoration(
-                    favoritesView.context,
-                    DividerItemDecoration.VERTICAL
-                )
-            )
-
-            favoritesPopup = PopupWindow(
-                favoritesView,
-                ConstraintLayout.LayoutParams.MATCH_PARENT,
-                context.findViewById<View>(R.id.map).height
-            )
-            favoritesPopup!!.showAtLocation(
-                context.findViewById(R.id.map),
-                Gravity.BOTTOM,
-                0, 0
-            )
-
-            val touchHelper = ItemTouchHelper(object :
-                ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
-                override fun onMove(
-                    recyclerView: RecyclerView,
-                    viewHolder: RecyclerView.ViewHolder,
-                    target: RecyclerView.ViewHolder
-                ): Boolean {
-                    return true
-                }
-
-                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                    if (LogicHandler.userDocks.size > viewHolder.layoutPosition) {
-                        LogicHandler.userDocks.removeAt(viewHolder.layoutPosition)
-                        ConfigurationHandler.storeStationList(LogicHandler.userDocks)
-                    }
-                    favoritesAdapter.notifyItemRemoved(viewHolder.layoutPosition)
-                }
-
-            })
-            touchHelper.attachToRecyclerView(favoritesView)
+            FavoritesHandler.loadFavoritesPage(context, map)
         }
     }
 
