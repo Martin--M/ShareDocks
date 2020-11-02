@@ -6,7 +6,6 @@ import androidx.preference.PreferenceManager
 import java.lang.StringBuilder
 
 object ConfigurationHandler {
-    private lateinit var mContext: Context
     private lateinit var mSettings: SharedPreferences
 
     private fun buildStationStorageKey(): String {
@@ -16,7 +15,6 @@ object ConfigurationHandler {
     }
 
     fun initialize(context: Context) {
-        mContext = context
         mSettings = PreferenceManager.getDefaultSharedPreferences(context)
     }
 
