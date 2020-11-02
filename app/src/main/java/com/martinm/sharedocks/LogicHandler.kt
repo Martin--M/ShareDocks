@@ -48,6 +48,14 @@ object LogicHandler {
                             return@thread
                         }
 
+                        if (ShareApiHandler.docks.isEmpty()) {
+                            return@thread
+                        }
+
+                        if (shutdownDetected(ShareApiHandler.docks)) {
+                            return@thread
+                        }
+
                         val notificationDetails =
                             NotificationHandler.buildTrackingNotificationMessage(mUnavailableIds)
 
@@ -157,5 +165,14 @@ object LogicHandler {
                 Toast.LENGTH_LONG
             ).show()
         }
+    }
+
+    private fun shutdownDetected(stations: MutableMap<String, ShareStation>): Boolean {
+        stations.forEach { (_, value) ->
+            if (value.isActive) {
+                return true
+            }
+        }
+        return false
     }
 }
