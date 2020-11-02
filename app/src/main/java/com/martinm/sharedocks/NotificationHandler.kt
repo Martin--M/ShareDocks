@@ -12,7 +12,6 @@ import androidx.core.app.NotificationManagerCompat
 
 object NotificationHandler {
     private val mApi = ShareApiHandler
-    private lateinit var mNotificationManager: NotificationManager
 
     private const val CHANNEL_ID_UPDATES: String = "DocksUpdates"
     private const val CHANNEL_ID_TRACKING: String = "DocksTracking"
@@ -21,7 +20,6 @@ object NotificationHandler {
     const val NOTIFICATION_ID_TRACKING = 100002
 
     fun initialize(context: Context, notificationManager: NotificationManager) {
-        mNotificationManager = notificationManager
         val chanUpdates = NotificationChannel(
             CHANNEL_ID_UPDATES,
             context.getString(R.string.notification_channel_update_name),
@@ -36,8 +34,8 @@ object NotificationHandler {
         ).apply {
             description = context.getString(R.string.notification_channel_tracking_description)
         }
-        mNotificationManager.createNotificationChannel(chanUpdates)
-        mNotificationManager.createNotificationChannel(chanTracking)
+        notificationManager.createNotificationChannel(chanUpdates)
+        notificationManager.createNotificationChannel(chanTracking)
     }
 
     fun showNotification(
@@ -75,8 +73,8 @@ object NotificationHandler {
         return builder.toString()
     }
 
-    fun removeTrackingNotifications() {
-        mNotificationManager.cancel(NOTIFICATION_ID_UPDATES)
+    fun removeTrackingNotifications(notificationManager: NotificationManager) {
+        notificationManager.cancel(NOTIFICATION_ID_UPDATES)
     }
 
     fun getForegroundNotification(context: Context): Notification {

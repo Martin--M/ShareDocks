@@ -1,5 +1,6 @@
 package com.martinm.sharedocks
 
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -48,7 +49,11 @@ object LogicHandler {
                                 NotificationHandler.buildTrackingNotificationMessage(mUnavailableIds)
 
                             if (notificationDetails == "") {
-                                NotificationHandler.removeTrackingNotifications()
+                                NotificationHandler.removeTrackingNotifications(
+                                    mTimerContext.getSystemService(
+                                        Context.NOTIFICATION_SERVICE
+                                    ) as NotificationManager
+                                )
                             } else {
                                 val content = if (mUnavailableIds.size == 1) {
                                     mTimerContext.getString(R.string.notification_update_content_single)
