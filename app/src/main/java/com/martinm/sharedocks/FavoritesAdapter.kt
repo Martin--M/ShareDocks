@@ -1,22 +1,28 @@
 package com.martinm.sharedocks
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.GoogleMap
+import kotlinx.android.synthetic.main.tracked_stations_entry.view.*
 import java.lang.StringBuilder
 
 class FavoritesAdapter(private val docks: MutableList<ShareStation>, private val map: GoogleMap) :
     RecyclerView.Adapter<FavoritesAdapter.FavoritesViewHolder>() {
 
-    class FavoritesViewHolder(val textView: TextView) : RecyclerView.ViewHolder(textView)
+    class FavoritesViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+        fun setText(text: String) {
+            view.tracked_stations_entry_text_view.text = text
+        }
+    }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritesViewHolder {
-        val textView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.tracked_stations_entry, parent, false) as TextView
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.tracked_stations_entry, parent, false)
 
-        return FavoritesViewHolder(textView)
+        return FavoritesViewHolder(view)
     }
 
     override fun getItemCount(): Int {
@@ -30,8 +36,8 @@ class FavoritesAdapter(private val docks: MutableList<ShareStation>, private val
             .append(String.format("%-13s", docks[position].availableBikes.toString()))
             .append("\uD83D\uDCCD: ")
             .append(docks[position].availableDocks)
-        holder.textView.text = stationStr.toString()
-        holder.textView.setOnClickListener {
+        holder.setText(stationStr.toString())
+        holder.view.setOnClickListener {
             ShareStation.userLocation = docks[position].location
             Utils.centerMap(map, 17F)
             Utils.favoritesPopup?.dismiss()

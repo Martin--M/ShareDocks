@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:fontFamily="monospace"
-    android:letterSpacing="-0.08"
-    android:textSize="15sp"
-    android:padding="10dp"
-    android:id="@+id/tracked_stations_entry">
+    android:layout_height="wrap_content">
 
-</TextView>
+    <TextView
+        android:id="@+id/tracked_stations_entry_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="monospace"
+        android:letterSpacing="-0.08"
+        android:padding="10dp"
+        android:textSize="15sp" />
+
+</RelativeLayout>
