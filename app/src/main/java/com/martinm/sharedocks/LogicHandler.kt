@@ -39,47 +39,50 @@ object LogicHandler {
                         }
                         Utils.safeUpdateDockStatus(mTimerContext)
 
-                        if (Utils.isStationStatusChanged(
+                        if (!Utils.isStationStatusChanged(
                                 userDocks,
                                 mUnavailableIds,
                                 currentChanges
                             )
                         ) {
-                            val notificationDetails =
-                                NotificationHandler.buildTrackingNotificationMessage(mUnavailableIds)
+                            return@thread
+                        }
 
-                            if (notificationDetails == "") {
-                                NotificationHandler.removeTrackingNotifications(
-                                    mTimerContext.getSystemService(
-                                        Context.NOTIFICATION_SERVICE
-                                    ) as NotificationManager
-                                )
+                        val notificationDetails =
+                            NotificationHandler.buildTrackingNotificationMessage(mUnavailableIds)
+
+                        if (mUnavailableIds.isEmpty()) {
+                            NotificationHandler.removeTrackingNotifications(
+                                mTimerContext.getSystemService(
+                                    Context.NOTIFICATION_SERVICE
+                                ) as NotificationManager
+                            )
+                        } else {
+                            val content = if (mUnavailableIds.size == 1) {
+                                mTimerContext.getString(R.string.notification_update_content_single)
                             } else {
-                                val content = if (mUnavailableIds.size == 1) {
-                                    mTimerContext.getString(R.string.notification_update_content_single)
-                                } else {
-                                    mTimerContext.getString(
-                                        R.string.notification_update_content,
-                                        mUnavailableIds.size
-                                    )
-                                }
-                                NotificationHandler.showNotification(
-                                    mTimerContext,
-                                    mTimerContext.getString(R.string.notification_update_title),
-                                    content,
-                                    notificationDetails
+                                mTimerContext.getString(
+                                    R.string.notification_update_content,
+                                    mUnavailableIds.size
                                 )
                             }
-                            if (ConfigurationHandler.getTtsEnabled()) {
-                                TtsHandler.initialize(mTimerContext)
-                                // Wait for the notification alert to finish
-                                sleep(2000)
-                                currentChanges.forEach {
-                                    TtsHandler.utteranceCount++
-                                    TtsHandler.speak(
-                                        Utils.buildTrackingTTS(mTimerContext, it.key, it.value)
-                                    )
-                                }
+                            NotificationHandler.showNotification(
+                                mTimerContext,
+                                mTimerContext.getString(R.string.notification_update_title),
+                                content,
+                                notificationDetails
+                            )
+                        }
+
+                        if (ConfigurationHandler.getTtsEnabled()) {
+                            TtsHandler.initialize(mTimerContext)
+                            // Wait for the notification alert to finish
+                            sleep(2000)
+                            currentChanges.forEach {
+                                TtsHandler.utteranceCount++
+                                TtsHandler.speak(
+                                    Utils.buildTrackingTTS(mTimerContext, it.key, it.value)
+                                )
                             }
                         }
                     }
