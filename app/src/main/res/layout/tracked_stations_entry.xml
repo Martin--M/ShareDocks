@@ -14,4 +14,15 @@
         android:padding="10dp"
         android:textSize="15sp" />
 
+    <ImageView
+        android:id="@+id/sort_icon"
+        android:layout_width="25dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:paddingEnd="10dp"
+        android:contentDescription="@string/favorites_sort_icon"
+        android:src="@drawable/ic_sort"
+        tools:ignore="RtlSymmetry" />
+
 </RelativeLayout>

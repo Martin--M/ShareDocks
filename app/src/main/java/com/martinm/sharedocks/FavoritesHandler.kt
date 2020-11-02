@@ -48,6 +48,10 @@ object FavoritesHandler {
 
     })
 
+    fun startDragging(viewHolder: RecyclerView.ViewHolder) {
+        mTouchHelper.startDrag(viewHolder)
+    }
+
     fun loadFavoritesPage(context: AppCompatActivity, map: GoogleMap) {
         context.supportActionBar?.setDisplayHomeAsUpEnabled(true)
         context.title = context.getString(R.string.actionbar_title_favorites)

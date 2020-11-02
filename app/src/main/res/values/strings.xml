@@ -41,4 +41,5 @@
     <string name="settings_entry_summary_tts_enable">Get a voice notification when a tracked station is full</string>
     <string name="settings_entry_title_tts_exclusive">Pause music during notifications</string>
     <string name="settings_entry_summary_tts_exclusive">Temporarily pause music playback until the notification is over</string>
+    <string name="favorites_sort_icon">Sort</string>
 </resources>

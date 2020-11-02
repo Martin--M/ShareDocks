@@ -1,6 +1,7 @@
 package com.martinm.sharedocks
 
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -22,7 +23,19 @@ class FavoritesAdapter(private val docks: MutableList<ShareStation>, private val
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.tracked_stations_entry, parent, false)
 
-        return FavoritesViewHolder(view)
+        val viewHolder = FavoritesViewHolder(view)
+
+        view.sort_icon.setOnTouchListener { v, event ->
+            when (event.actionMasked) {
+                MotionEvent.ACTION_DOWN -> {
+                    FavoritesHandler.startDragging(viewHolder)
+                }
+                MotionEvent.ACTION_UP -> v.performClick()
+            }
+
+            return@setOnTouchListener true
+        }
+        return viewHolder
     }
 
     override fun getItemCount(): Int {
