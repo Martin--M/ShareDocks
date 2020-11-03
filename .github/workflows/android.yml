@@ -34,6 +34,13 @@ jobs:
 
     - name: Build with Gradle
       run: ./gradlew build --quiet
+      continue-on-error: true
+
+    - name: Upload Lint Report
+      uses: actions/upload-artifact@v2
+      with:
+        name: LintReport
+        path: app/build/reports/lint-results.html
 
     - name: Upload APK
       uses: actions/upload-artifact@v2
