@@ -72,35 +72,43 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         }
     }
 
+    private fun handleBackButton() {
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        title = getString(R.string.app_name)
+        Utils.favoritesPopup?.dismiss()
+        for (fragment in supportFragmentManager.fragments) {
+            if (fragment is SupportMapFragment) {
+                continue
+            }
+            supportFragmentManager.beginTransaction().remove(fragment).commit()
+        }
+
+        if (CityUtils.currentCity != ConfigurationHandler.getCityId()) {
+            CityUtils.currentCity = ConfigurationHandler.getCityId()
+            ShareApiHandler.lastCalled = Instant.MIN
+            ShareStation.userLocation = CityUtils.map[CityUtils.currentCity]?.location!!
+            findViewById<ImageButton>(R.id.button_favorites).visibility = View.GONE
+            Utils.centerMap(mMap, 14F)
+            thread(start = true) {
+                if (Utils.isMapLoading) {
+                    Utils.stopLoadRequest = true
+                    while (Utils.isMapLoading) {
+                        Thread.sleep(10)
+                    }
+                }
+                Utils.setupMap(this, mMap, mMarkers)
+            }
+        }
+    }
+
+    override fun onBackPressed() {
+        handleBackButton()
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                supportActionBar?.setDisplayHomeAsUpEnabled(false)
-                title = getString(R.string.app_name)
-                Utils.favoritesPopup?.dismiss()
-                for (fragment in supportFragmentManager.fragments) {
-                    if (fragment is SupportMapFragment) {
-                        continue
-                    }
-                    supportFragmentManager.beginTransaction().remove(fragment).commit()
-                }
-
-                if (CityUtils.currentCity != ConfigurationHandler.getCityId()) {
-                    CityUtils.currentCity = ConfigurationHandler.getCityId()
-                    ShareApiHandler.lastCalled = Instant.MIN
-                    ShareStation.userLocation = CityUtils.map[CityUtils.currentCity]?.location!!
-                    findViewById<ImageButton>(R.id.button_favorites).visibility = View.GONE
-                    Utils.centerMap(mMap, 14F)
-                    thread(start = true) {
-                        if (Utils.isMapLoading) {
-                            Utils.stopLoadRequest = true
-                            while (Utils.isMapLoading) {
-                                Thread.sleep(10)
-                            }
-                        }
-                        Utils.setupMap(this, mMap, mMarkers)
-                    }
-                }
+                handleBackButton()
                 return true
             }
         }
