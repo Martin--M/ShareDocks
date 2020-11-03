@@ -33,7 +33,7 @@ jobs:
         java-version: 1.8
 
     - name: Build with Gradle
-      run: ./gradlew build --quiet
+      run: ./gradlew build
       continue-on-error: true
 
     - name: Upload Lint Report

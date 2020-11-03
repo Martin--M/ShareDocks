@@ -25,6 +25,12 @@ android {
     lintOptions {
         abortOnError false
     }
+
+    tasks.withType(Test) {
+        testLogging {
+            events "standardOut", "started", "passed", "skipped", "failed"
+        }
+    }
 }
 
 dependencies {
