@@ -55,5 +55,20 @@ object TtsHandler {
         )
     }
 
+    fun buildTrackingTTS(context: Context, stationId: String, isAvailable: Boolean): String {
+        if (ShareApiHandler.docks[stationId] == null) {
+            return ""
+        }
 
+        val stationTTS = ShareApiHandler.docks[stationId]!!.name.replace(
+            "/",
+            context.getString(R.string.tts_replace_intersection)
+        )
+
+        if (isAvailable) {
+            return context.getString(R.string.tts_update_available, stationTTS)
+        }
+
+        return context.getString(R.string.tts_update_full, stationTTS)
+    }
 }

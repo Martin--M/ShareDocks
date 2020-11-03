@@ -89,7 +89,7 @@ object LogicHandler {
                             currentChanges.forEach {
                                 TtsHandler.utteranceCount++
                                 TtsHandler.speak(
-                                    Utils.buildTrackingTTS(mTimerContext, it.key, it.value)
+                                    TtsHandler.buildTrackingTTS(mTimerContext, it.key, it.value)
                                 )
                             }
                         }

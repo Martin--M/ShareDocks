@@ -141,23 +141,6 @@ object Utils {
         return isChanged
     }
 
-    fun buildTrackingTTS(context: Context, stationId: String, isAvailable: Boolean): String {
-        if (mApi.docks[stationId] == null) {
-            return ""
-        }
-
-        val stationTTS = mApi.docks[stationId]!!.name.replace(
-            "/",
-            context.getString(R.string.tts_replace_intersection)
-        )
-
-        if (isAvailable) {
-            return context.getString(R.string.tts_update_available, stationTTS)
-        }
-
-        return context.getString(R.string.tts_update_full, stationTTS)
-    }
-
     fun setupFavoritesButtonCallback(context: AppCompatActivity, map: GoogleMap) {
         context.findViewById<ImageButton>(R.id.button_favorites).setOnClickListener {
             FavoritesHandler.loadFavoritesPage(context, map)
