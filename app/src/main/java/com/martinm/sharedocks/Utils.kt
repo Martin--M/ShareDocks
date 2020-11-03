@@ -108,6 +108,15 @@ object Utils {
         }
     }
 
+    fun moveItems(list: MutableList<ShareStation>, from: Int, to: Int) {
+        if (from > list.size || to > list.size) {
+            return
+        }
+        val tmpStation = list[from]
+        list.removeAt(from)
+        list.add(to, tmpStation)
+    }
+
     fun isStationStatusChanged(
         userStations: MutableList<ShareStation>,
         currentUnavailableIds: MutableList<String>,

@@ -16,19 +16,32 @@ object FavoritesHandler {
     private lateinit var mFavoritesAdapter: FavoritesAdapter
 
     private val mTouchHelper = ItemTouchHelper(object :
-        ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+        ItemTouchHelper.SimpleCallback(
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ) {
         override fun onMove(
             recyclerView: RecyclerView,
             viewHolder: RecyclerView.ViewHolder,
             target: RecyclerView.ViewHolder
         ): Boolean {
+            Utils.moveItems(
+                LogicHandler.userDocks,
+                viewHolder.layoutPosition,
+                target.layoutPosition
+            )
+            mFavoritesAdapter.notifyItemMoved(viewHolder.layoutPosition, target.layoutPosition)
             return true
+        }
+
+        override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
+            super.clearView(recyclerView, viewHolder)
+            ConfigurationHandler.storeStationList(LogicHandler.userDocks)
         }
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             if (LogicHandler.userDocks.size > viewHolder.layoutPosition) {
                 LogicHandler.userDocks.removeAt(viewHolder.layoutPosition)
-                ConfigurationHandler.storeStationList(LogicHandler.userDocks)
             }
             mFavoritesAdapter.notifyItemRemoved(viewHolder.layoutPosition)
         }
