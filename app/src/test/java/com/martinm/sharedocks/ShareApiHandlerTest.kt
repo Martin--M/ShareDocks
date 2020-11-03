@@ -1,7 +1,8 @@
 package com.martinm.sharedocks
 
 import android.os.Build
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -30,8 +31,10 @@ class ShareApiHandlerTest {
                     ShareApiHandler.loadStationUrls()
                     ShareApiHandler.loadDockLocations()
                     ShareApiHandler.updateDockStatus()
-                    assertNotEquals(0, ShareApiHandler.docks.size)
-                    assertNotEquals(0, ShareApiHandler.sortableDocks.size)
+                    if (ShareApiHandler.docks.isEmpty()) {
+                        warnCount++
+                        details += "   + No stations reported"
+                    }
                     ShareApiHandler.sortableDocks.forEach { station ->
                         try {
                             assertNotNull(station.lastUpdate)
@@ -45,7 +48,8 @@ class ShareApiHandlerTest {
                     totalErrorCount++
                     val sw = StringWriter()
                     e.printStackTrace(PrintWriter(sw))
-                    details = sw.toString()
+                    details = "   + " + e.javaClass.kotlin.qualifiedName + ": " +
+                            (e.message ?: sw.toString())
                 }
             }
             when (true) {
