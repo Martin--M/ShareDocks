@@ -34,7 +34,13 @@ object LogicHandler {
                             Utils.safeLoadDockLocations(context)
                             Utils.loadUserDocks()
                         } else {
-                            ShareApiHandler.loadStationUrls()
+                            try {
+                                ShareApiHandler.loadStationUrls()
+                            } catch (e: Exception) {
+                                // No internet, skip tick
+                                return@thread
+                            }
+
                         }
                         Utils.safeUpdateDockStatus(context)
 
