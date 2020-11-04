@@ -32,8 +32,8 @@ jobs:
       with:
         java-version: 1.8
 
-    - name: Build with Gradle
-      run: ./gradlew build
+    - name: Lint
+      run: ./gradlew lint
       continue-on-error: true
 
     - name: Upload Lint Report
@@ -41,6 +41,13 @@ jobs:
       with:
         name: LintReport
         path: app/build/reports/lint-results.html
+
+    - name: Test Api
+      run: ./gradlew testDebug
+      continue-on-error: true
+
+    - name: Generate APK
+      run: ./gradlew assembleDebug
 
     - name: Upload APK
       uses: actions/upload-artifact@v2
