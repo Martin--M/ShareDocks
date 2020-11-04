@@ -15,7 +15,7 @@ import kotlin.concurrent.thread
 
 object LogicHandler {
     var userDocks = mutableListOf<ShareStation>()
-    private var isTracking: Boolean = false
+    var isTracking: Boolean = false
     private val mUnavailableIds = mutableListOf<String>()
     private lateinit var mTimerContext: Context
     private lateinit var mTrackingTimer: CountDownTimer

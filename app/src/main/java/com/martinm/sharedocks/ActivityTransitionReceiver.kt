@@ -31,6 +31,9 @@ class ActivityTransitionReceiver : BroadcastReceiver() {
                         )
                     }
                 } else if (event.transitionType == ActivityTransition.ACTIVITY_TRANSITION_EXIT) {
+                    if (!LogicHandler.isTracking) {
+                        continue
+                    }
                     context.startService(
                         Intent().setClass(
                             context,
