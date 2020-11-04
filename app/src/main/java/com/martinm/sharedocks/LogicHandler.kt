@@ -66,14 +66,11 @@ object LogicHandler {
                                 ) as NotificationManager
                             )
                         } else {
-                            val content = if (mUnavailableIds.size == 1) {
-                                mTimerContext.getString(R.string.notification_update_content_single)
-                            } else {
-                                mTimerContext.getString(
-                                    R.string.notification_update_content,
-                                    mUnavailableIds.size
-                                )
-                            }
+                            val content = mTimerContext.resources.getQuantityString(
+                                R.plurals.notification_update_content,
+                                mUnavailableIds.size,
+                                mUnavailableIds.size
+                            )
                             NotificationHandler.showNotification(
                                 mTimerContext,
                                 mTimerContext.getString(R.string.notification_update_title),

@@ -11,18 +11,20 @@
     <string name="notification_channel_tracking_name">Suivi en cours</string>
     <string name="notification_tracking_stop_button">Arrêter</string>
     <string name="notification_tracking_title">Recherche en cours pour connaître l’état du réseau</string>
-    <string name="notification_update_content">%1$d stations sont pleines</string>
     <string name="notification_update_title">Station pleine</string>
     <string name="toast_activity_recognition_connection_success">Connexion au service d\'Activity Recognition</string>
     <string name="tts_replace_intersection">et</string>
     <string name="tts_update_full">La station à %1$s est pleine</string>
     <string name="toast_activity_recognition_connection_failure">Échec de connexion au service d\'Activity Recognition. Redémarrer l’application</string>
     <string name="notification_channel_tracking_description">Notification pour recevoir un avertissement quand le suivi est en cours.</string>
-    <string name="notification_update_content_single">1 station est pleine</string>
     <string name="tts_update_available">La station à %1$s n\'est plus pleine</string>
     <string name="button_favorites">Stations suivies</string>
     <string name="popup_no_city_selected">S\'il vous plaît choisissez une ville</string>
     <string name="actionbar_title_favorites">Stations suivies</string>
     <string name="actionbar_title_settings">Paramètres</string>
     <string name="button_settings">Paramètres</string>
+    <plurals name="notification_update_content">
+        <item quantity="one">%1$d station est pleine</item>
+        <item quantity="other">%1$d stations sont pleines</item>
+    </plurals>
 </resources>

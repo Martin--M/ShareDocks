@@ -15,10 +15,8 @@
     <string name="notification_tracking_stop_button">Stop</string>
     <string name="toast_activity_recognition_connection_success">Connected to the Activity Recognition Service</string>
     <string name="toast_activity_recognition_connection_failure">Failed to connect to the Activity Recognition Service. Restart the application</string>
-    <string name="notification_update_content">%1$d stations are full</string>
     <string name="tts_update_full">Station at %1$s is full</string>
     <string name="tts_replace_intersection">and</string>
-    <string name="notification_update_content_single">1 station is full</string>
     <string name="tts_update_available">Station at %1$s is not full anymore</string>
     <string name="button_favorites">Tracked stations</string>
     <string name="popup_no_city_selected">Please select a city</string>
@@ -42,4 +40,8 @@
     <string name="settings_entry_title_tts_exclusive">Pause music during notifications</string>
     <string name="settings_entry_summary_tts_exclusive">Temporarily pause music playback until the notification is over</string>
     <string name="favorites_sort_icon">Sort</string>
+    <plurals name="notification_update_content">
+        <item quantity="one">%1$d station is full</item>
+        <item quantity="other">%1$d stations are full</item>
+    </plurals>
 </resources>
