@@ -17,10 +17,9 @@ object LogicHandler {
     var userDocks = mutableListOf<ShareStation>()
     var isTracking: Boolean = false
     private val mUnavailableIds = mutableListOf<String>()
-    private lateinit var mTimerContext: Context
     private lateinit var mTrackingTimer: CountDownTimer
 
-    private fun createTrackingTimer(updatePeriodSec: Int) {
+    private fun createTrackingTimer(context: Context, updatePeriodSec: Int) {
         mTrackingTimer =
             object : CountDownTimer(30 * 60 * 1000, (updatePeriodSec * 1000).toLong()) {
                 override fun onFinish() {
@@ -32,12 +31,12 @@ object LogicHandler {
                     thread(start = true) {
                         val currentChanges = mutableMapOf<String, Boolean>()
                         if (ShareApiHandler.docks.isEmpty()) {
-                            Utils.safeLoadDockLocations(mTimerContext)
+                            Utils.safeLoadDockLocations(context)
                             Utils.loadUserDocks()
                         } else {
                             ShareApiHandler.loadStationUrls()
                         }
-                        Utils.safeUpdateDockStatus(mTimerContext)
+                        Utils.safeUpdateDockStatus(context)
 
                         if (!Utils.isStationStatusChanged(
                                 userDocks,
@@ -61,32 +60,32 @@ object LogicHandler {
 
                         if (mUnavailableIds.isEmpty()) {
                             NotificationHandler.removeTrackingNotifications(
-                                mTimerContext.getSystemService(
+                                context.getSystemService(
                                     Context.NOTIFICATION_SERVICE
                                 ) as NotificationManager
                             )
                         } else {
-                            val content = mTimerContext.resources.getQuantityString(
+                            val content = context.resources.getQuantityString(
                                 R.plurals.notification_update_content,
                                 mUnavailableIds.size,
                                 mUnavailableIds.size
                             )
                             NotificationHandler.showNotification(
-                                mTimerContext,
-                                mTimerContext.getString(R.string.notification_update_title),
+                                context,
+                                context.getString(R.string.notification_update_title),
                                 content,
                                 notificationDetails
                             )
                         }
 
                         if (ConfigurationHandler.getTtsEnabled()) {
-                            TtsHandler.initialize(mTimerContext)
+                            TtsHandler.initialize(context)
                             // Wait for the notification alert to finish
                             sleep(2000)
                             currentChanges.forEach {
                                 TtsHandler.utteranceCount++
                                 TtsHandler.speak(
-                                    TtsHandler.buildTrackingTTS(mTimerContext, it.key, it.value)
+                                    TtsHandler.buildTrackingTTS(context, it.key, it.value)
                                 )
                             }
                         }
@@ -100,7 +99,7 @@ object LogicHandler {
             return
         }
         isTracking = true
-        createTrackingTimer(ConfigurationHandler.getTrackingUpdatePeriodSec())
+        createTrackingTimer(context, ConfigurationHandler.getTrackingUpdatePeriodSec())
         thread(start = true) {
             // Load docks again in case the whole context has been lost
             CityUtils.currentCity = ConfigurationHandler.getCityId()
@@ -108,18 +107,17 @@ object LogicHandler {
             Utils.loadUserDocks()
 
             mUnavailableIds.clear()
-            mTimerContext = context
 
             mTrackingTimer.cancel()
             mTrackingTimer.start()
         }
     }
 
-    fun stopTracking() {
+    fun stopTracking(context: Context) {
         if (this::mTrackingTimer.isInitialized) {
             mTrackingTimer.cancel()
             NotificationHandler.removeTrackingNotifications(
-                mTimerContext.getSystemService(
+                context.getSystemService(
                     Context.NOTIFICATION_SERVICE
                 ) as NotificationManager
             )

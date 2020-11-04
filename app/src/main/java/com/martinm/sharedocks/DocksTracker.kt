@@ -19,7 +19,7 @@ class DocksTracker : Service() {
             return START_STICKY
         }
         // No need to check for FOREGROUND_SERVICE_STOP, just stop for safety
-        LogicHandler.stopTracking()
+        LogicHandler.stopTracking(baseContext)
         stopForeground(true)
         stopSelf()
         return START_NOT_STICKY
