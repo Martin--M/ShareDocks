@@ -200,7 +200,6 @@ object CityUtils {
         184 to CityInfo("US","Salt Lake City",LatLng(40.7563078,-111.8902742),URL("https://gbfs.bcycle.com/bcycle_greenbikeslc/gbfs.json")),
         185 to CityInfo("US","San Antonio",LatLng(29.4178916,-98.4892824),URL("https://gbfs.bcycle.com/bcycle_sanantonio/gbfs.json")),
         186 to CityInfo("US","San Francisco Bay Area",LatLng(37.7780906,-122.4058823),URL("https://gbfs.baywheels.com/gbfs/gbfs.json")),
-        187 to CityInfo("US","San Ramon",LatLng(37.7586196,-121.958027),URL("http://britebikes.socialbicycles.com/opendata/gbfs.json")),
         188 to CityInfo("US","Santa Barbara",LatLng(34.4096915,-119.8420952),URL("https://gbfs.hopr.city/api/gbfs/5/")),
         189 to CityInfo("US","Santa Monica",LatLng(34.0174395,-118.479121),URL("http://santamonicabikeshare.com/opendata/gbfs.json")),
         190 to CityInfo("US","Spartanburg",LatLng(34.9516242,-81.9273243),URL("https://gbfs.bcycle.com/bcycle_spartanburg/gbfs.json")),
