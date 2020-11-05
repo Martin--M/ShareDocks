@@ -16,6 +16,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceScreen
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
@@ -29,6 +30,7 @@ object Utils {
 
     private val mApi = ShareApiHandler
     private lateinit var mTextPopup: PopupWindow
+    var isNestedSetting = false
     var isMapLoading = false
     var stopLoadRequest = false
     var favoritesPopup: PopupWindow? = null
@@ -240,10 +242,24 @@ object Utils {
         isMapLoading = false
     }
 
-    class SettingsFragment : PreferenceFragmentCompat() {
+    class SettingsFragment : PreferenceFragmentCompat(), PreferenceFragmentCompat.OnPreferenceStartScreenCallback {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.settings_definition, rootKey)
         }
+
+        override fun onPreferenceStartScreen(
+            caller: PreferenceFragmentCompat?,
+            pref: PreferenceScreen?
+        ): Boolean {
+            caller?.preferenceScreen = pref
+            isNestedSetting = true
+            return true
+        }
+
+        override fun getCallbackFragment(): Fragment {
+            return this
+        }
+
     }
 
     class BackgroundOverlayFragment : Fragment() {

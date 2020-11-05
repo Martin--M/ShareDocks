@@ -73,6 +73,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     }
 
     private fun handleBackButton() {
+        if (Utils.isNestedSetting) {
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.map, Utils.BackgroundOverlayFragment())
+                .replace(R.id.settings_background_fragment, Utils.SettingsFragment())
+                .commit()
+            return
+        }
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
         title = getString(R.string.app_name)
         Utils.favoritesPopup?.dismiss()
