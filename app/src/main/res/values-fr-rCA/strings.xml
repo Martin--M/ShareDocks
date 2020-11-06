@@ -3,7 +3,7 @@
     <string name="popup_label_docks">Points d\'ancrage</string>
     <string name="popup_label_bikes">Vélos</string>
     <string name="popup_button_close">Fermer</string>
-    <string name="popup_button_add">Ajouter</string>
+    <string name="popup_button_add">Suivre</string>
     <string name="popup_button_remove">Enlever</string>
     <string name="toast_error_network">Échec à obtenir les données des stations</string>
     <string name="notification_channel_update_name">"Mises à jour "</string>

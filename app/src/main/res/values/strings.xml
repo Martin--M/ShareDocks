@@ -3,7 +3,7 @@
     <string name="popup_label_docks">Docks</string>
     <string name="popup_label_bikes">Bikes</string>
     <string name="popup_button_close">Close</string>
-    <string name="popup_button_add">Add</string>
+    <string name="popup_button_add">Track</string>
     <string name="popup_button_remove">Remove</string>
     <string name="toast_error_network">Error getting station data</string>
     <string name="notification_channel_update_name">Updates</string>
