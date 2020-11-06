@@ -31,6 +31,10 @@ android {
             events "standardOut", "started", "passed", "skipped", "failed"
         }
     }
+
+    applicationVariants.all { variant ->
+        variant.resValue "string", "version_name", variant.versionName
+    }
 }
 
 dependencies {
