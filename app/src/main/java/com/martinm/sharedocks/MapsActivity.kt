@@ -79,6 +79,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 .replace(R.id.map, Utils.BackgroundOverlayFragment())
                 .replace(R.id.settings_background_fragment, Utils.SettingsFragment())
                 .commit()
+            Utils.isNestedSetting = false
             return
         }
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
