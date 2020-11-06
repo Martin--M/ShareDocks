@@ -27,4 +27,5 @@
         <item quantity="one">%1$d station est pleine</item>
         <item quantity="other">%1$d stations sont pleines</item>
     </plurals>
+    <string name="settings_category_title_advanced">Paramètres avancés</string>
 </resources>

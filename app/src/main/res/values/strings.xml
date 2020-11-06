@@ -32,7 +32,7 @@
     <string name="settings_entry_title_color_code">Colors on station markers</string>
     <string name="settings_entry_summary_color_code">Show the color of the station markers based on the availability of bikes. This might take some time in cities with many stations</string>
     <string name="settings_entry_title_responsiveness">Responsiveness during map load</string>
-    <string name="settings_entry_summary_responsiveness">A \'0\' here means that all markers will be color coding before loading the map. A higher value represents how slowly will the markers be color coded after the map is displayed and usable</string>
+    <string name="settings_entry_summary_responsiveness">A \'0\' here means that all markers will be color coded before loading the map. A higher value represents how slowly will the markers be color coded after the map is displayed and usable</string>
     <string name="settings_category_title_visuals">Visuals</string>
     <string name="settings_category_entry_tts">Text-to-Speech</string>
     <string name="settings_entry_title_tts_enable">Enable</string>
@@ -44,4 +44,5 @@
         <item quantity="one">%1$d station is full</item>
         <item quantity="other">%1$d stations are full</item>
     </plurals>
+    <string name="settings_category_title_advanced">Advanced Settings</string>
 </resources>
