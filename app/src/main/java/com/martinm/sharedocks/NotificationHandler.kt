@@ -44,11 +44,18 @@ object NotificationHandler {
         message: String,
         details: String? = null
     ) {
+        val pendingIntent = PendingIntent.getActivity(
+            context,
+            0,
+            Intent(context, MapsActivity::class.java),
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
         val builder = NotificationCompat.Builder(context, CHANNEL_ID_UPDATES)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentTitle(title)
             .setContentText(message)
+            .setContentIntent(pendingIntent)
 
         if (details != null) {
             builder.setStyle(NotificationCompat.BigTextStyle().bigText(Html.fromHtml(details, 0)))
