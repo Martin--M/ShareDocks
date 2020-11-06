@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="popup_label_docks">Points d\'ancrage</string>
     <string name="popup_label_bikes">Vélos</string>
     <string name="popup_button_close">Fermer</string>
@@ -28,4 +28,10 @@
         <item quantity="other">%1$d stations sont pleines</item>
     </plurals>
     <string name="settings_category_title_advanced">Paramètres avancés</string>
+    <string name="settings_screen_about">À Propos</string>
+    <string name="about_license">License</string>
+    <string name="about_version">Version</string>
+    <string name="about_source_code">Code source</string>
+    <string name="about_license_details">ShareDocks est distribué gratuitement sous GNU GPLv3</string>
+    <string name="about_source_code_details" tools:ignore="TypographyDashes">Hébergé sur GitHub @ Martin--M/ShareDocks</string>
 </resources>

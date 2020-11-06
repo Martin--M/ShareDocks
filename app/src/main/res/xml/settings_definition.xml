@@ -70,4 +70,39 @@
             app:showSeekBarValue="true" />
 
     </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_screen_about">
+
+        <PreferenceScreen
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="@string/settings_screen_about">
+
+            <PreferenceCategory android:title="@string/settings_screen_about">
+                <Preference
+                    android:summary="Copyright © 2020 Martin M"
+                    android:title="@string/app_name" />
+                <!--suppress AndroidDomInspection -->
+                <Preference
+                    android:summary="@string/version_name"
+                    android:title="@string/about_version" />
+                <Preference
+                    android:summary="@string/about_license_details"
+                    android:title="@string/about_license">
+                    <intent
+                        android:action="android.intent.action.VIEW"
+                        android:data="https://www.gnu.org/licenses/gpl-3.0.en.html" />
+                </Preference>
+                <Preference
+                    android:summary="@string/about_source_code_details"
+                    android:title="@string/about_source_code">
+                    <intent
+                        android:action="android.intent.action.VIEW"
+                        android:data="https://github.com/Martin--M/ShareDocks" />
+                </Preference>
+            </PreferenceCategory>
+
+        </PreferenceScreen>
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

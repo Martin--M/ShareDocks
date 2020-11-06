@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name" translatable="false">ShareDocks</string>
     <string name="popup_label_docks">Docks</string>
     <string name="popup_label_bikes">Bikes</string>
@@ -45,4 +45,10 @@
         <item quantity="other">%1$d stations are full</item>
     </plurals>
     <string name="settings_category_title_advanced">Advanced Settings</string>
+    <string name="settings_screen_about">About</string>
+    <string name="about_version">Version</string>
+    <string name="about_license">License</string>
+    <string name="about_license_details">ShareDocks is released for free under GNU GPLv3</string>
+    <string name="about_source_code">Source code</string>
+    <string name="about_source_code_details" tools:ignore="TypographyDashes">Hosted on GitHub @ Martin--M/ShareDocks</string>
 </resources>
