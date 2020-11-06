@@ -77,9 +77,7 @@
 
             <Button
                 android:id="@+id/toggle_dock_button"
-                android:layout_span="2"
-                android:layout_weight="2"
-                android:gravity="center"
+                style="@style/PopupButton"
                 android:text="@string/popup_button_remove" />
         </TableRow>
 
@@ -91,9 +89,7 @@
 
             <Button
                 android:id="@+id/close_popup_button"
-                android:layout_span="2"
-                android:layout_weight="2"
-                android:gravity="center"
+                style="@style/PopupButton"
                 android:text="@string/popup_button_close" />
         </TableRow>
     </TableLayout>
