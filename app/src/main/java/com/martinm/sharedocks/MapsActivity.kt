@@ -160,7 +160,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         // Listener for the Close button
         popupView.findViewById<Button>(R.id.close_popup_button).setOnClickListener {
             popupWindow.dismiss()
-            mIsPopupPresent = false
         }
 
         // Listener for the Toggle button
@@ -177,6 +176,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         popupView.findViewById<TextView>(R.id.dock_name).text = station.name
         popupView.findViewById<Button>(R.id.toggle_dock_button).text =
             Utils.getButtonStringForId(baseContext, station.id)
+
+        popupWindow.setOnDismissListener {
+            mIsPopupPresent = false
+        }
+
+        popupWindow.isFocusable = true
 
         popupWindow.showAtLocation(
             findViewById(R.id.map),
