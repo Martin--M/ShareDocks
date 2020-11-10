@@ -34,4 +34,9 @@
     <string name="about_source_code">Code source</string>
     <string name="about_license_details">ShareDocks est distribué gratuitement sous GNU GPLv3</string>
     <string name="about_source_code_details" tools:ignore="TypographyDashes">Hébergé sur GitHub @ Martin--M/ShareDocks</string>
+    <string name="popup_button_nickname">Surnom</string>
+    <string name="dialog_nickname_hint">Entrez un surnom</string>
+    <string name="dialog_nickname_button_ok">OK</string>
+    <string name="dialog_nickname_button_cancel">Annuler</string>
+    <string name="dialog_nickname_button_remove">Supprimer le surnom</string>
 </resources>
