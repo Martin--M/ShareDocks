@@ -8,16 +8,11 @@ object ConfigurationHandler {
     private lateinit var mSettings: SharedPreferences
 
     private fun buildStationStorageKey(): String {
-        val info = CityUtils.map[CityUtils.currentCity] ?: return "user_docks"
-
-        return "user_docks_${info.country}_${info.name}"
+        return "user_docks_${CityUtils.currentCity}"
     }
 
     private fun buildFavoritesStorageKey(stationId: String): String {
-        val prefix =
-            CityUtils.map[CityUtils.currentCity]?.country + "_" +
-                    CityUtils.map[CityUtils.currentCity]?.name
-        return "${prefix}_${stationId}"
+        return "${CityUtils.currentCity}_${stationId}"
     }
 
     fun initialize(context: Context) {
