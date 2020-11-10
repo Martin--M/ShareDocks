@@ -3,7 +3,6 @@ package com.martinm.sharedocks
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
-import java.lang.StringBuilder
 
 object ConfigurationHandler {
     private lateinit var mSettings: SharedPreferences
@@ -12,6 +11,13 @@ object ConfigurationHandler {
         val info = CityUtils.map[CityUtils.currentCity] ?: return "user_docks"
 
         return "user_docks_${info.country}_${info.name}"
+    }
+
+    private fun buildFavoritesStorageKey(stationId: String): String {
+        val prefix =
+            CityUtils.map[CityUtils.currentCity]?.country + "_" +
+                    CityUtils.map[CityUtils.currentCity]?.name
+        return "${prefix}_${stationId}"
     }
 
     fun initialize(context: Context) {
@@ -28,6 +34,17 @@ object ConfigurationHandler {
             putString(buildStationStorageKey(), strBuilder.toString())
             apply()
         }
+    }
+
+    fun storeNickname(stationId: String, nickname: String) {
+        with(mSettings.edit()) {
+            putString(buildFavoritesStorageKey(stationId), nickname)
+            apply()
+        }
+    }
+
+    fun getNickname(stationId: String): String {
+        return mSettings.getString(buildFavoritesStorageKey(stationId), "") ?: return ""
     }
 
     fun stationIdListFromStorageString(): MutableList<String> {
