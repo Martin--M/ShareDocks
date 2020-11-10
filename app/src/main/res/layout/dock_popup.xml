@@ -95,17 +95,6 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingHorizontal="20dp">
-
-            <Button
-                android:id="@+id/close_popup_button"
-                style="@style/PopupButton"
-                android:text="@string/popup_button_close" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:paddingHorizontal="20dp"
             android:paddingBottom="5dp">
 
@@ -114,6 +103,26 @@
                 style="@style/PopupButton"
                 android:text="@string/popup_button_nickname" />
 
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="5dp">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="0.7" />
+
+            <Button
+                android:id="@+id/close_popup_button"
+                android:layout_width="0dp"
+                android:layout_gravity="end"
+                android:layout_weight="0.3"
+                android:background="@android:color/transparent"
+                android:text="@string/popup_button_close"
+                android:textColor="@color/colorAccent" />
         </TableRow>
 
     </TableLayout>
