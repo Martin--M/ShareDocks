@@ -5,10 +5,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.PopupWindow
@@ -168,6 +165,25 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             popupView.findViewById<Button>(R.id.toggle_dock_button).text =
                 Utils.getButtonStringForId(baseContext, station.id)
             ConfigurationHandler.storeStationList(mLogic.userDocks)
+        }
+
+        val nicknameView = popupView.findViewById<TextView>(R.id.current_nickname_text)
+        popupView.findViewById<Button>(R.id.set_nickname_button).setOnClickListener {
+            val nicknameFragment = NicknameEdit(
+                station.id,
+                popupView.parent as ViewGroup,
+                nicknameView
+            )
+            nicknameFragment.show(supportFragmentManager.beginTransaction(), "nickNameEditTag")
+        }
+
+        nicknameView.text = ConfigurationHandler.getNickname(station.id)
+        if (nicknameView.text == "") {
+            nicknameView.visibility = View.GONE
+            popupView.findViewById<TextView>(R.id.dock_name).visibility = View.VISIBLE
+        } else {
+            nicknameView.visibility = View.VISIBLE
+            popupView.findViewById<TextView>(R.id.dock_name).visibility = View.GONE
         }
 
         // Load labels with appropriate values
