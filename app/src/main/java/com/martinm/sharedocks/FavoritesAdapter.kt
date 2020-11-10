@@ -43,8 +43,12 @@ class FavoritesAdapter(private val docks: MutableList<ShareStation>, private val
     }
 
     override fun onBindViewHolder(holder: FavoritesViewHolder, position: Int) {
+        var displayName = ConfigurationHandler.getNickname(docks[position].id)
+        if (displayName == "") {
+            displayName = docks[position].name
+        }
         val stationStr = StringBuilder()
-            .append(docks[position].name)
+            .append(displayName)
             .append("\n\uD83D\uDEB2: ")
             .append(String.format("%-13s", docks[position].availableBikes.toString()))
             .append("\uD83D\uDCCD: ")
