@@ -120,6 +120,7 @@ object ShareApiHandler {
             }
             docks[id]!!.location = LatLng(lat, lon)
             docks[id]!!.name = obj.getString("name")
+            docks[id]!!.updateHue()
 
             if (docks[id]!!.location.longitude == 0.0 && docks[id]!!.location.latitude == 0.0) {
                 docks.remove(id)
