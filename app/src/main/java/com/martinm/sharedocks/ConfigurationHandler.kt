@@ -17,6 +17,11 @@ object ConfigurationHandler {
 
     fun initialize(context: Context) {
         mSettings = PreferenceManager.getDefaultSharedPreferences(context)
+        mSettings.registerOnSharedPreferenceChangeListener { _, key ->
+            if (key.startsWith("settings_visuals")) {
+                Utils.requireVisualsUpdate = true
+            }
+        }
     }
 
     fun storeStationList(list: MutableList<ShareStation>) {
@@ -61,7 +66,7 @@ object ConfigurationHandler {
     }
 
     fun getColorOnMarkers(): Boolean {
-        return mSettings.getBoolean("settings_is_colors_on_markers", false)
+        return mSettings.getBoolean("settings_visuals_is_colors_on_markers", false)
     }
 
     fun getTrackingUpdatePeriodSec(): Int {
@@ -85,6 +90,6 @@ object ConfigurationHandler {
     }
 
     fun getShowUnavailableStations(): Boolean {
-        return mSettings.getBoolean("settings_show_unavailable_stations", false)
+        return mSettings.getBoolean("settings_visuals_show_unavailable_stations", false)
     }
 }

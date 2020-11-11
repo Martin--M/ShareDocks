@@ -96,13 +96,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             findViewById<ImageButton>(R.id.button_favorites).visibility = View.GONE
             Utils.centerMap(mMap, 14F)
             thread(start = true) {
-                if (Utils.isMapLoading) {
-                    Utils.stopLoadRequest = true
-                    while (Utils.isMapLoading) {
-                        Thread.sleep(10)
-                    }
-                }
+                Utils.overrideMapLoad()
                 Utils.setupMap(this, mMap, mMarkers)
+            }
+        } else if (Utils.requireVisualsUpdate) {
+            thread(start = true) {
+                Utils.overrideMapLoad()
+                Utils.updateMapVisuals(this, mMap, mMarkers)
             }
         }
     }
