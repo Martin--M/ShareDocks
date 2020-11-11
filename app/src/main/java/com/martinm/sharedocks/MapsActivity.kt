@@ -117,6 +117,19 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 handleBackButton()
                 return true
             }
+            R.id.menu_refresh_button ->
+                if (ShareApiHandler.docks.isEmpty()) {
+                    thread(start = true) {
+                        Utils.overrideMapLoad()
+                        Utils.setupMap(this, mMap, mMarkers)
+                    }
+                } else {
+                    thread(start = true) {
+                        Utils.safeUpdateDockStatus(this)
+                        Utils.overrideMapLoad()
+                        Utils.updateMapVisuals(this, mMap, mMarkers)
+                    }
+                }
         }
         return false
     }
@@ -223,6 +236,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 }
             }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.support_bar_menu, menu)
+        return super.onCreateOptionsMenu(menu)
     }
 
     companion object {
