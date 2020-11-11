@@ -22,13 +22,13 @@ class ShareStation(val id: String) : Comparable<ShareStation> {
         if (availableBikes + availableDocks == 0 || !isActive) {
             return Float.NaN
         }
-        return availableBikes.toFloat() / (availableBikes + availableDocks)
+        return availableDocks.toFloat() / (availableBikes + availableDocks)
     }
 
     fun updateHue() {
         /*
          * Ranges from 15 (Warm Red) to 95 (Yellow Green)
-         * Special case for disabled Stations at 240 (Blue), empty stations at 0 (Red), and full
+         * Special case for disabled Stations at 240 (Blue), full stations at 0 (Red), and empty
          * stations at 120 (Green)
          */
         val availability = getAvailablePercent()
