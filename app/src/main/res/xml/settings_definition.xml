@@ -23,6 +23,13 @@
         <SwitchPreferenceCompat
             android:defaultValue="false"
             android:dependency="settings_enable_tracking"
+            android:key="settings_show_unavailable_stations"
+            android:summary="@string/settings_entry_summary_show_unavailable_stations"
+            android:title="@string/settings_entry_title_show_unavailable_stations" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:dependency="settings_enable_tracking"
             android:key="settings_is_colors_on_markers"
             android:summary="@string/settings_entry_summary_color_code"
             android:title="@string/settings_entry_title_color_code" />

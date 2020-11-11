@@ -56,4 +56,6 @@
     <string name="settings_entry_title_tts_exclusive">Brève interruption de la musique pour recevoir une notification</string>
     <string name="settings_entry_summary_tts_exclusive">Si vous écoutez de la musique lorsque vous recevez une notification, elle sera brièvement interrompue pour vous avertir de la disponibilité d’une station suivie. Votre musique reprendra tout de suite après.</string>
     <string name="favorites_sort_icon">Trier</string>
+    <string name="settings_entry_summary_show_unavailable_stations">Afficher les stations qui ne sont pas disponibles sur la carte</string>
+    <string name="settings_entry_title_show_unavailable_stations">Afficher les stations indisponibles</string>
 </resources>

@@ -213,9 +213,12 @@ object Utils {
 
         context.runOnUiThread {
             context.findViewById<ImageButton>(R.id.button_favorites).visibility = View.VISIBLE
-            mApi.sortableDocks.forEach {
-                val marker = map.addMarker(MarkerOptions().position(it.location))
-                marker.tag = it
+            mApi.sortableDocks.forEach { station ->
+                if (!station.isActive && !ConfigurationHandler.getShowUnavailableStations()) {
+                    return@forEach
+                }
+                val marker = map.addMarker(MarkerOptions().position(station.location))
+                marker.tag = station
                 markers.add(marker)
             }
             latch.countDown()
@@ -242,7 +245,8 @@ object Utils {
         isMapLoading = false
     }
 
-    class SettingsFragment : PreferenceFragmentCompat(), PreferenceFragmentCompat.OnPreferenceStartScreenCallback {
+    class SettingsFragment : PreferenceFragmentCompat(),
+        PreferenceFragmentCompat.OnPreferenceStartScreenCallback {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.settings_definition, rootKey)
         }

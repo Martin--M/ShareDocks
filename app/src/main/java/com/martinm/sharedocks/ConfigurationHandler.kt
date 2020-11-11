@@ -83,4 +83,8 @@ object ConfigurationHandler {
     fun getTtsEnabled(): Boolean {
         return mSettings.getBoolean("settings_enable_tts", true)
     }
+
+    fun getShowUnavailableStations(): Boolean {
+        return mSettings.getBoolean("settings_show_unavailable_stations", false)
+    }
 }

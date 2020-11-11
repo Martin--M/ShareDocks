@@ -56,4 +56,6 @@
     <string name="dialog_nickname_button_ok">OK</string>
     <string name="dialog_nickname_button_cancel">Cancel</string>
     <string name="dialog_nickname_button_remove">Remove nickname</string>
+    <string name="settings_entry_summary_show_unavailable_stations">Display stations that are marked as not available in the map</string>
+    <string name="settings_entry_title_show_unavailable_stations">Show unavailable stations</string>
 </resources>
