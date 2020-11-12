@@ -32,7 +32,7 @@
     <string name="settings_entry_title_color_code">Colors on station markers</string>
     <string name="settings_entry_summary_color_code">Show the color of the station markers based on the availability of bikes. This might take some time in cities with many stations</string>
     <string name="settings_entry_title_responsiveness">Responsiveness during map load</string>
-    <string name="settings_entry_summary_responsiveness">A \'0\' here means that all markers will be color coded before loading the map. A higher value represents how slowly will the markers be color coded after the map is displayed and usable</string>
+    <string name="settings_entry_summary_responsiveness">A lower value means the colors will load faster, but the map could experience some lag. With a higher value, the load will be slower, but the experience will be smoother</string>
     <string name="settings_category_title_visuals">Visuals</string>
     <string name="settings_category_entry_tts">Text-to-Speech</string>
     <string name="settings_entry_title_tts_enable">Enable</string>
@@ -51,11 +51,11 @@
     <string name="about_license_details">ShareDocks is released for free under GNU GPLv3</string>
     <string name="about_source_code">Source code</string>
     <string name="about_source_code_details" tools:ignore="TypographyDashes">Hosted on GitHub @ Martin--M/ShareDocks</string>
-    <string name="popup_button_nickname">Nickname</string>
-    <string name="dialog_nickname_hint">Enter a nickname</string>
+    <string name="popup_button_nickname">Customize</string>
+    <string name="dialog_nickname_hint">Enter a custom name for the station</string>
     <string name="dialog_nickname_button_ok">OK</string>
     <string name="dialog_nickname_button_cancel">Cancel</string>
-    <string name="dialog_nickname_button_remove">Remove nickname</string>
-    <string name="settings_entry_summary_show_unavailable_stations">Display stations that are marked as not available in the map</string>
+    <string name="dialog_nickname_button_remove">Remove custom name</string>
+    <string name="settings_entry_summary_show_unavailable_stations">Display in the map the stations that are marked as not available</string>
     <string name="settings_entry_title_show_unavailable_stations">Show unavailable stations</string>
 </resources>
