@@ -20,6 +20,7 @@ object LogicHandler {
     private lateinit var mTrackingTimer: CountDownTimer
 
     private fun createTrackingTimer(context: Context, updatePeriodSec: Int) {
+        var mIsFirstTick = true
         mTrackingTimer =
             object : CountDownTimer(30 * 60 * 1000, (updatePeriodSec * 1000).toLong()) {
                 override fun onFinish() {
@@ -43,12 +44,31 @@ object LogicHandler {
 
                         }
                         Utils.safeUpdateDockStatus(context)
+                        val isUpdateNeeded = Utils.isStationStatusChanged(
+                            userDocks,
+                            mUnavailableIds,
+                            currentChanges
+                        )
 
-                        if (!Utils.isStationStatusChanged(
-                                userDocks,
-                                mUnavailableIds,
-                                currentChanges
-                            )
+                        if (mIsFirstTick) {
+                            if (ConfigurationHandler.getNotifyOnStart() && mUnavailableIds.isEmpty()) {
+                                NotificationHandler.showNotification(
+                                    context,
+                                    context.getString(R.string.notification_on_start_title),
+                                    context.getString(R.string.notification_on_start_summary)
+                                )
+                                if (ConfigurationHandler.getTtsEnabled()) {
+                                    TtsHandler.initialize(context)
+                                    // Wait for the notification alert to finish
+                                    sleep(2000)
+                                    TtsHandler.utteranceCount++
+                                    TtsHandler.speak(context.getString(R.string.tts_on_start))
+                                }
+                            }
+                            mIsFirstTick = false
+                        }
+
+                        if (!isUpdateNeeded
                         ) {
                             return@thread
                         }

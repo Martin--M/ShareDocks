@@ -58,4 +58,9 @@
     <string name="dialog_nickname_button_remove">Remove custom name</string>
     <string name="settings_entry_summary_show_unavailable_stations">Display in the map the stations that are marked as not available</string>
     <string name="settings_entry_title_show_unavailable_stations">Show unavailable stations</string>
+    <string name="settings_entry_title_notify_on_start">Notify on tracking start</string>
+    <string name="settings_entry_summary_notify_on_start">Receive a notification when tracking starts even if all tracked stations are available</string>
+    <string name="notification_on_start_title">Stations available</string>
+    <string name="notification_on_start_summary">All the tracked stations are available</string>
+    <string name="tts_on_start">All tracked stations are available</string>
 </resources>

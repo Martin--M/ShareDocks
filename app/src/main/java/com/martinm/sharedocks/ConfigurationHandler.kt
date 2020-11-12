@@ -92,4 +92,8 @@ object ConfigurationHandler {
     fun getShowUnavailableStations(): Boolean {
         return mSettings.getBoolean("settings_visuals_show_unavailable_stations", false)
     }
+
+    fun getNotifyOnStart(): Boolean {
+        return mSettings.getBoolean("settings_notify_on_start", false)
+    }
 }

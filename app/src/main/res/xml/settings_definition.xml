@@ -56,6 +56,13 @@
         android:title="@string/settings_category_title_advanced"
         app:initialExpandedChildrenCount="0">
 
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:dependency="settings_enable_tracking"
+            android:key="settings_notify_on_start"
+            android:summary="@string/settings_entry_summary_notify_on_start"
+            android:title="@string/settings_entry_title_notify_on_start" />
+
         <SeekBarPreference
             android:defaultValue="30"
             android:dependency="settings_enable_tracking"

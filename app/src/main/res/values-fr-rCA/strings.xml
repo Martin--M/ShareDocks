@@ -58,4 +58,9 @@
     <string name="favorites_sort_icon">Trier</string>
     <string name="settings_entry_summary_show_unavailable_stations">Afficher sur la carte les stations qui ne sont pas disponibles</string>
     <string name="settings_entry_title_show_unavailable_stations">Afficher les stations indisponibles</string>
+    <string name="settings_entry_title_notify_on_start">Notifier au début du suivi</string>
+    <string name="settings_entry_summary_notify_on_start">Recevoir une notification quand le suivi commence même si toutes les stations suivies sont disponibles</string>
+    <string name="notification_on_start_title">Stations disponibles</string>
+    <string name="notification_on_start_summary">Toutes les stations suivies sont disponibles</string>
+    <string name="tts_on_start">Toutes les stations suivies sont disponibles</string>
 </resources>
