@@ -50,14 +50,14 @@
             <TextView
                 android:id="@+id/bikes_label"
                 style="@style/PopupInfoText"
-                android:layout_weight="0.6"
+                android:layout_weight="0.65"
                 android:text="@string/popup_label_bikes"
                 android:textAlignment="viewEnd" />
 
             <TextView
                 android:id="@+id/bikes_value"
                 style="@style/PopupInfoText"
-                android:layout_weight="0.4"
+                android:layout_weight="0.35"
                 android:textAlignment="center" />
         </TableRow>
 
@@ -69,14 +69,14 @@
             <TextView
                 android:id="@+id/docks_label"
                 style="@style/PopupInfoText"
-                android:layout_weight="0.6"
+                android:layout_weight="0.65"
                 android:text="@string/popup_label_docks"
                 android:textAlignment="viewEnd" />
 
             <TextView
                 android:id="@+id/docks_value"
                 style="@style/PopupInfoText"
-                android:layout_weight="0.4"
+                android:layout_weight="0.35"
                 android:textAlignment="center" />
         </TableRow>
 
