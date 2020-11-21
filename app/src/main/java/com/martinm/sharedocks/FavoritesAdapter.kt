@@ -56,7 +56,7 @@ class FavoritesAdapter(private val docks: MutableList<ShareStation>, private val
         holder.setText(stationStr.toString())
         holder.view.setOnClickListener {
             ShareStation.userLocation = docks[position].location
-            Utils.centerMap(map, 17F)
+            MapHandler.centerMap(map, 17F)
             Utils.favoritesPopup?.dismiss()
         }
     }

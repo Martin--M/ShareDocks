@@ -19,7 +19,7 @@ object ConfigurationHandler {
         mSettings = PreferenceManager.getDefaultSharedPreferences(context)
         mSettings.registerOnSharedPreferenceChangeListener { _, key ->
             if (key.startsWith("settings_visuals")) {
-                Utils.requireVisualsUpdate = true
+                MapHandler.requireVisualsUpdate = true
             }
         }
     }

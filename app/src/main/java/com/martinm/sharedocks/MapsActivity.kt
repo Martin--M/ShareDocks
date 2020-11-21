@@ -94,12 +94,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             ShareApiHandler.lastCalled = Instant.MIN
             ShareStation.userLocation = CityUtils.map[CityUtils.currentCity]?.location!!
             findViewById<ImageButton>(R.id.button_favorites).visibility = View.GONE
-            Utils.centerMap(mMap, 14F)
+            MapHandler.centerMap(mMap, 14F)
             thread(start = true) {
-                Utils.overrideMapLoad()
-                Utils.setupMap(this, mMap, mMarkers)
+                MapHandler.overrideMapLoad()
+                MapHandler.setupMap(this, mMap, mMarkers)
             }
-        } else if (Utils.requireVisualsUpdate) {
+        } else if (MapHandler.requireVisualsUpdate) {
             thread(start = true) {
                 //TODO: Update visuals
             }
@@ -119,8 +119,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             R.id.menu_refresh_button ->
                 if (ShareApiHandler.docks.isEmpty()) {
                     thread(start = true) {
-                        Utils.overrideMapLoad()
-                        Utils.setupMap(this, mMap, mMarkers)
+                        MapHandler.overrideMapLoad()
+                        MapHandler.setupMap(this, mMap, mMarkers)
                     }
                 } else {
                     thread(start = true) {
@@ -138,9 +138,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         Utils.setupFavoritesButtonCallback(this, mMap)
 
         if (CityUtils.currentCity != 0) {
-            Utils.centerMap(mMap, 14F)
+            MapHandler.centerMap(mMap, 14F)
             thread(start = true) {
-                Utils.setupMap(this, mMap, mMarkers)
+                MapHandler.setupMap(this, mMap, mMarkers)
             }
         } else {
             thread(start = true) {
