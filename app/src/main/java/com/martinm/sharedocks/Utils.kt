@@ -231,55 +231,6 @@ object Utils {
             latch.countDown()
         }
         latch.await()
-        updateMapVisuals(context, map, markers)
-    }
-
-    fun updateMapVisuals(context: AppCompatActivity, map: GoogleMap, markers: MutableList<Marker>) {
-        isMapLoading = true
-        val latch = CountDownLatch(1)
-        context.runOnUiThread {
-            val iterator = markers.iterator()
-            while (iterator.hasNext()) {
-                val marker = iterator.next()
-                if (!(marker.tag as ShareStation).isActive) {
-                    marker.remove()
-                    iterator.remove()
-                }
-            }
-            mApi.sortableDocks.forEach { station ->
-                if (!station.isActive && ConfigurationHandler.getShowUnavailableStations()) {
-                    val marker = map.addMarker(MarkerOptions().position(station.location))
-                    marker.tag = station
-                    markers.add(0, marker)
-                }
-            }
-            latch.countDown()
-        }
-        latch.await()
-        if (ConfigurationHandler.getColorOnMarkers()) {
-            markers.forEach {
-                if (stopLoadRequest) {
-                    return@forEach
-                }
-                context.runOnUiThread {
-                    it.setIcon(
-                        BitmapDescriptorFactory.defaultMarker(
-                            (it.tag as ShareStation).hue
-                        )
-                    )
-                }
-                // Unblock UI thread to allow for responsiveness
-                Thread.sleep(ConfigurationHandler.getUIResponsiveness().toLong())
-            }
-        } else {
-            context.runOnUiThread {
-                for (marker in markers) {
-                    marker.setIcon(null)
-                }
-            }
-        }
-        requireVisualsUpdate = false
-        stopLoadRequest = false
         isMapLoading = false
     }
 
