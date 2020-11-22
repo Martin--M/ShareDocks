@@ -96,7 +96,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             findViewById<ImageButton>(R.id.button_favorites).visibility = View.GONE
             MapHandler.centerMap(mMap, 14F)
             thread(start = true) {
-                MapHandler.overrideMapLoad()
+                MapHandler.waitForMapLoad()
                 MapHandler.setupMap(this, mMap, mMarkers)
             }
         } else if (MapHandler.requireVisualsUpdate) {
@@ -119,7 +119,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             R.id.menu_refresh_button ->
                 if (ShareApiHandler.docks.isEmpty()) {
                     thread(start = true) {
-                        MapHandler.overrideMapLoad()
+                        MapHandler.waitForMapLoad()
                         MapHandler.setupMap(this, mMap, mMarkers)
                     }
                 } else {

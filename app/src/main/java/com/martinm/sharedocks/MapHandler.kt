@@ -12,15 +12,11 @@ import java.util.concurrent.CountDownLatch
 object MapHandler {
     private val mApi = ShareApiHandler
     var isMapLoading = false
-    var stopLoadRequest = false
     var requireVisualsUpdate = false
 
-    fun overrideMapLoad() {
-        if (isMapLoading) {
-            stopLoadRequest = true
-            while (isMapLoading) {
-                Thread.sleep(10)
-            }
+    fun waitForMapLoad() {
+        while (isMapLoading) {
+            Thread.sleep(10)
         }
     }
 
@@ -59,5 +55,4 @@ object MapHandler {
         latch.await()
         isMapLoading = false
     }
-
 }
