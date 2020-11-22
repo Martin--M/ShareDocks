@@ -79,6 +79,37 @@ object MapHandler {
         isMapLoading = false
     }
 
+    fun updateMapVisuals(context: AppCompatActivity, markers: MutableList<Marker>) {
+        isMapLoading = true
+        val latch = CountDownLatch(1)
+        context.runOnUiThread {
+            val paint = Paint()
+            val path = getMarkerPath()
+            markers.forEach { marker ->
+                val station = marker.tag as ShareStation
+                val pctFull =
+                    station.availableDocks.toFloat() / (station.availableBikes + station.availableDocks)
+                marker.setIcon(
+                    getMarkerIcon(
+                        context,
+                        paint,
+                        path,
+                        pctFull,
+                        station.isActive
+                    )
+                )
+                marker.isVisible = true
+                if (!ConfigurationHandler.getShowUnavailableStations() && !station.isActive) {
+                    marker.isVisible = false
+                }
+            }
+            latch.countDown()
+        }
+        latch.await()
+        requireVisualsUpdate = false
+        isMapLoading = false
+    }
+
     private fun getMarkerPath(): Path {
         val path = Path()
         path.moveTo(36.8F, 4F)

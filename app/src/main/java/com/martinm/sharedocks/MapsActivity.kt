@@ -101,7 +101,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
             }
         } else if (MapHandler.requireVisualsUpdate) {
             thread(start = true) {
-                //TODO: Update visuals
+                MapHandler.waitForMapLoad()
+                MapHandler.updateMapVisuals(this, mMarkers)
             }
         }
     }
@@ -125,7 +126,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
                 } else {
                     thread(start = true) {
                         Utils.safeUpdateDockStatus(this)
-                        //TODO: Update visuals
+                        MapHandler.waitForMapLoad()
+                        MapHandler.updateMapVisuals(this, mMarkers)
                     }
                 }
         }
