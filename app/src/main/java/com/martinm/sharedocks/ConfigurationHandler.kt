@@ -61,10 +61,6 @@ object ConfigurationHandler {
         return mSettings.getBoolean("settings_enable_tracking", true)
     }
 
-    fun getUIResponsiveness(): Int {
-        return mSettings.getInt("settings_load_responsiveness", 50)
-    }
-
     fun getColorOnMarkers(): Boolean {
         return mSettings.getBoolean("settings_visuals_is_colors_on_markers", false)
     }

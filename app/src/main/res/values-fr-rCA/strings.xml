@@ -48,8 +48,6 @@
     <string name="settings_category_title_visuals">Paramètres visuels</string>
     <string name="settings_entry_title_color_code">Couleurs des marqueurs des stations</string>
     <string name="settings_entry_summary_color_code">Ajouter un code de couleurs sur les marqueurs de stations pour visualiser la proportion de vélos disponibles en fonction du nombre de places. Cette option peut prendre un peu de temps à se mettre à jour dans les villes comportant de nombreuses stations</string>
-    <string name="settings_entry_title_responsiveness">Réactivité lors du chargement de la carte</string>
-    <string name="settings_entry_summary_responsiveness">Une valeur inférieure rendra le chargement des couleurs des marqueurs rapide, mais la carte pourrait ne pas être réactive. Avec une valeur supérieure, le chargement sera plus lent, mais la carte sera réactive</string>
     <string name="settings_category_entry_tts">Avertissement vocal</string>
     <string name="settings_entry_summary_tts_enable">Recevez une notification vocale lorsqu’une station suivie est pleine.</string>
     <string name="settings_entry_title_tts_enable">Activer</string>

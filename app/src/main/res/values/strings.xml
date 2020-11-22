@@ -31,8 +31,6 @@
     <string name="settings_entry_summary_tracking_period">While in tracking mode, how often should the application update station data (in seconds)</string>
     <string name="settings_entry_title_color_code">Colors on station markers</string>
     <string name="settings_entry_summary_color_code">Show the color of the station markers based on the availability of bikes. This might take some time in cities with many stations</string>
-    <string name="settings_entry_title_responsiveness">Responsiveness during map load</string>
-    <string name="settings_entry_summary_responsiveness">A lower value means the colors will load faster, but the map could experience some lag. With a higher value, the load will be slower, but the experience will be smoother</string>
     <string name="settings_category_title_visuals">Visuals</string>
     <string name="settings_category_entry_tts">Text-to-Speech</string>
     <string name="settings_entry_title_tts_enable">Enable</string>
