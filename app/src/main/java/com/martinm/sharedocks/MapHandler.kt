@@ -68,6 +68,10 @@ object MapHandler {
 
                 marker.tag = station
                 markers.add(marker)
+
+                if (!ConfigurationHandler.getShowUnavailableStations() && !station.isActive) {
+                    marker.isVisible = false
+                }
             }
             latch.countDown()
         }
@@ -111,6 +115,15 @@ object MapHandler {
             borderColor = context.getColor(R.color.colorBorderNoDocks)
         } else if (pctFull == 1F) {
             borderColor = context.getColor(R.color.colorBorderAllDocks)
+        }
+
+        if (ConfigurationHandler.getColorOnMarkers() && isAvailable && !pctFull.isNaN()) {
+            canvasFillY = canvas.height
+            var g = (pctFull * 2 * 255).toInt()
+            if (g > 255) g = 255
+            var r = ((1 - pctFull) * 2 * 255).toInt()
+            if (r > 255) r = 255
+            backgroundColor = Color.rgb(r, g, 0)
         }
 
         // Minor offsets to account for the border
