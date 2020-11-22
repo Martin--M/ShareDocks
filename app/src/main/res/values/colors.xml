@@ -5,4 +5,7 @@
     <color name="colorAccent">#8BC34A</color>
     <color name="colorPopupText">#f2f2f2</color>
     <color name="colorPopupButtonBackground">#355365</color>
+    <color name="colorUnavailable">#919191</color>
+    <color name="colorBorderNoDocks">#B81A1A</color>
+    <color name="colorBorderAllDocks">#71FB4B</color>
 </resources>
