@@ -53,7 +53,7 @@ object MapHandler {
             context.findViewById<ImageButton>(R.id.button_favorites).visibility = View.VISIBLE
             mApi.sortableDocks.forEach { station ->
                 val pctFull =
-                    station.availableDocks.toFloat() / (station.availableBikes + station.availableDocks)
+                    station.availableBikes.toFloat() / (station.availableBikes + station.availableDocks)
                 val marker = map.addMarker(
                     MarkerOptions().position(station.location).icon(
                         getMarkerIcon(
@@ -88,7 +88,7 @@ object MapHandler {
             markers.forEach { marker ->
                 val station = marker.tag as ShareStation
                 val pctFull =
-                    station.availableDocks.toFloat() / (station.availableBikes + station.availableDocks)
+                    station.availableBikes.toFloat() / (station.availableBikes + station.availableDocks)
                 marker.setIcon(
                     getMarkerIcon(
                         context,
