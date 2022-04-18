@@ -13,6 +13,7 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import java.util.concurrent.CountDownLatch
 
+
 object MapHandler {
     private val mApi = ShareApiHandler
     var isMapLoading = false
@@ -61,7 +62,8 @@ object MapHandler {
                             paint,
                             path,
                             pctFull,
-                            station.isActive
+                            station.isActive,
+                            station.availableEbikes > 0
                         )
                     )
                 )
@@ -95,7 +97,8 @@ object MapHandler {
                         paint,
                         path,
                         pctFull,
-                        station.isActive
+                        station.isActive,
+                        station.availableEbikes > 0
                     )
                 )
                 marker.isVisible = true
@@ -127,7 +130,8 @@ object MapHandler {
         paint: Paint,
         path: Path,
         pctFull: Float,
-        isAvailable: Boolean
+        isAvailable: Boolean,
+        hasEbikes: Boolean
     ): BitmapDescriptor? {
         val bitmap = Bitmap.createBitmap(75, 75, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
@@ -181,6 +185,15 @@ object MapHandler {
         paint.style = Paint.Style.STROKE
         paint.strokeWidth = 8F
         canvas.drawPath(path, paint)
+
+        /* E-bike sign */
+        if (hasEbikes) {
+            paint.color = Color.BLACK
+            paint.style = Paint.Style.FILL
+            paint.textSize = 35.0f
+            paint.typeface = Typeface.create("sans-serif-black", Typeface.BOLD)
+            canvas.drawText("ϟ", 0, 1, 26f, 50f, paint)
+        }
 
         return BitmapDescriptorFactory.fromBitmap(bitmap)
     }

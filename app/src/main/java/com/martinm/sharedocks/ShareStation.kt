@@ -11,6 +11,7 @@ class ShareStation(val id: String) : Comparable<ShareStation> {
     var location: LatLng = LatLng(0.0, 0.0)
     var availableDocks: Int = 0
     var availableBikes: Int = 0
+    var availableEbikes: Int = 0
     var isActive: Boolean = false
     var hue: Float = 0F
 

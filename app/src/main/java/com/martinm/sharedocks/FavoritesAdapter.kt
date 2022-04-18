@@ -47,10 +47,13 @@ class FavoritesAdapter(private val docks: MutableList<ShareStation>, private val
         if (displayName == "") {
             displayName = docks[position].name
         }
+        val simpleBikes = docks[position].availableBikes - docks[position].availableEbikes
         val stationStr = StringBuilder()
             .append(displayName)
             .append("\n\uD83D\uDEB2: ")
-            .append(String.format("%-13s", docks[position].availableBikes.toString()))
+            .append(String.format("%-8s", simpleBikes.toString()))
+            .append("⚡: ")
+            .append(String.format("%-8s", docks[position].availableEbikes.toString()))
             .append("\uD83D\uDCCD: ")
             .append(docks[position].availableDocks)
         holder.setText(stationStr.toString())

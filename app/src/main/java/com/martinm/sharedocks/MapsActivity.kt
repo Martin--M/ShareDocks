@@ -200,8 +200,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         }
 
         // Load labels with appropriate values
-        popupView.findViewById<TextView>(R.id.bikes_value).text = station.availableBikes.toString()
+        val simpleBikes = station.availableBikes - station.availableEbikes
+        popupView.findViewById<TextView>(R.id.bikes_value).text = simpleBikes.toString()
         popupView.findViewById<TextView>(R.id.docks_value).text = station.availableDocks.toString()
+        popupView.findViewById<TextView>(R.id.e_bikes_value).text = station.availableEbikes.toString()
         popupView.findViewById<TextView>(R.id.dock_name).text = station.name
         popupView.findViewById<Button>(R.id.toggle_dock_button).text =
             Utils.getButtonStringForId(baseContext, station.id)

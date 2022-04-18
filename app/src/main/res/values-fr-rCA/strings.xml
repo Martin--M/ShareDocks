@@ -2,6 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="popup_label_docks">Points d\'ancrage</string>
     <string name="popup_label_bikes">Vélos</string>
+    <string name="popup_label_e_bikes">Vélos électriques</string>
     <string name="popup_button_close">Fermer</string>
     <string name="popup_button_add">Suivre</string>
     <string name="popup_button_remove">Enlever</string>

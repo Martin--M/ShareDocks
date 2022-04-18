@@ -79,6 +79,12 @@ object ShareApiHandler {
                         obj.getBoolean("is_installed") && obj.getBoolean("is_returning")
                 }
 
+                // Montreal-only
+                try {
+                    docks[id]!!.availableEbikes = obj.getInt("num_ebikes_available")
+                } catch (e: Exception) {
+                }
+
                 docks[id]!!.updateHue()
             }
         }
