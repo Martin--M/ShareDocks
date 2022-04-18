@@ -16,7 +16,7 @@ object CityUtils {
 
     // This should be consistent with the entries under array.xml @cityData & @cityId
     val map: Map<Int, CityInfo> = mapOf(
-        1 to CityInfo("CA","Montréal",LatLng(45.5005302, -73.5686184),URL("https://api-core.bixi.com/gbfs/gbfs.json")),
+        1 to CityInfo("CA","Montréal",LatLng(45.5005302, -73.5686184),URL("https://gbfs.velobixi.com/gbfs/gbfs.json")),
         2 to CityInfo("AE","Abu Dhabi",LatLng(24.4618886,54.597254),URL("https://api-core.bikeshare.ae/gbfs/gbfs.json")),
         3 to CityInfo("AE","Dubai",LatLng(25.074116,55.1453836),URL("https://dubai.publicbikesystem.net/ube/gbfs/v1/gbfs.json")),
         4 to CityInfo("AR","Buenos Aires",LatLng(-34.5957212,-58.3979731),URL("https://buenosaires.publicbikesystem.net/ube/gbfs/v1/gbfs.json")),
