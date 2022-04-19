@@ -167,7 +167,7 @@ object LogicHandler {
             context,
             Utils.RECEIVER_REQUEST_ID_ACTIVITY_TRANSITION,
             Intent().setClass(context, ActivityTransitionReceiver::class.java),
-            PendingIntent.FLAG_UPDATE_CURRENT
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
         val task = ActivityRecognition.getClient(context)
             .requestActivityTransitionUpdates(activityTransitionRequest, pendingIntent)
