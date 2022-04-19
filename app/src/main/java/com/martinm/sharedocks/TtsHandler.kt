@@ -34,6 +34,7 @@ object TtsHandler {
                     }
                 }
 
+                @Deprecated("Deprecated in Java")
                 override fun onError(p0: String?) {
                 }
 

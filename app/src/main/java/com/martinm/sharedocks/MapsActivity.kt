@@ -151,8 +151,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         }
     }
 
-    override fun onMarkerClick(p0: Marker?): Boolean {
-        if (p0 == null || mIsPopupPresent) {
+    override fun onMarkerClick(p0: Marker): Boolean {
+        if (mIsPopupPresent) {
             // Have to return true, else the default snippet pops up
             return true
         }

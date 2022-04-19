@@ -68,7 +68,7 @@ object MapHandler {
                     )
                 )
 
-                marker.tag = station
+                marker!!.tag = station
                 markers.add(marker)
 
                 if (!ConfigurationHandler.getShowUnavailableStations() && !station.isActive) {

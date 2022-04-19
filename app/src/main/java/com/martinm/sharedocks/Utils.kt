@@ -188,10 +188,10 @@ object Utils {
         }
 
         override fun onPreferenceStartScreen(
-            caller: PreferenceFragmentCompat?,
-            pref: PreferenceScreen?
+            caller: PreferenceFragmentCompat,
+            pref: PreferenceScreen
         ): Boolean {
-            caller?.preferenceScreen = pref
+            caller.preferenceScreen = pref
             isNestedSetting = true
             return true
         }
