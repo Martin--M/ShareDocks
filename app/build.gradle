@@ -25,11 +25,18 @@ android {
         abortOnError false
     }
 
+    task generateSources(type: Exec, description: "Generate CityUtils sources") {
+        commandLine 'python3', 'src/main/python/CityUtilsGenerator.py'
+    }
 
     tasks.withType(Test) {
         testLogging {
             events "standardOut", "started", "passed", "skipped", "failed"
         }
+    }
+
+    tasks.named('preBuild') {
+        dependsOn generateSources
     }
 
     applicationVariants.all { variant ->
