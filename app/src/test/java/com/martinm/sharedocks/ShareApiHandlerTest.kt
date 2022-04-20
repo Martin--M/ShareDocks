@@ -54,7 +54,7 @@ class ShareApiHandlerTest {
             }
             when (true) {
                 isError -> print("[FAIL] ")
-                warnCount > 0 -> print("[WARN] ")
+                (warnCount > 0) -> print("[WARN] ")
                 else -> print("[SUCCESS] ")
             }
             println("${mapEntry.value.name} ($timeMs ms)")
