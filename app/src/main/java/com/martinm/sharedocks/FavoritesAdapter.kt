@@ -28,13 +28,12 @@ class FavoritesAdapter(private val docks: MutableList<ShareStation>, private val
 
         val viewHolder = FavoritesViewHolder(view)
 
-        view.findViewById<ImageView>(R.id.sort_icon).setOnTouchListener { v, event ->
+        view.findViewById<ImageView>(R.id.sort_icon).setOnTouchListener { _, event ->
 
             when (event.actionMasked) {
                 MotionEvent.ACTION_DOWN -> {
                     FavoritesHandler.startDragging(viewHolder)
                 }
-                MotionEvent.ACTION_UP -> v.performClick()
             }
 
             return@setOnTouchListener true
