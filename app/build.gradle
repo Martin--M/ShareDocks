@@ -39,6 +39,11 @@ android {
         dependsOn generateSources
     }
 
+    clean.doFirst {
+        delete "${projectDir}/src/main/java/com/martinm/sharedocks/CityUtils.kt"
+        delete "${projectDir}/src/main/res/values/cityInfo.xml"
+    }
+
     applicationVariants.configureEach { variant ->
         variant.resValue "string", "version_name", variant.versionName
     }
