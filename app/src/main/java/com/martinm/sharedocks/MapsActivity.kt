@@ -107,6 +107,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         handleBackButton()
     }

@@ -1,12 +1,14 @@
 package com.martinm.sharedocks
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.GoogleMap
-import kotlinx.android.synthetic.main.tracked_stations_entry.view.*
 import java.lang.StringBuilder
 
 class FavoritesAdapter(private val docks: MutableList<ShareStation>, private val map: GoogleMap) :
@@ -14,18 +16,20 @@ class FavoritesAdapter(private val docks: MutableList<ShareStation>, private val
 
     class FavoritesViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         fun setText(text: String) {
-            view.tracked_stations_entry_text_view.text = text
+            view.findViewById<TextView>(R.id.tracked_stations_entry_text_view).text = text
         }
     }
 
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritesViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.tracked_stations_entry, parent, false)
 
         val viewHolder = FavoritesViewHolder(view)
 
-        view.sort_icon.setOnTouchListener { v, event ->
+        view.findViewById<ImageView>(R.id.sort_icon).setOnTouchListener { v, event ->
+
             when (event.actionMasked) {
                 MotionEvent.ACTION_DOWN -> {
                     FavoritesHandler.startDragging(viewHolder)
