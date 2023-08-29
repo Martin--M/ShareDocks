@@ -41,7 +41,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: LintReport
-        path: app/build/reports/lint-results.html
+        path: app/build/reports/lint-results-debug.html
 
     - name: Test Api
       run: ./gradlew testDebug
